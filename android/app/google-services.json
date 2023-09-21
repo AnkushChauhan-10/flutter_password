@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "458287736684",
+    "project_id": "password-saver-a9e41",
+    "storage_bucket": "password-saver-a9e41.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:458287736684:android:1103712d4ccbac92843549",
+        "android_client_info": {
+          "package_name": "com.android.application"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "458287736684-nsv3c2omsss3bjpuaogentb2hp1k09iu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3I5CNz8z1tD7NMoSuT9DrufuDAGDFxXw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "458287736684-nsv3c2omsss3bjpuaogentb2hp1k09iu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:458287736684:android:9b19e6043a5c5bd3843549",
+        "android_client_info": {
+          "package_name": "com.example.password"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "458287736684-nsv3c2omsss3bjpuaogentb2hp1k09iu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3I5CNz8z1tD7NMoSuT9DrufuDAGDFxXw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "458287736684-nsv3c2omsss3bjpuaogentb2hp1k09iu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
