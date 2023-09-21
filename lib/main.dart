@@ -2,10 +2,10 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:password/core/utiles/const.dart';
-import 'package:password/features/home/presentation/bloc/home_bloc.dart';
-import 'package:password/features/home/presentation/page/home_page.dart';
 import 'package:password/features/save_data/presentation/bloc/save_bloc.dart';
 import 'package:password/features/save_data/presentation/page/save_page.dart';
+import 'package:password/features/show_accounts_list/presentation/bloc/show_accounts_list_bloc.dart';
+import 'package:password/features/show_accounts_list/presentation/page/show_accounts_list_page.dart';
 import 'package:password/features/sign_in/presentation/bloc/sign_in_bloc.dart';
 import 'package:password/features/sign_in/presentation/page/sign_in_page.dart';
 import 'package:password/features/sign_up/presentation/bloc/sign_up_bloc.dart';
@@ -13,6 +13,8 @@ import 'package:password/features/sign_up/presentation/page/sign_up_page.dart';
 import 'package:password/features/splash/presentation/bloc/splash_bloc.dart';
 import 'package:password/features/splash/presentation/page/splash_page.dart';
 import 'package:password/injection_container.dart';
+import 'package:password/screen/home/presentation/bloc/home_bloc.dart';
+import 'package:password/screen/home/presentation/page/home_page.dart';
 import 'package:password/service/background_update/domain/use_case/update.dart';
 
 void main() async {
@@ -53,6 +55,10 @@ class MyApp extends StatelessWidget {
           create: (_) => sl<SignInBloc>(),
           child: const SignInPage(),
         ),
+        BlocProvider(
+          create: (_) => sl<ShowAccountsListBloc>(),
+          child: const ShowAccountsListPage(),
+        )
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

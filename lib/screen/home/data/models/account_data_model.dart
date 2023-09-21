@@ -1,8 +1,9 @@
 import 'package:password/core/utiles/typedef.dart';
 import 'package:password/screen/home/domain/entities/account_data.dart';
 
-class UpdateDataModel extends AccountData {
-  const UpdateDataModel({
+
+class AccountDataModel extends AccountData {
+  const AccountDataModel({
     required super.siteName,
     required super.id,
     required super.userName,
@@ -11,7 +12,7 @@ class UpdateDataModel extends AccountData {
     required super.isUpdate,
   });
 
-  const UpdateDataModel.empty()
+  const AccountDataModel.empty()
       : this(
           siteName: "",
           id: "",
@@ -21,12 +22,12 @@ class UpdateDataModel extends AccountData {
           isUpdate: false,
         );
 
-  factory UpdateDataModel.fromMap(DataMap map) => UpdateDataModel(
+  factory AccountDataModel.fromMap(DataMap map) => AccountDataModel(
         siteName: map["site_name"],
         id: map["id"],
         userName: map["user_name"],
         password: map["password"],
-        lastUpdate: map["last_update"],
+        lastUpdate: DateTime.fromMicrosecondsSinceEpoch(int.parse(map["last_update"])).toString(),
         isUpdate: map['is_update'] == 1 ? true : false,
       );
 
@@ -36,10 +37,10 @@ class UpdateDataModel extends AccountData {
         'user_name': userName,
         'password': password,
         'last_update': lastUpdate,
-        'is_update': isUpdate ? 1 : 0,
+        'is_update': isUpdate,
       };
 
-  UpdateDataModel copyWith({
+  AccountDataModel copyWith({
     String? siteName,
     String? id,
     String? userName,
@@ -47,7 +48,7 @@ class UpdateDataModel extends AccountData {
     String? lastUpdate,
     bool? isUpdate,
   }) =>
-      UpdateDataModel(
+      AccountDataModel(
         siteName: siteName ?? this.siteName,
         id: id ?? this.id,
         userName: userName ?? this.userName,
