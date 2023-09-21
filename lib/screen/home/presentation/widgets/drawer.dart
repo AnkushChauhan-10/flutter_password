@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:password/features/sign_out/presentation/page/sign_out_page.dart';
+import 'package:password/features/sign_out/presentation/provider/sign_out_provider.dart';
+import 'package:password/injection_container.dart';
 
 class CustomDrawer extends StatelessWidget {
   CustomDrawer({super.key, required this.onLogOut});
@@ -21,22 +24,7 @@ class CustomDrawer extends StatelessWidget {
                   return await showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: const Text("Logg Out"),
-                        content: const Text("Are you sure you want to log out"),
-                        actions: <Widget>[
-                          ElevatedButton(
-                              onPressed: () {
-                                onLogOut();
-                                Navigator.of(context).pop(true);
-                              },
-                              child: const Text("Yes")),
-                          ElevatedButton(
-                            onPressed: () => Navigator.of(context).pop(false),
-                            child: const Text("No"),
-                          ),
-                        ],
-                      );
+                      return SignOutPage(signOutProvider: sl<SignOutProvider>(),);
                     },
                   );
                 },

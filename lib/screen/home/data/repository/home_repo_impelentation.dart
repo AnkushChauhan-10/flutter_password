@@ -29,13 +29,4 @@ class HomeRepoImplementation extends HomeRepository {
     }
   }
 
-  @override
-  FutureResponse signOut() async {
-    try {
-      final result = await _homeDataSource.signOut();
-      return SuccessResponse(result);
-    } catch (e) {
-      return FailureResponse(e.toString());
-    }
-  }
 }

@@ -22,6 +22,11 @@ import 'package:password/features/show_accounts_list/data/repository/show_accoun
 import 'package:password/features/show_accounts_list/domain/repository/show_accounts_list_repository.dart';
 import 'package:password/features/show_accounts_list/domain/use_case/get_account_list.dart';
 import 'package:password/features/show_accounts_list/presentation/bloc/show_accounts_list_bloc.dart';
+import 'package:password/features/sign_out/data/data_source/local_sign_out_data_source.dart';
+import 'package:password/features/sign_out/data/repository/sign_out_repository_implementation.dart';
+import 'package:password/features/sign_out/domain/repository/sign_out_repository.dart';
+import 'package:password/features/sign_out/domain/use_case/sign_out.dart';
+import 'package:password/features/sign_out/presentation/provider/sign_out_provider.dart';
 import 'package:password/features/splash/data/data_source/splash_local_data_source.dart';
 import 'package:password/features/splash/data/repository/splash_repository_implementation.dart';
 import 'package:password/features/splash/domain/repository/splash_repository.dart';
@@ -75,8 +80,7 @@ Future<void> init() async {
 
   ///===================================== Home Dependency ========================================================
   //----------------bloc ( HomeBloc() )
-  sl.registerFactory<HomeBloc>(() => HomeBloc(getUserData: sl(), signOut: sl()));
-  sl.registerLazySingleton(() => SignOut(homeRepository: sl()));
+  sl.registerFactory<HomeBloc>(() => HomeBloc(getUserData: sl()));
   sl.registerLazySingleton(() => GetUserData(homeRepository: sl()));
   sl.registerLazySingleton<HomeRepository>(
       () => HomeRepoImplementation(homeRemoteDataSource: sl(), homeDataSource: sl(), networkConnectivity: const NetworkConnectivity()));
@@ -137,6 +141,12 @@ Future<void> init() async {
   sl.registerLazySingleton<ShowAccountsListRemoteDataSource>(
     () => ShowAccountsListRemoteDataSourceImplementation(fireStore: FirebaseFirestore.instance),
   );
+
+  ///======================================= Sign Out Dependency ==================================================
+  sl.registerFactory(() => SignOutProvider(signOut: sl()));
+  sl.registerLazySingleton(() => SignOut(signOutRepository: sl()));
+  sl.registerLazySingleton<SignOutRepository>(() => SignOutRepositoryImplementation(localSignOutDataSource: sl()));
+  sl.registerLazySingleton<LocalSignOutDataSource>(() => LocalSignOutDataSourceImplementation(sharedPreferences: sharedPreferences));
 
   ///======================================= External Dependency ===================================================
   //-------------Fire Store -------------------------------

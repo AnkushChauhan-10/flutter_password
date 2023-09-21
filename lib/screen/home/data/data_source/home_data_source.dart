@@ -9,8 +9,6 @@ abstract class HomeDataSource {
 
   UsersModel getUserData();
 
-  Future<bool> signOut();
-
 }
 
 class HomeDataSourceImplementation extends HomeDataSource {
@@ -34,13 +32,5 @@ class HomeDataSourceImplementation extends HomeDataSource {
     List<String>? result = _preferences.getStringList("user_data");
     return UsersModel.fromListString(result!);
   }
-
-  @override
-  Future<bool> signOut() async {
-    await _preferences.remove("user_data");
-    final result = await _preferences.remove("token");
-    return result;
-  }
-
 
 }

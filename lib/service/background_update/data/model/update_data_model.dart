@@ -1,7 +1,7 @@
 import 'package:password/core/utiles/typedef.dart';
-import 'package:password/screen/home/domain/entities/account_data.dart';
+import 'package:password/features/show_accounts_list/domain/entities/show_account.dart';
 
-class UpdateDataModel extends AccountData {
+class UpdateDataModel extends ShowAccount {
   const UpdateDataModel({
     required super.siteName,
     required super.id,

@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:password/screen/home/data/models/account_data_model.dart';
 
 abstract class HomeRemoteDataSource {
   const HomeRemoteDataSource();

@@ -12,12 +12,3 @@ class GetUserData extends UseCaseWithOutParams<FutureResponse> {
   FutureResponse call() async => await _homeRepository.getUserData();
 
 }
-
-class SignOut extends UseCaseWithOutParams<FutureResponse> {
-  SignOut({required HomeRepository homeRepository}) :_homeRepository = homeRepository;
-
-  final HomeRepository _homeRepository;
-
-  @override
-  FutureResponse call() async => await  _homeRepository.signOut();
-}

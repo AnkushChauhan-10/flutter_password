@@ -10,16 +10,12 @@ import 'package:password/screen/home/presentation/bloc/home_state.dart';
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc({
     required GetUserData getUserData,
-    required SignOut signOut,
-  })  : _signOut = signOut,
-        _getUserData = getUserData,
+  })  : _getUserData = getUserData,
         super(const HomeState.initialState()) {
     on<GetUserDataHomeEvent>(_getUserDataHomeEvent);
-    on<OnSignOutHomeEvent>(_onSignOutHomeEvent);
   }
 
   final GetUserData _getUserData;
-  final SignOut _signOut;
 
   Future<void> _getUserDataHomeEvent(GetUserDataHomeEvent event, Emitter<HomeState> emit) async {
     final result = await _getUserData();
@@ -28,10 +24,4 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       emit(state.copyWith(name: model.name, email: model.email));
     }
   }
-
-  Future<void> _onSignOutHomeEvent(OnSignOutHomeEvent event, Emitter<HomeState> emit) async {
-    await _signOut();
-    event.onDone.call();
-  }
-
 }

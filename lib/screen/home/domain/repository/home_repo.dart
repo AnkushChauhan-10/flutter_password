@@ -4,6 +4,5 @@ abstract class HomeRepository{
   const HomeRepository();
 
   FutureResponse getUserData();
-  FutureResponse signOut();
 
 }

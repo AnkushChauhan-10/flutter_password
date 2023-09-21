@@ -48,9 +48,6 @@ class _HomePage extends State<HomePage> with TickerProviderStateMixin {
           key: _key,
           drawer: CustomDrawer(
             onLogOut: () {
-              context.read<HomeBloc>().add(OnSignOutHomeEvent(onDone: () {
-                Navigator.pushReplacementNamed(context, signInPageRoute);
-              }));
             },
           ),
           body: BlocBuilder<HomeBloc, HomeState>(
