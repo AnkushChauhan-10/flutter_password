@@ -64,67 +64,212 @@ Future<void> init() async {
   final sharedPreferences = await SharedPreferences.getInstance();
 
   ///====================================== Splash Page Dependency ==========================================
-  sl.registerFactory(() => SplashBloc(isUserLoggedIn: sl()));
-  sl.registerLazySingleton(() => IsUserLoggedIn(splashRepository: sl()));
-  sl.registerLazySingleton<SplashRepository>(() => SplashRepositoryImplementation(splashLocalDataSource: sl()));
-  sl.registerLazySingleton<SplashLocalDataSource>(() => SplashLocalDataSourceImplementation(sharedPreferences: sharedPreferences));
+  sl.registerFactory(
+    () => SplashBloc(
+      isUserLoggedIn: sl(),
+    ),
+  );
+  sl.registerLazySingleton(
+    () => IsUserLoggedIn(
+      splashRepository: sl(),
+    ),
+  );
+  sl.registerLazySingleton<SplashRepository>(
+    () => SplashRepositoryImplementation(
+      splashLocalDataSource: sl(),
+    ),
+  );
+  sl.registerLazySingleton<SplashLocalDataSource>(
+    () => SplashLocalDataSourceImplementation(sharedPreferences: sharedPreferences),
+  );
 
   ///====================================== Save Data Dependency =============================================
   //-----------bloc ( SaveBloc() )
-  sl.registerFactory(() => SaveBloc(saveData: sl()));
-  sl.registerLazySingleton(() => SaveData(saveRepo: sl()));
+  sl.registerFactory(
+    () => SaveBloc(
+      saveData: sl(),
+    ),
+  );
+  sl.registerLazySingleton(
+    () => SaveData(
+      saveRepo: sl(),
+    ),
+  );
   sl.registerLazySingleton<SaveRepository>(
-      () => SaveRepoImplementation(saveDataSourceRepo: sl(), saveDataOfflineRepo: sl(), networkConnectivity: const NetworkConnectivity()));
-  sl.registerLazySingleton<SaveDataOfflineRepo>(() => SaveDataOfflineRepoImplementation(dataBase: db, sharedPreferences: sharedPreferences));
-  sl.registerLazySingleton<SaveDataSourceRepo>(() => SaveDataSourceRepoImplementation(fireStore: sl()));
+    () => SaveRepoImplementation(
+      saveDataSourceRepo: sl(),
+      saveDataOfflineRepo: sl(),
+      networkConnectivity: const NetworkConnectivity(),
+    ),
+  );
+  sl.registerLazySingleton<SaveDataOfflineRepo>(
+    () => SaveDataOfflineRepoImplementation(
+      dataBase: db,
+      sharedPreferences: sharedPreferences,
+    ),
+  );
+  sl.registerLazySingleton<SaveDataSourceRepo>(
+    () => SaveDataSourceRepoImplementation(
+      fireStore: sl(),
+    ),
+  );
 
   ///===================================== Home Dependency ========================================================
   //----------------bloc ( HomeBloc() )
-  sl.registerFactory<HomeBloc>(() => HomeBloc(getUserData: sl()));
-  sl.registerLazySingleton(() => GetUserData(homeRepository: sl()));
+  sl.registerFactory<HomeBloc>(
+    () => HomeBloc(
+      getUserData: sl(),
+    ),
+  );
+  sl.registerLazySingleton(
+    () => GetUserData(
+      homeRepository: sl(),
+    ),
+  );
   sl.registerLazySingleton<HomeRepository>(
-      () => HomeRepoImplementation(homeRemoteDataSource: sl(), homeDataSource: sl(), networkConnectivity: const NetworkConnectivity()));
-  sl.registerLazySingleton<HomeRemoteDataSource>(() => HomeRemoteDataSourceImplementation(fireStore: sl()));
-  sl.registerLazySingleton<HomeDataSource>(() => HomeDataSourceImplementation(sharedPreferences: sharedPreferences, dataBase: db));
+    () => HomeRepoImplementation(
+      homeRemoteDataSource: sl(),
+      homeDataSource: sl(),
+      networkConnectivity: const NetworkConnectivity(),
+    ),
+  );
+  sl.registerLazySingleton<HomeRemoteDataSource>(
+    () => HomeRemoteDataSourceImplementation(
+      fireStore: sl(),
+    ),
+  );
+  sl.registerLazySingleton<HomeDataSource>(
+    () => HomeDataSourceImplementation(
+      sharedPreferences: sharedPreferences,
+      dataBase: db,
+    ),
+  );
 
   ///======================================= Sign Up Dependency ====================================================
   //------------------bloc
-  sl.registerFactory(() => SignUpBloc(signUp: sl()));
-  sl.registerLazySingleton(() => SignUp(singUpRepository: sl()));
-  sl.registerLazySingleton<SignUpRepository>(() => SignUpRepositoryImplementation(signUpDataSource: sl(), signUpLocalSource: sl()));
+  sl.registerFactory(
+    () => SignUpBloc(
+      signUp: sl(),
+    ),
+  );
+  sl.registerLazySingleton(
+    () => SignUp(
+      singUpRepository: sl(),
+    ),
+  );
+  sl.registerLazySingleton<SignUpRepository>(
+    () => SignUpRepositoryImplementation(
+      signUpDataSource: sl(),
+      signUpLocalSource: sl(),
+    ),
+  );
   sl.registerLazySingleton<SignUpDataSource>(
-      () => SignUpDataSourceImplementation(firebaseAuth: FirebaseAuth.instance, firebaseFirestore: FirebaseFirestore.instance));
-  sl.registerLazySingleton<SignUpLocalSource>(() => SignUpLocalSourceImplementation(sharedPreferences: sharedPreferences));
+    () => SignUpDataSourceImplementation(
+      firebaseAuth: FirebaseAuth.instance,
+      firebaseFirestore: FirebaseFirestore.instance,
+    ),
+  );
+  sl.registerLazySingleton<SignUpLocalSource>(
+    () => SignUpLocalSourceImplementation(
+      sharedPreferences: sharedPreferences,
+    ),
+  );
 
   ///======================================= Sign In Dependency ====================================================
   //------------------bloc
-  sl.registerFactory(() => SignInBloc(signIn: sl()));
-  sl.registerLazySingleton(() => SignIn(signInRepository: sl()));
-  sl.registerLazySingleton<SignInRepository>(() => SignInRepositoryImplementation(signInDataSource: sl(), signInLocalSource: sl()));
+  sl.registerFactory(
+    () => SignInBloc(
+      signIn: sl(),
+    ),
+  );
+  sl.registerLazySingleton(
+    () => SignIn(
+      signInRepository: sl(),
+    ),
+  );
+  sl.registerLazySingleton<SignInRepository>(
+    () => SignInRepositoryImplementation(
+      signInDataSource: sl(),
+      signInLocalSource: sl(),
+    ),
+  );
   sl.registerLazySingleton<SignInDataSource>(
-      () => SignInDataSourceImplementation(firebaseAuth: FirebaseAuth.instance, firebaseFirestore: FirebaseFirestore.instance));
-  sl.registerLazySingleton<SignInLocalSource>(() => SignInLocalSourceImplementation(sharedPreferences: sharedPreferences));
+    () => SignInDataSourceImplementation(
+      firebaseAuth: FirebaseAuth.instance,
+      firebaseFirestore: FirebaseFirestore.instance,
+    ),
+  );
+  sl.registerLazySingleton<SignInLocalSource>(
+    () => SignInLocalSourceImplementation(
+      sharedPreferences: sharedPreferences,
+    ),
+  );
 
   ///======================================= Update Data Dependency ================================================
-  sl.registerFactory(() => Update(repository: sl()));
-  sl.registerLazySingleton<UpdateRepository>(() => UpdateRepositoryImplementation(remoteDataSource: sl(), localDataSource: sl()));
-  sl.registerLazySingleton<RemoteUpdateDataSource>(() => RemoteUpdateDataSourceImplementation(fireStore: FirebaseFirestore.instance));
-  sl.registerLazySingleton<LocalUpdateDataSource>(() => LocalUpdateDataSourceImplementation(sharedPreferences: sharedPreferences, dataBase: db));
+  sl.registerFactory(
+    () => Update(
+      repository: sl(),
+    ),
+  );
+  sl.registerLazySingleton<UpdateRepository>(
+    () => UpdateRepositoryImplementation(
+      remoteDataSource: sl(),
+      localDataSource: sl(),
+    ),
+  );
+  sl.registerLazySingleton<RemoteUpdateDataSource>(
+    () => RemoteUpdateDataSourceImplementation(
+      fireStore: FirebaseFirestore.instance,
+    ),
+  );
+  sl.registerLazySingleton<LocalUpdateDataSource>(
+    () => LocalUpdateDataSourceImplementation(
+      sharedPreferences: sharedPreferences,
+      dataBase: db,
+    ),
+  );
 
   ///======================================= Delete Dialog Dependency ==============================================
-  sl.registerFactory(() => DeleteProvider(delete: sl()));
-  sl.registerLazySingleton(() => Delete(deleteRepository: sl()));
-  sl.registerLazySingleton<DeleteRepository>(() => DeleteRepositoryImplementation(
-        remoteDeleteDataSource: sl(),
-        localDeleteDataSource: sl(),
-        networkConnectivity: const NetworkConnectivity(),
-      ));
-  sl.registerLazySingleton<RemoteDeleteDataSource>(() => RemoteDeleteDataSourceImplementation(firebaseFirestore: FirebaseFirestore.instance));
-  sl.registerLazySingleton<LocalDeleteDataSource>(() => LocalDeleteDataSourceImplementation(sharedPreferences: sharedPreferences, database: db));
+  sl.registerFactory(
+    () => DeleteProvider(
+      delete: sl(),
+    ),
+  );
+  sl.registerLazySingleton(
+    () => Delete(
+      deleteRepository: sl(),
+    ),
+  );
+  sl.registerLazySingleton<DeleteRepository>(
+    () => DeleteRepositoryImplementation(
+      remoteDeleteDataSource: sl(),
+      localDeleteDataSource: sl(),
+      networkConnectivity: const NetworkConnectivity(),
+    ),
+  );
+  sl.registerLazySingleton<RemoteDeleteDataSource>(
+    () => RemoteDeleteDataSourceImplementation(
+      firebaseFirestore: FirebaseFirestore.instance,
+    ),
+  );
+  sl.registerLazySingleton<LocalDeleteDataSource>(
+    () => LocalDeleteDataSourceImplementation(
+      sharedPreferences: sharedPreferences,
+      database: db,
+    ),
+  );
 
   ///======================================= Show Accounts List Dependency =========================================
-  sl.registerFactory(() => ShowAccountsListBloc(getShowAccountsList: sl()));
-  sl.registerLazySingleton(() => GetShowAccountsList(showAccountsListRepository: sl()));
+  sl.registerFactory(
+    () => ShowAccountsListBloc(
+      getShowAccountsList: sl(),
+    ),
+  );
+  sl.registerLazySingleton(
+    () => GetShowAccountsList(
+      showAccountsListRepository: sl(),
+    ),
+  );
   sl.registerLazySingleton<ShowAccountsListRepository>(
     () => ShowAccountsListRepositoryImplementation(
       showAccountsListRemoteDataSource: sl(),
@@ -143,10 +288,26 @@ Future<void> init() async {
   );
 
   ///======================================= Sign Out Dependency ==================================================
-  sl.registerFactory(() => SignOutProvider(signOut: sl()));
-  sl.registerLazySingleton(() => SignOut(signOutRepository: sl()));
-  sl.registerLazySingleton<SignOutRepository>(() => SignOutRepositoryImplementation(localSignOutDataSource: sl()));
-  sl.registerLazySingleton<LocalSignOutDataSource>(() => LocalSignOutDataSourceImplementation(sharedPreferences: sharedPreferences));
+  sl.registerFactory(
+    () => SignOutProvider(
+      signOut: sl(),
+    ),
+  );
+  sl.registerLazySingleton(
+    () => SignOut(
+      signOutRepository: sl(),
+    ),
+  );
+  sl.registerLazySingleton<SignOutRepository>(
+    () => SignOutRepositoryImplementation(
+      localSignOutDataSource: sl(),
+    ),
+  );
+  sl.registerLazySingleton<LocalSignOutDataSource>(
+    () => LocalSignOutDataSourceImplementation(
+      sharedPreferences: sharedPreferences,
+    ),
+  );
 
   ///======================================= External Dependency ===================================================
   //-------------Fire Store -------------------------------
