@@ -1,7 +1,7 @@
 import 'package:password/core/use_case/use_case_with_param.dart';
 import 'package:password/core/utiles/typedef.dart';
-import 'package:password/features/save_data/domain/entities/account.dart';
-import 'package:password/features/save_data/domain/repository/save_repo.dart';
+import 'package:password/screen/save_data/domain/entities/account.dart';
+import 'package:password/screen/save_data/domain/repository/save_repo.dart';
 
 class SaveData extends UseCaseWithParams<FutureResponse, SaveDataParam> {
   final SaveRepository saveRepo;

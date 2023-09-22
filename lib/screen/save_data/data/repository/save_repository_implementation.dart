@@ -1,11 +1,11 @@
 import 'package:password/core/response/response.dart';
 import 'package:password/core/utiles/network_connectivity.dart';
 import 'package:password/core/utiles/typedef.dart';
-import 'package:password/features/save_data/data/data_source/save_data_offline_repo.dart';
-import 'package:password/features/save_data/data/data_source/save_data_source_repo.dart';
-import 'package:password/features/save_data/data/model/account_model.dart';
-import 'package:password/features/save_data/domain/entities/account.dart';
-import 'package:password/features/save_data/domain/repository/save_repo.dart';
+import 'package:password/screen/save_data/data/data_source/save_data_offline_repo.dart';
+import 'package:password/screen/save_data/data/data_source/save_data_source_repo.dart';
+import 'package:password/screen/save_data/data/model/account_model.dart';
+import 'package:password/screen/save_data/domain/entities/account.dart';
+import 'package:password/screen/save_data/domain/repository/save_repo.dart';
 
 class SaveRepoImplementation extends SaveRepository {
   final SaveDataSourceRepo _remoteRepo;

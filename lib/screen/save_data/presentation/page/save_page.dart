@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:password/core/utiles/validation.dart';
 import 'package:password/core/widgets/common_field.dart';
 import 'package:password/features/password_generator/presentation/page/password_generator_page.dart';
-import 'package:password/features/save_data/presentation/bloc/save_bloc.dart';
-import 'package:password/features/save_data/presentation/bloc/save_event.dart';
-import 'package:password/features/save_data/presentation/bloc/save_state.dart';
-import 'package:password/features/save_data/presentation/widgets/save_button.dart';
+import 'package:password/screen/save_data/presentation/bloc/save_bloc.dart';
+import 'package:password/screen/save_data/presentation/bloc/save_event.dart';
+import 'package:password/screen/save_data/presentation/bloc/save_state.dart';
+import 'package:password/screen/save_data/presentation/widgets/save_button.dart';
 
 class SavePage extends StatefulWidget {
   const SavePage({super.key});

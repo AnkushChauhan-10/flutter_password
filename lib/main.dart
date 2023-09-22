@@ -4,13 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:password/core/utiles/const.dart';
 import 'package:password/features/password_generator/presentation/bloc/generate_password_bloc.dart';
 import 'package:password/features/password_generator/presentation/page/password_generator_page.dart';
-import 'package:password/features/save_data/presentation/bloc/save_bloc.dart';
-import 'package:password/features/save_data/presentation/page/save_page.dart';
 import 'package:password/features/show_accounts_list/presentation/bloc/show_accounts_list_bloc.dart';
 import 'package:password/features/show_accounts_list/presentation/page/show_accounts_list_page.dart';
 import 'package:password/injection_container.dart';
 import 'package:password/screen/home/presentation/bloc/home_bloc.dart';
 import 'package:password/screen/home/presentation/page/home_page.dart';
+import 'package:password/screen/save_data/presentation/bloc/save_bloc.dart';
+import 'package:password/screen/save_data/presentation/page/save_page.dart';
 import 'package:password/screen/sign_in/presentation/bloc/sign_in_bloc.dart';
 import 'package:password/screen/sign_in/presentation/page/sign_in_page.dart';
 import 'package:password/screen/sign_up/presentation/bloc/sign_up_bloc.dart';
@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => sl<SaveBloc>(),
-          child: SavePage(),
+          child: const SavePage(),
         ),
         BlocProvider(
           create: (_) => sl<HomeBloc>(),

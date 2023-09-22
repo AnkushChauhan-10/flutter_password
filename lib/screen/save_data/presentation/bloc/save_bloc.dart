@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:password/core/response/response.dart';
 import 'package:password/core/utiles/validation.dart';
-import 'package:password/features/save_data/domain/use_case/save_data.dart';
-import 'package:password/features/save_data/presentation/bloc/save_event.dart';
-import 'package:password/features/save_data/presentation/bloc/save_state.dart';
+import 'package:password/screen/save_data/domain/use_case/save_data.dart';
+import 'package:password/screen/save_data/presentation/bloc/save_event.dart';
+import 'package:password/screen/save_data/presentation/bloc/save_state.dart';
 
 class SaveBloc extends Bloc<SaveEvent, SaveState> {
   SaveBloc({required SaveData saveData})

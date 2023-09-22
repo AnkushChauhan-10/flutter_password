@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:password/core/response/response.dart';
-import 'package:password/features/save_data/domain/entities/account.dart';
-import 'package:password/features/save_data/domain/repository/save_repo.dart';
-import 'package:password/features/save_data/domain/use_case/save_data.dart';
+import 'package:password/screen/save_data/domain/entities/account.dart';
+import 'package:password/screen/save_data/domain/repository/save_repo.dart';
+import 'package:password/screen/save_data/domain/use_case/save_data.dart';
 
 class MockSaveRepo extends Mock implements SaveRepository {}
 

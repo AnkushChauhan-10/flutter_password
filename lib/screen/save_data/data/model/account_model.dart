@@ -1,5 +1,5 @@
 import 'package:password/core/utiles/typedef.dart';
-import 'package:password/features/save_data/domain/entities/account.dart';
+import 'package:password/screen/save_data/domain/entities/account.dart';
 
 class AccountModel extends Account {
   const AccountModel({
