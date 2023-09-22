@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:password/core/utiles/const.dart';
 import 'package:password/features/sign_out/presentation/provider/sign_out_provider.dart';
 
 class SignOutPage extends StatelessWidget {
@@ -15,7 +16,8 @@ class SignOutPage extends StatelessWidget {
         ElevatedButton(
             onPressed: () {
               _signOutProvider.signOut((){
-                Navigator.of(context).pop(true);
+                Navigator.pop(context);
+                Navigator.pushReplacementNamed(context, signInPageRoute);
               });
             },
             child: const Text("Yes")),

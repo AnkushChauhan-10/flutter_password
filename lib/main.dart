@@ -9,6 +9,7 @@ import 'package:password/features/show_accounts_list/presentation/page/show_acco
 import 'package:password/injection_container.dart';
 import 'package:password/screen/home/presentation/bloc/home_bloc.dart';
 import 'package:password/screen/home/presentation/page/home_page.dart';
+import 'package:password/screen/home/presentation/page/home_page_1.dart';
 import 'package:password/screen/save_data/presentation/bloc/save_bloc.dart';
 import 'package:password/screen/save_data/presentation/page/save_page.dart';
 import 'package:password/screen/sign_in/presentation/bloc/sign_in_bloc.dart';
@@ -47,7 +48,7 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => sl<HomeBloc>(),
-          child: const HomePage(),
+          child: HomePage1(),
         ),
         BlocProvider(
           create: (_) => sl<SignUpBloc>(),
@@ -76,7 +77,7 @@ class MyApp extends StatelessWidget {
         initialRoute: splashPageRoute,
         routes: {
           splashPageRoute: (context) => const SplashPage(),
-          homePageRoute: (context) => const HomePage(),
+          homePageRoute: (context) => HomePage1(),
           signInPageRoute: (context) => const SignInPage(),
           signUpPageRoute: (context) => const SignUpPage(),
           savePageRoute: (context) => const SavePage(),

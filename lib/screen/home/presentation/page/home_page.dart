@@ -57,7 +57,6 @@ class _HomePage extends State<HomePage> with TickerProviderStateMixin {
                 height: double.infinity,
                 color: Colors.lightBlueAccent,
                 child: Stack(
-                  fit: StackFit.expand,
                   children: [
                     Positioned(
                       left: 0,

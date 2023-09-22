@@ -15,16 +15,51 @@ class ShowAccountTile extends StatelessWidget {
         color: accountData.isUpdate ? Colors.grey : Colors.lightGreen,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Text(accountData.title),
-              Text(accountData.websiteURL),
-              Text(accountData.email),
-              Text(accountData.userName),
-              Text(accountData.password),
-              Text(accountData.lastUpdate),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    accountData.title,
+                    style: const TextStyle(fontSize: 26, color: Colors.black),
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            const WidgetSpan(
+                              child: Icon(Icons.person),
+                            ),
+                            TextSpan(
+                              text: " ${accountData.email}",
+                              style: const TextStyle(),
+                            ),
+                          ],
+                        ),
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            const WidgetSpan(
+                              child: Icon(Icons.lock),
+                            ),
+                            TextSpan(
+                              text: " ${accountData.password}",
+                              style: const TextStyle(),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              ),
             ],
           ),
         ),
