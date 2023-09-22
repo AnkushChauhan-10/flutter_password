@@ -2,9 +2,10 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:password/core/utiles/const.dart';
-import 'package:password/features/splash/domain/use_case/is_user_logged_in.dart';
-import 'package:password/features/splash/presentation/bloc/splash_event.dart';
-import 'package:password/features/splash/presentation/bloc/splash_state.dart';
+import 'package:password/screen/splash/domain/use_case/is_user_logged_in.dart';
+import 'package:password/screen/splash/presentation/bloc/splash_event.dart';
+import 'package:password/screen/splash/presentation/bloc/splash_state.dart';
+
 
 class SplashBloc extends Bloc<SplashEvent, SplashState> {
   SplashBloc({required IsUserLoggedIn isUserLoggedIn})

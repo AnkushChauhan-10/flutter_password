@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:password/features/splash/presentation/bloc/splash_bloc.dart';
-import 'package:password/features/splash/presentation/bloc/splash_event.dart';
-import 'package:password/features/splash/presentation/bloc/splash_state.dart';
+import 'package:password/screen/splash/presentation/bloc/splash_bloc.dart';
+import 'package:password/screen/splash/presentation/bloc/splash_event.dart';
+import 'package:password/screen/splash/presentation/bloc/splash_state.dart';
 
 class SplashPage extends StatelessWidget {
   const SplashPage({super.key});

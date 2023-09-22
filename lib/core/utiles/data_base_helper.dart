@@ -5,8 +5,9 @@ Future<Database> getDB() async {
   const dbVersion = 1;
   const tableName = "account_table";
 
-  const columnSiteName = 'site_name';
-  const columnUserId = 'id';
+  const columnTitle = 'title';
+  const columnEmail = 'email';
+  const columnWebsiteURL ="website_url";
   const columnUserName = 'user_name';
   const columnPassword = "password";
   const columnLastUpdate = "last_update";
@@ -17,8 +18,9 @@ Future<Database> getDB() async {
     onCreate: (Database db, int version) async {
       await db.execute('''
                 CREATE TABLE $tableName(
-                $columnSiteName TEXT NOT NULL PRIMARY KEY,
-                $columnUserId TEXT NOT NULL,
+                $columnTitle TEXT NOT NULL PRIMARY KEY,
+                $columnWebsiteURL TEXT NOT NULL,
+                $columnEmail TEXT NOT NULL,
                 $columnUserName TEXT NOT NULL,
                 $columnPassword TEXT NOT NULL,
                 $columnLastUpdate TEXT NOT NULL,

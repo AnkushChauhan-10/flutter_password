@@ -21,7 +21,7 @@ class LocalDeleteDataSourceImplementation extends LocalDeleteDataSource {
   Future<bool> deleteData(String name) async {
     final result = await _database.delete(
       'account_table',
-      where: "site_name = ?",
+      where: "title = ?",
       whereArgs: [name],
     );
     return result == 0 ? false : true;

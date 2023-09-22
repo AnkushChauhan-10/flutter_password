@@ -2,12 +2,12 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:password/core/utiles/const.dart';
+import 'package:password/features/password_generator/presentation/bloc/generate_password_bloc.dart';
+import 'package:password/features/password_generator/presentation/page/password_generator_page.dart';
 import 'package:password/features/save_data/presentation/bloc/save_bloc.dart';
 import 'package:password/features/save_data/presentation/page/save_page.dart';
 import 'package:password/features/show_accounts_list/presentation/bloc/show_accounts_list_bloc.dart';
 import 'package:password/features/show_accounts_list/presentation/page/show_accounts_list_page.dart';
-import 'package:password/features/splash/presentation/bloc/splash_bloc.dart';
-import 'package:password/features/splash/presentation/page/splash_page.dart';
 import 'package:password/injection_container.dart';
 import 'package:password/screen/home/presentation/bloc/home_bloc.dart';
 import 'package:password/screen/home/presentation/page/home_page.dart';
@@ -15,6 +15,8 @@ import 'package:password/screen/sign_in/presentation/bloc/sign_in_bloc.dart';
 import 'package:password/screen/sign_in/presentation/page/sign_in_page.dart';
 import 'package:password/screen/sign_up/presentation/bloc/sign_up_bloc.dart';
 import 'package:password/screen/sign_up/presentation/page/sign_up_page.dart';
+import 'package:password/screen/splash/presentation/bloc/splash_bloc.dart';
+import 'package:password/screen/splash/presentation/page/splash_page.dart';
 import 'package:password/service/background_update/domain/use_case/update.dart';
 
 void main() async {
@@ -58,6 +60,10 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) => sl<ShowAccountsListBloc>(),
           child: const ShowAccountsListPage(),
+        ),
+        BlocProvider(
+          create: (_) => sl<GeneratePasswordBloc>(),
+          child: const PasswordGeneratorPage(),
         )
       ],
       child: MaterialApp(
@@ -73,7 +79,7 @@ class MyApp extends StatelessWidget {
           homePageRoute: (context) => const HomePage(),
           signInPageRoute: (context) => const SignInPage(),
           signUpPageRoute: (context) => const SignUpPage(),
-          savePageRoute: (context) => SavePage(),
+          savePageRoute: (context) => const SavePage(),
         },
       ),
     );

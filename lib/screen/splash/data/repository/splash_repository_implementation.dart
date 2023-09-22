@@ -1,5 +1,7 @@
-import 'package:password/features/splash/data/data_source/splash_local_data_source.dart';
-import 'package:password/features/splash/domain/repository/splash_repository.dart';
+
+
+import 'package:password/screen/splash/data/data_source/splash_local_data_source.dart';
+import 'package:password/screen/splash/domain/repository/splash_repository.dart';
 
 class SplashRepositoryImplementation extends SplashRepository {
   SplashRepositoryImplementation({required SplashLocalDataSource splashLocalDataSource}) : _splashLocalDataSource = splashLocalDataSource;

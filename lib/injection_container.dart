@@ -10,6 +10,7 @@ import 'package:password/features/delete/data/repository/delete_repository_impel
 import 'package:password/features/delete/domain/repository/delete_repository.dart';
 import 'package:password/features/delete/domain/use_case/delete.dart';
 import 'package:password/features/delete/presentation/provider/delete_provider.dart';
+import 'package:password/features/password_generator/presentation/bloc/generate_password_bloc.dart';
 import 'package:password/features/save_data/data/data_source/save_data_offline_repo.dart';
 import 'package:password/features/save_data/data/data_source/save_data_source_repo.dart';
 import 'package:password/features/save_data/data/repository/save_repository_implementation.dart';
@@ -27,11 +28,6 @@ import 'package:password/features/sign_out/data/repository/sign_out_repository_i
 import 'package:password/features/sign_out/domain/repository/sign_out_repository.dart';
 import 'package:password/features/sign_out/domain/use_case/sign_out.dart';
 import 'package:password/features/sign_out/presentation/provider/sign_out_provider.dart';
-import 'package:password/features/splash/data/data_source/splash_local_data_source.dart';
-import 'package:password/features/splash/data/repository/splash_repository_implementation.dart';
-import 'package:password/features/splash/domain/repository/splash_repository.dart';
-import 'package:password/features/splash/domain/use_case/is_user_logged_in.dart';
-import 'package:password/features/splash/presentation/bloc/splash_bloc.dart';
 import 'package:password/screen/home/data/data_source/home_data_source.dart';
 import 'package:password/screen/home/data/data_source/home_remote_data_source.dart';
 import 'package:password/screen/home/data/repository/home_repo_impelentation.dart';
@@ -50,6 +46,11 @@ import 'package:password/screen/sign_up/data/repository/sing_up_repository_imple
 import 'package:password/screen/sign_up/domain/repository/sign_up_repo.dart';
 import 'package:password/screen/sign_up/domain/use_case/sign_up.dart';
 import 'package:password/screen/sign_up/presentation/bloc/sign_up_bloc.dart';
+import 'package:password/screen/splash/data/data_source/splash_local_data_source.dart';
+import 'package:password/screen/splash/data/repository/splash_repository_implementation.dart';
+import 'package:password/screen/splash/domain/repository/splash_repository.dart';
+import 'package:password/screen/splash/domain/use_case/is_user_logged_in.dart';
+import 'package:password/screen/splash/presentation/bloc/splash_bloc.dart';
 import 'package:password/service/background_update/data/data_source/local_update_data_source.dart';
 import 'package:password/service/background_update/data/data_source/remote_update_data_source.dart';
 import 'package:password/service/background_update/data/repository/update_repository_implementation.dart';
@@ -308,6 +309,10 @@ Future<void> init() async {
       sharedPreferences: sharedPreferences,
     ),
   );
+
+  ///======================================= Generate Password Bloc ============================================
+
+  sl.registerFactory(() => GeneratePasswordBloc());
 
   ///======================================= External Dependency ===================================================
   //-------------Fire Store -------------------------------
