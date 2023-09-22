@@ -1,3 +1,4 @@
+import 'package:password/core/utiles/cryptography.dart';
 import 'package:password/core/utiles/typedef.dart';
 import 'package:password/screen/save_data/domain/entities/account.dart';
 
@@ -28,7 +29,7 @@ class AccountModel extends Account {
         'email': email,
         'website_url': websiteURL,
         'user_name': userName,
-        'password': password,
+        'password': encodePassword(password),
         'last_update': lastUpdate,
         'is_update': isUpdate ? 1 : 0,
       };

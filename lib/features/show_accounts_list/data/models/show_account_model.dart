@@ -1,3 +1,4 @@
+import 'package:password/core/utiles/cryptography.dart';
 import 'package:password/core/utiles/typedef.dart';
 import 'package:password/features/show_accounts_list/domain/entities/show_account.dart';
 
@@ -28,7 +29,7 @@ class ShowAccountModel extends ShowAccount {
         email: map["email"],
         websiteURL: map["website_url"],
         userName: map["user_name"],
-        password: map["password"],
+        password: decodePassword(map["password"]),
         lastUpdate: DateTime.fromMicrosecondsSinceEpoch(int.parse(map["last_update"])).toString(),
         isUpdate: map['is_update'] == 1 ? true : false,
       );
