@@ -1,55 +1,46 @@
 import 'package:password/core/utiles/typedef.dart';
-import 'package:password/features/show_accounts_list/domain/entities/show_account.dart';
+import 'package:password/screen/save_data/data/model/account_model.dart';
 
-class UpdateDataModel extends ShowAccount {
+class UpdateDataModel extends AccountModel {
   const UpdateDataModel({
-    required super.siteName,
-    required super.id,
     required super.userName,
     required super.password,
     required super.lastUpdate,
     required super.isUpdate,
+    required super.title,
+    required super.websiteURL,
+    required super.email,
   });
 
-  const UpdateDataModel.empty()
-      : this(
-          siteName: "",
-          id: "",
-          userName: "",
-          password: "",
-          lastUpdate: "",
-          isUpdate: false,
-        );
+  const UpdateDataModel.empty() : super.empty();
 
   factory UpdateDataModel.fromMap(DataMap map) => UpdateDataModel(
-        siteName: map["site_name"],
-        id: map["id"],
+        title: map["title"],
+        email: map["email"],
+        websiteURL: map["website_url"],
         userName: map["user_name"],
         password: map["password"],
         lastUpdate: map["last_update"],
         isUpdate: map['is_update'] == 1 ? true : false,
       );
 
-  DataMap toMap() => {
-        'site_name': siteName,
-        'id': id,
-        'user_name': userName,
-        'password': password,
-        'last_update': lastUpdate,
-        'is_update': isUpdate ? 1 : 0,
-      };
+  @override
+  DataMap toMap() => super.toMap();
 
+  @override
   UpdateDataModel copyWith({
-    String? siteName,
-    String? id,
+    String? title,
+    String? email,
+    String? websiteURL,
     String? userName,
     String? password,
     String? lastUpdate,
     bool? isUpdate,
   }) =>
       UpdateDataModel(
-        siteName: siteName ?? this.siteName,
-        id: id ?? this.id,
+        title: title ?? this.title,
+        websiteURL: websiteURL ?? this.websiteURL,
+        email: email ?? this.email,
         userName: userName ?? this.userName,
         password: password ?? this.password,
         lastUpdate: lastUpdate ?? this.lastUpdate,

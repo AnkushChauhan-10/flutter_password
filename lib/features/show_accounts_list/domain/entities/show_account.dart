@@ -1,16 +1,18 @@
 import 'package:equatable/equatable.dart';
 
 class ShowAccount extends Equatable {
-  final String siteName;
-  final String id;
+  final String title;
+  final String email;
+  final String websiteURL;
   final String userName;
   final String password;
   final String lastUpdate;
   final bool isUpdate;
 
-  const ShowAccount ({
-    required this.siteName,
-    required this.id,
+  const ShowAccount({
+    required this.title,
+    required this.websiteURL,
+    required this.email,
     required this.userName,
     required this.password,
     required this.lastUpdate,
@@ -19,8 +21,9 @@ class ShowAccount extends Equatable {
 
   const ShowAccount.empty()
       : this(
-          siteName: "",
-          id: "",
+          title: "",
+          websiteURL: "",
+          email: "",
           userName: "",
           password: "",
           lastUpdate: "",
@@ -28,5 +31,5 @@ class ShowAccount extends Equatable {
         );
 
   @override
-  List<Object?> get props => [id];
+  List<Object?> get props => [title];
 }

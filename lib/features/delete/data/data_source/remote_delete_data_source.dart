@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:password/core/utiles/typedef.dart';
 
 abstract class RemoteDeleteDataSource {
   const RemoteDeleteDataSource();

@@ -12,23 +12,28 @@ class ShowAccountsListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     context.read<ShowAccountsListBloc>().add(const OnGetShowAccountsListEvent());
     return Scaffold(
-      body: Center(
-        child: BlocBuilder<ShowAccountsListBloc, ShowAccountsListState>(
-          builder: (context, state) {
-            if(state.state == false){
-              context.read<ShowAccountsListBloc>().add(const OnGetShowAccountsListEvent());
-            }
-            if (state.isLoading) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            } else {
-              return ShowAccountList(
-                list: state.list,
-                onTap: () {},
-              );
-            }
-          },
+      body: RefreshIndicator(
+        onRefresh: () async {
+          context.read<ShowAccountsListBloc>().add(const OnGetShowAccountsListEvent());
+        },
+        child: Center(
+          child: BlocBuilder<ShowAccountsListBloc, ShowAccountsListState>(
+            builder: (context, state) {
+              if(state.state == false){
+                context.read<ShowAccountsListBloc>().add(const OnGetShowAccountsListEvent());
+              }
+              if (state.isLoading) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else {
+                return ShowAccountList(
+                  list: state.list,
+                  onTap: () {},
+                );
+              }
+            },
+          ),
         ),
       ),
     );

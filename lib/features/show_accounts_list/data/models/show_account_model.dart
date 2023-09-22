@@ -3,18 +3,20 @@ import 'package:password/features/show_accounts_list/domain/entities/show_accoun
 
 class ShowAccountModel extends ShowAccount {
   const ShowAccountModel({
-    required super.siteName,
-    required super.id,
     required super.userName,
     required super.password,
     required super.lastUpdate,
     required super.isUpdate,
+    required super.title,
+    required super.websiteURL,
+    required super.email,
   });
 
   const ShowAccountModel.empty()
       : this(
-          siteName: "",
-          id: "",
+          title: "",
+          websiteURL: "",
+          email: "",
           userName: "",
           password: "",
           lastUpdate: "",
@@ -22,8 +24,9 @@ class ShowAccountModel extends ShowAccount {
         );
 
   factory ShowAccountModel.fromMap(DataMap map) => ShowAccountModel(
-        siteName: map["site_name"],
-        id: map["id"],
+        title: map["title"],
+        email: map["email"],
+        websiteURL: map["website_url"],
         userName: map["user_name"],
         password: map["password"],
         lastUpdate: DateTime.fromMicrosecondsSinceEpoch(int.parse(map["last_update"])).toString(),
@@ -31,8 +34,9 @@ class ShowAccountModel extends ShowAccount {
       );
 
   DataMap toMap() => {
-        'site_name': siteName,
-        'id': id,
+        'title': title,
+        'email': email,
+        'website_url': websiteURL,
         'user_name': userName,
         'password': password,
         'last_update': lastUpdate,
@@ -40,16 +44,18 @@ class ShowAccountModel extends ShowAccount {
       };
 
   ShowAccountModel copyWith({
-    String? siteName,
-    String? id,
+    String? title,
+    String? email,
+    String? websiteURL,
     String? userName,
     String? password,
     String? lastUpdate,
     bool? isUpdate,
   }) =>
       ShowAccountModel(
-        siteName: siteName ?? this.siteName,
-        id: id ?? this.id,
+        title: title ?? this.title,
+        websiteURL: websiteURL ?? this.websiteURL,
+        email: email ?? this.email,
         userName: userName ?? this.userName,
         password: password ?? this.password,
         lastUpdate: lastUpdate ?? this.lastUpdate,
