@@ -18,15 +18,19 @@ class HomePage1 extends StatelessWidget {
     context.read<HomeBloc>().add(const GetUserDataHomeEvent());
     return LayoutBuilder(
       builder: (context, size) {
-        return Scaffold(
-          key: _key,
-          drawer: CustomDrawer(
-            onLogOut: () {},
-          ),
-          body: BlocBuilder<HomeBloc, HomeState>(
-            builder: (context, state) {
-              return Container(
+        return BlocBuilder<HomeBloc, HomeState>(
+          builder: (context, state) => Scaffold(
+            key: _key,
+            drawer: CustomDrawer(
+              onLogOut: () {},
+              name: state.name,
+              email: state.email,
+            ),
+            body: SingleChildScrollView(
+              child: Container(
                 color: Colors.lightBlueAccent,
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
                 child: Column(
                   children: [
                     Flexible(
@@ -54,14 +58,14 @@ class HomePage1 extends StatelessWidget {
                     ),
                   ],
                 ),
-              );
-            },
-          ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () async {
-              await Navigator.pushNamed(context, savePageRoute);
-            },
-            child: const Icon(Icons.add),
+              ),
+            ),
+            floatingActionButton: FloatingActionButton(
+              onPressed: () async {
+                await Navigator.pushNamed(context, savePageRoute);
+              },
+              child: const Icon(Icons.add),
+            ),
           ),
         );
       },

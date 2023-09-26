@@ -4,9 +4,16 @@ import 'package:password/features/sign_out/presentation/provider/sign_out_provid
 import 'package:password/injection_container.dart';
 
 class CustomDrawer extends StatelessWidget {
-  CustomDrawer({super.key, required this.onLogOut});
+  const CustomDrawer({
+    super.key,
+    required this.onLogOut,
+    required this.name,
+    required this.email,
+  });
 
-  GestureTapCallback onLogOut;
+  final String name;
+  final String email;
+  final GestureTapCallback onLogOut;
 
   @override
   Widget build(BuildContext context) {
@@ -14,8 +21,22 @@ class CustomDrawer extends StatelessWidget {
       child: ListView(
         children: [
           UserAccountsDrawerHeader(
-            accountName: Text("Ankush"),
-            accountEmail: Text("email.com"),
+            accountName: RichText(
+              text: TextSpan(
+                children: [
+                  const WidgetSpan(child: Icon(Icons.person)),
+                  TextSpan(text: name),
+                ],
+              ),
+            ),
+            accountEmail:RichText(
+              text: TextSpan(
+                children: [
+                  const WidgetSpan(child: Icon(Icons.email)),
+                  TextSpan(text: email),
+                ],
+              ),
+            ),
           ),
           Padding(
             padding: EdgeInsets.all(8.0),
@@ -24,7 +45,9 @@ class CustomDrawer extends StatelessWidget {
                   return await showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      return SignOutPage(signOutProvider: sl<SignOutProvider>(),);
+                      return SignOutPage(
+                        signOutProvider: sl<SignOutProvider>(),
+                      );
                     },
                   );
                 },

@@ -47,6 +47,8 @@ class _HomePage extends State<HomePage> with TickerProviderStateMixin {
         return Scaffold(
           key: _key,
           drawer: CustomDrawer(
+            name: "",
+            email: "",
             onLogOut: () {
             },
           ),

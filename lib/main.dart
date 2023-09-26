@@ -10,6 +10,7 @@ import 'package:password/injection_container.dart';
 import 'package:password/screen/home/presentation/bloc/home_bloc.dart';
 import 'package:password/screen/home/presentation/page/home_page.dart';
 import 'package:password/screen/home/presentation/page/home_page_1.dart';
+import 'package:password/screen/lock_screen/presentation/page/lock_page.dart';
 import 'package:password/screen/save_data/presentation/bloc/save_bloc.dart';
 import 'package:password/screen/save_data/presentation/page/save_page.dart';
 import 'package:password/screen/sign_in/presentation/bloc/sign_in_bloc.dart';
@@ -77,9 +78,10 @@ class MyApp extends StatelessWidget {
         initialRoute: splashPageRoute,
         routes: {
           splashPageRoute: (context) => const SplashPage(),
-          homePageRoute: (context) => HomePage1(),
           signInPageRoute: (context) => const SignInPage(),
           signUpPageRoute: (context) => const SignUpPage(),
+          lockScreenPageRoute: (context) => const LockPage(),
+          homePageRoute: (context) => HomePage1(),
           savePageRoute: (context) => const SavePage(),
         },
       ),
