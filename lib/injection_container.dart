@@ -51,11 +51,9 @@ import 'package:password/screen/splash/data/repository/splash_repository_impleme
 import 'package:password/screen/splash/domain/repository/splash_repository.dart';
 import 'package:password/screen/splash/domain/use_case/is_user_logged_in.dart';
 import 'package:password/screen/splash/presentation/bloc/splash_bloc.dart';
-import 'package:password/service/background_update/data/data_source/local_update_data_source.dart';
-import 'package:password/service/background_update/data/data_source/remote_update_data_source.dart';
-import 'package:password/service/background_update/data/repository/update_repository_implementation.dart';
-import 'package:password/service/background_update/domain/repository/update_repository.dart';
-import 'package:password/service/background_update/domain/use_case/update.dart';
+import 'package:password/screen/update_account/data/data_source/update_local_data_source.dart';
+import 'package:password/screen/update_account/data/data_source/update_remote_data_source.dart';
+import 'package:password/screen/update_account/presentation/bloc/update_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final sl = GetIt.instance;
@@ -162,6 +160,7 @@ Future<void> init() async {
     () => SignUpRepositoryImplementation(
       signUpDataSource: sl(),
       signUpLocalSource: sl(),
+      networkConnectivity: const NetworkConnectivity(),
     ),
   );
   sl.registerLazySingleton<SignUpDataSource>(
@@ -192,41 +191,18 @@ Future<void> init() async {
     () => SignInRepositoryImplementation(
       signInDataSource: sl(),
       signInLocalSource: sl(),
+      networkConnectivity: const NetworkConnectivity(),
     ),
   );
   sl.registerLazySingleton<SignInDataSource>(
     () => SignInDataSourceImplementation(
-      firebaseAuth: FirebaseAuth.instance,
+      firebaseAuth: sl(),
       firebaseFirestore: FirebaseFirestore.instance,
     ),
   );
   sl.registerLazySingleton<SignInLocalSource>(
     () => SignInLocalSourceImplementation(
       sharedPreferences: sharedPreferences,
-    ),
-  );
-
-  ///======================================= Update Data Dependency ================================================
-  sl.registerFactory(
-    () => Update(
-      repository: sl(),
-    ),
-  );
-  sl.registerLazySingleton<UpdateRepository>(
-    () => UpdateRepositoryImplementation(
-      remoteDataSource: sl(),
-      localDataSource: sl(),
-    ),
-  );
-  sl.registerLazySingleton<RemoteUpdateDataSource>(
-    () => RemoteUpdateDataSourceImplementation(
-      fireStore: FirebaseFirestore.instance,
-    ),
-  );
-  sl.registerLazySingleton<LocalUpdateDataSource>(
-    () => LocalUpdateDataSourceImplementation(
-      sharedPreferences: sharedPreferences,
-      dataBase: db,
     ),
   );
 
@@ -310,12 +286,17 @@ Future<void> init() async {
     ),
   );
 
-  ///======================================= Generate Password Bloc ============================================
+  ///======================================= Generate Password Bloc ==============================================
 
   sl.registerFactory(() => GeneratePasswordBloc());
 
-  ///======================================= External Dependency ===================================================
+  ///======================================= External Dependency ==================================================
   //-------------Fire Store -------------------------------
   await Firebase.initializeApp();
+  FirebaseAuth.instance;
+  await FirebaseAuth.instance.setSettings(
+    forceRecaptchaFlow: false,
+  );
   sl.registerLazySingleton(() => FirebaseFirestore.instance);
+  sl.registerLazySingleton(() => FirebaseAuth.instance);
 }

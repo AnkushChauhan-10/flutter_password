@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 class ErrorMsg extends StatelessWidget {
   const ErrorMsg({super.key, required this.isError});
 
-  final bool isError;
+  final String? isError;
 
   @override
   Widget build(BuildContext context) {
     return Visibility(
-      visible: isError,
-      child: const Center(
+      visible: isError != null,
+      child: Center(
         child: Text(
-          "Email or Password are incorrect",
-          style: TextStyle(
+          isError ?? "Something went wrong",
+          style: const TextStyle(
             color: Colors.red,
             fontSize: 14,
           ),

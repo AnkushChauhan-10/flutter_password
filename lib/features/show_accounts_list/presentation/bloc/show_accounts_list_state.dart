@@ -31,5 +31,5 @@ class ShowAccountsListState extends Equatable {
       );
 
   @override
-  List<Object?> get props => [list];
+  List<Object?> get props => [list,isLoading];
 }

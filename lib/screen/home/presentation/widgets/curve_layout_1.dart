@@ -13,7 +13,7 @@ class CurveLayout1 extends StatelessWidget {
     return ClipPath(
       clipper: CurveClipPath(),
       child: Container(
-        color: Colors.white,
+        color: Colors.blue,
         child: child,
       ),
     );

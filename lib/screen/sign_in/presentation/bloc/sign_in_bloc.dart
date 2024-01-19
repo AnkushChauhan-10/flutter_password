@@ -18,7 +18,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
 
   Future<void> _singInEvent(OnSignInEvent event, Emitter<SignInState> emit) async {
     if (validateEmail(event.email) == null && validatePassword(event.password) == null) {
-      emit(state.copyWith(isLoading: true, error: false));
+      emit(state.copyWith(isLoading: true, error: null));
       SignInParams params = SignInParams(
         email: event.email,
         password: event.password,
@@ -26,9 +26,9 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       final result = await _signIn(params);
       if (result is SuccessResponse) {
         event.onDone.call();
-      }else{
+      } else {
         print(result.data);
-        emit(state.copyWith(error: true,isLoading: false));
+        emit(state.copyWith(error: result.data, isLoading: false));
       }
     }
   }

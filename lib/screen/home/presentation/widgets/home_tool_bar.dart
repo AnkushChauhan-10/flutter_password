@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
 class HomeToolBar extends StatelessWidget {
-  const HomeToolBar({super.key, required this.profileUrl, required this.name, required this.onChange, required this.onTab});
+  const HomeToolBar({super.key, required this.profileUrl, required this.name, required this.onTab});
 
   final String profileUrl;
   final String name;
-  final Function(String) onChange;
   final Function() onTab;
 
   @override

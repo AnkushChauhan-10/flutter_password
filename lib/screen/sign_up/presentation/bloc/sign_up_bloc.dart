@@ -20,9 +20,10 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     if (validateName(event.name) == null &&
         validatePassword(event.password) == null &&
         validateEmail(event.email) == null &&
+        validatePhone(event.phone) == null &&
         validateConfirmPassword(event.password, event.confirmPassword) == null)
     {
-      emit(state.copyWith(isLoading: true));
+      emit(state.copyWith(isLoading: true,error: null));
       SingUpParams params = SingUpParams(
         email: event.email,
         name: event.name,
@@ -33,7 +34,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
       if(result is SuccessResponse) {
         event.onDone.call();
       }else{
-        emit(state.copyWith(error: true,isLoading: false));
+        emit(state.copyWith(error: result.data,isLoading: false));
       }
     }
   }

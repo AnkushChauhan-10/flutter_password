@@ -42,11 +42,11 @@ class ShowAccountList extends StatelessWidget {
               },
             );
           },
-          child: Container(
+          child: SizedBox(
             width: double.infinity,
             child: ShowAccountTile(
               accountData: list[index],
-              onTap: onTap,
+              onTap: () => onTap.call(list[index]),
             ),
           ),
         ),

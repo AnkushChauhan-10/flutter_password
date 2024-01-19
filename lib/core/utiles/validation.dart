@@ -6,6 +6,7 @@ String? validateName(String? name) {
 String? validatePhone(String? phone) {
   if(phone == null) return "Empty Field";
   if (phone.isEmpty) return "Empty Field";
+  if(phone.length < 10) return "Invalid number";
 }
 
 String? validatePassword(String? password) {

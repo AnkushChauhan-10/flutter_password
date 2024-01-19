@@ -21,7 +21,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     final result = await _getUserData();
     if (result is SuccessResponse) {
       UsersModel model = result.data;
-      emit(state.copyWith(name: model.name, email: model.email));
+      emit(state.copyWith(name: model.name, email: model.email, isLoading: false));
+    }else if(result is FailureResponse){
+      emit(state.copyWith(isLoading: false));
     }
   }
 }

@@ -20,6 +20,8 @@ class SignInPage extends StatefulWidget {
 class _SignInPage extends State<SignInPage> {
   late TextEditingController email, name, password, phone;
   final formKey = GlobalKey<FormState>();
+  int select = -1;
+
   @override
   void initState() {
     email = TextEditingController();
@@ -82,14 +84,14 @@ class _SignInPage extends State<SignInPage> {
                                   formKey.currentState!.validate();
                                 });
                                 context.read<SignInBloc>().add(
-                                  OnSignInEvent(
-                                    email: email.text,
-                                    password: password.text,
-                                    onDone: () {
-                                      Navigator.pushReplacementNamed(context, homePageRoute);
-                                    },
-                                  ),
-                                );
+                                      OnSignInEvent(
+                                        email: email.text,
+                                        password: password.text,
+                                        onDone: () {
+                                          Navigator.pushReplacementNamed(context, homePageRoute);
+                                        },
+                                      ),
+                                    );
                               },
                             ),
                           ),

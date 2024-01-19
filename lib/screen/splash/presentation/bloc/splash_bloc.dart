@@ -35,9 +35,9 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
       }else{
         emit(state.copyWith(retrievedUser: true,nextPage: signInPageRoute));
       }
-      // if(state.completeSplash) {
-      //   event.onDone.call(state.nextPage);
-      // }
+      if(state.completeSplash) {
+        event.onDone.call(state.nextPage);
+      }
     }
   }
 }

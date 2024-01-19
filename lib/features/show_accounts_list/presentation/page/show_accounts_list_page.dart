@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:password/core/utiles/const.dart';
 import 'package:password/features/show_accounts_list/presentation/bloc/show_accounts_list_bloc.dart';
 import 'package:password/features/show_accounts_list/presentation/bloc/show_accounts_list_event.dart';
 import 'package:password/features/show_accounts_list/presentation/bloc/show_accounts_list_state.dart';
@@ -19,7 +20,7 @@ class ShowAccountsListPage extends StatelessWidget {
         child: Center(
           child: BlocBuilder<ShowAccountsListBloc, ShowAccountsListState>(
             builder: (context, state) {
-              if(state.state == false){
+              if (state.state == false) {
                 context.read<ShowAccountsListBloc>().add(const OnGetShowAccountsListEvent());
               }
               if (state.isLoading) {
@@ -29,7 +30,10 @@ class ShowAccountsListPage extends StatelessWidget {
               } else {
                 return ShowAccountList(
                   list: state.list,
-                  onTap: () {},
+                  onTap: (account) {
+                    print(account);
+                    Navigator.pushNamed(context, updatePageRoute, arguments: account);
+                  },
                 );
               }
             },

@@ -38,6 +38,8 @@ class SaveRepoImplementation extends SaveRepository {
         result = await _remoteRepo.saveData(path, model.toMap());
         var date = int.parse(account.lastUpdate);
         await _remoteRepo.lastUpdate(date, path);
+      }else{
+        throw Exception("No internet connection");
       }
       AccountModel model = AccountModel(
         email: account.email,

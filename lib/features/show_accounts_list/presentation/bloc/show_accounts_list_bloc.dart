@@ -18,15 +18,14 @@ class ShowAccountsListBloc extends Bloc<ShowAccountsListEvent, ShowAccountsListS
 
   Future<void> _onGetShowAccountsListEvent(OnGetShowAccountsListEvent event, Emitter<ShowAccountsListState> emit) async {
     final result = await _getAccountList();
-    emit(state.copyWith(state: true));
+    emit(state.copyWith(state: true, isLoading: true));
     if (result is SuccessResponse) {
       print("========================================${result}");
       emit(state.copyWith(isLoading: false, list: result.data));
     }
     if (result is FailureResponse) {
+      emit(state.copyWith(isLoading: false));
       print("faild ${result.data}");
     }
   }
-
-
 }

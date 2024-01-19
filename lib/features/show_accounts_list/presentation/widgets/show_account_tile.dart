@@ -5,12 +5,12 @@ class ShowAccountTile extends StatelessWidget {
   const ShowAccountTile({super.key, required this.accountData, required this.onTap});
 
   final ShowAccount accountData;
-  final Function onTap;
+  final GestureTapCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap.call(),
+      onTap: onTap,
       child: Card(
         color: accountData.isUpdate ? Colors.grey : Colors.lightGreen,
         child: Padding(
@@ -25,6 +25,10 @@ class ShowAccountTile extends StatelessWidget {
                   Text(
                     accountData.title,
                     style: const TextStyle(fontSize: 26, color: Colors.black),
+                  ),
+                  Text(
+                    "Last update :- ${accountData.lastUpdate}",
+                    style: const TextStyle(fontSize: 11, color: Colors.black45),
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

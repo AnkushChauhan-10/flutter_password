@@ -1,6 +1,8 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
+import 'package:password/core/utiles/NetworkConnectivityController.dart';
 import 'package:password/core/utiles/const.dart';
 import 'package:password/features/password_generator/presentation/bloc/generate_password_bloc.dart';
 import 'package:password/features/password_generator/presentation/page/password_generator_page.dart';
@@ -9,7 +11,6 @@ import 'package:password/features/show_accounts_list/presentation/page/show_acco
 import 'package:password/injection_container.dart';
 import 'package:password/screen/home/presentation/bloc/home_bloc.dart';
 import 'package:password/screen/home/presentation/page/home_page.dart';
-import 'package:password/screen/home/presentation/page/home_page_1.dart';
 import 'package:password/screen/lock_screen/presentation/page/lock_page.dart';
 import 'package:password/screen/save_data/presentation/bloc/save_bloc.dart';
 import 'package:password/screen/save_data/presentation/page/save_page.dart';
@@ -19,15 +20,15 @@ import 'package:password/screen/sign_up/presentation/bloc/sign_up_bloc.dart';
 import 'package:password/screen/sign_up/presentation/page/sign_up_page.dart';
 import 'package:password/screen/splash/presentation/bloc/splash_bloc.dart';
 import 'package:password/screen/splash/presentation/page/splash_page.dart';
-import 'package:password/service/background_update/domain/use_case/update.dart';
+import 'package:password/screen/update_account/presentation/bloc/update_bloc.dart';
+import 'package:password/screen/update_account/presentation/page/update_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await init();
-  Connectivity().onConnectivityChanged.listen((result) {
-    if (result.name != "none") {
-      print(sl<Update>().call());
-    }
+  Get.put(NetworkConnectivityController());
+  Connectivity().onConnectivityChanged.listen((event) {
+    Get.find<NetworkConnectivityController>().connection = event.name != 'none';
   });
   runApp(const MyApp());
 }
@@ -41,7 +42,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (_) => sl<SplashBloc>(),
-          child: const SplashPage(),
+          child: SplashPage(),
         ),
         BlocProvider(
           create: (_) => sl<SaveBloc>(),
@@ -49,7 +50,7 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => sl<HomeBloc>(),
-          child: HomePage1(),
+          child: HomePage(),
         ),
         BlocProvider(
           create: (_) => sl<SignUpBloc>(),
@@ -66,9 +67,13 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) => sl<GeneratePasswordBloc>(),
           child: const PasswordGeneratorPage(),
-        )
+        ),
+        BlocProvider(
+          create: (_) => sl<UpdateBloc>(),
+          child: const UpdatePage(),
+        ),
       ],
-      child: MaterialApp(
+      child: GetMaterialApp(
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
@@ -77,12 +82,13 @@ class MyApp extends StatelessWidget {
         ),
         initialRoute: splashPageRoute,
         routes: {
-          splashPageRoute: (context) => const SplashPage(),
+          splashPageRoute: (context) => SplashPage(),
           signInPageRoute: (context) => const SignInPage(),
           signUpPageRoute: (context) => const SignUpPage(),
           lockScreenPageRoute: (context) => const LockPage(),
-          homePageRoute: (context) => HomePage1(),
+          homePageRoute: (context) => HomePage(),
           savePageRoute: (context) => const SavePage(),
+          updatePageRoute: (context) => const UpdatePage(),
         },
       ),
     );

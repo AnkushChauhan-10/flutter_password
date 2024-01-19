@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
+import 'package:password/core/utiles/NetworkConnectivityController.dart';
+import 'package:password/core/utiles/utility.dart';
 import 'package:password/core/utiles/validation.dart';
 import 'package:password/core/widgets/common_field.dart';
 import 'package:password/features/password_generator/presentation/page/password_generator_page.dart';
@@ -34,74 +37,72 @@ class _SavePage extends State<SavePage> {
         builder: (context, state) {
           return Form(
             key: _key,
-            child: Column(
-              children: [
-                Flexible(
-                  child: CommonField(
-                    controller: _title,
-                    label: "Title",
-                    validation: validateName,
-                  ),
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    CommonField(
+                      controller: _title,
+                      label: "Title",
+                      validation: validateName,
+                    ),
+                    CommonField(
+                      controller: _websiteURL,
+                      label: 'Website URL',
+                      validation: validateName,
+                    ),
+                    CommonField(
+                      controller: _email,
+                      label: 'Email',
+                      validation: validateEmail,
+                    ),
+                    CommonField(
+                      controller: _userName,
+                      label: "User Name",
+                      validation: validateName,
+                    ),
+                    CommonField(
+                      controller: _password,
+                      label: "Password",
+                      validation: validatePassword,
+                    ),
+                    PasswordGeneratorPage(
+                      generatePassword: (password) {
+                        setState(() {
+                          _password.text = password;
+                        });
+                        print("=========================>>>> $password");
+                      },
+                    ),
+                    GetBuilder<NetworkConnectivityController>(builder: (ctrl) {
+                      return Opacity(
+                        opacity: ctrl.connection ? 1 : 0.4,
+                        child: SaveButton(
+                          onPressed: ctrl.connection
+                              ? () {
+                                  _key.currentState?.validate();
+                                  context.read<SaveBloc>().add(
+                                        OnSave(
+                                          title: _title.text,
+                                          password: _password.text,
+                                          userName: _userName.text,
+                                          email: _email.text,
+                                          websiteURL: _websiteURL.text,
+                                          onDone: () {
+                                            Navigator.pop(context);
+                                          },
+                                        ),
+                                      );
+                                }
+                              : () => Utility.toastMessage(title: "Network Error", message: "Please Check your network connection and try again!"),
+                        ),
+                      );
+                    }),
+                  ],
                 ),
-                Flexible(
-                  child: CommonField(
-                    controller: _websiteURL,
-                    label: 'Website URL',
-                    validation: validateName,
-                  ),
-                ),
-                Flexible(
-                  child: CommonField(
-                    controller: _email,
-                    label: 'Email',
-                    validation: validateEmail,
-                  ),
-                ),
-                Flexible(
-                  child: CommonField(
-                    controller: _userName,
-                    label: "User Name",
-                    validation: validateName,
-                  ),
-                ),
-                Flexible(
-                  child: CommonField(
-                    controller: _password,
-                    label: "Password",
-                    validation: validatePassword,
-                  ),
-                ),
-                Flexible(
-                  flex: 3,
-                  child: PasswordGeneratorPage(
-                    generatePassword: (password) {
-                      setState(() {
-                        _password.text = password;
-                      });
-                      print("=========================>>>> $password");
-                    },
-                  ),
-                ),
-                Flexible(
-                  child: SaveButton(
-                    onPressed: () {
-                      _key.currentState?.validate();
-                      context.read<SaveBloc>().add(
-                            OnSave(
-                              title: _title.text,
-                              password: _password.text,
-                              userName: _userName.text,
-                              email: _email.text,
-                              websiteURL: _websiteURL.text,
-                              onDone: () {
-                                Navigator.pop(context);
-                              },
-                            ),
-                          );
-                    },
-                  ),
-                ),
-              ],
+              ),
             ),
           );
         },

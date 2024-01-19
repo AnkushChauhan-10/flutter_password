@@ -17,7 +17,7 @@ class SignInState extends Equatable {
           password: "",
           phone: "",
           email: "",
-          error: false,
+          error: null,
         );
 
   final bool isLoading;
@@ -25,7 +25,7 @@ class SignInState extends Equatable {
   final String email;
   final String password;
   final String phone;
-  final bool error;
+  final String? error;
 
   SignInState copyWith({
     String? name,
@@ -33,7 +33,7 @@ class SignInState extends Equatable {
     String? password,
     String? phone,
     bool? isLoading,
-    bool? error,
+    String? error,
   }) =>
       SignInState(
         isLoading: isLoading ?? this.isLoading,

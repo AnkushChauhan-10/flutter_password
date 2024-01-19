@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:password/core/utiles/const.dart';
+import 'package:password/core/utiles/utility.dart';
 import 'package:password/core/utiles/validation.dart';
 import 'package:password/core/widgets/common_field.dart';
 import 'package:password/screen/sign_up/presentation/bloc/sign_up_bloc.dart';
@@ -9,7 +10,6 @@ import 'package:password/screen/sign_up/presentation/bloc/sign_up_state.dart';
 import 'package:password/screen/sign_up/presentation/widgets/error_msg.dart';
 import 'package:password/screen/sign_up/presentation/widgets/have_account_text.dart';
 import 'package:password/screen/sign_up/presentation/widgets/sign_up_button.dart';
-
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -42,82 +42,77 @@ class _SignUpPage extends State<SignUpPage> {
       ),
       body: BlocBuilder<SignUpBloc, SignUpState>(
         builder: (context, state) {
+          // state.isLoading ? Utility.loaderScreen() : Utility.loaderScreen();
           return LayoutBuilder(
             builder: (context, size) {
               return SizedBox(
                 height: size.maxHeight,
+                width: size.maxWidth,
                 child: Form(
                   key: formKey,
-                  child: Center(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Flexible(
-                          child: ErrorMsg(isError: state.error),
-                        ),
-                        Flexible(
-                          child: CommonField(
+                  child: Container(
+                    width: size.maxWidth,
+                    height: size.maxHeight,
+                    padding: const EdgeInsets.all(8.0),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ErrorMsg(
+                            isError: state.error,
+                          ),
+                          CommonField(
                             controller: name,
                             label: "Name",
                             validation: validateName,
                           ),
-                        ),
-                        Flexible(
-                          child: CommonField(
+                          CommonField(
                             controller: email,
                             label: "Email",
                             validation: validateEmail,
                           ),
-                        ),
-                        Flexible(
-                            child: CommonField(
-                          controller: phone,
-                          label: "Phone no.",
-                          validation: validatePhone,
-                        )),
-                        Flexible(
-                          child: CommonField(
+                          CommonField(
+                            controller: phone,
+                            label: "Phone no.",
+                            validation: validatePhone,
+                          ),
+                          CommonField(
                             controller: password,
                             label: 'Password',
                             validation: validatePassword,
                           ),
-                        ),
-                        Flexible(
-                          child: CommonField(
+                          CommonField(
                             controller: confirmPassword,
                             label: "Confirm Password",
                             arg: password.text,
                             validation: validateConfirmPassword,
                           ),
-                        ),
-                        Flexible(
-                          child: HaveAccountText(
+                          HaveAccountText(
                             tap: () {
                               Navigator.pushReplacementNamed(context, signInPageRoute);
                             },
                           ),
-                        ),
-                        Flexible(
-                          child: SignUpButton(
+                          SignUpButton(
                             onPressed: () {
                               setState(() {
                                 formKey.currentState!.validate();
                               });
                               context.read<SignUpBloc>().add(
                                     OnSignUpEvent(
-                                        email: email.text,
-                                        password: password.text,
-                                        phone: phone.text,
-                                        name: name.text,
-                                        confirmPassword: confirmPassword.text,
-                                        onDone: () {
-                                          Navigator.pushReplacementNamed(context, homePageRoute);
-                                        }),
+                                      email: email.text,
+                                      password: password.text,
+                                      phone: phone.text,
+                                      name: name.text,
+                                      confirmPassword: confirmPassword.text,
+                                      onDone: () {
+                                        Navigator.pushReplacementNamed(context, homePageRoute);
+                                      },
+                                    ),
                                   );
                             },
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),

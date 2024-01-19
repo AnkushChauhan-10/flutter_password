@@ -1,4 +1,5 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/material.dart';
 
 class NetworkConnectivity {
   const NetworkConnectivity();
@@ -6,9 +7,5 @@ class NetworkConnectivity {
   Future<bool> isConnected() async {
     ConnectivityResult result = await Connectivity().checkConnectivity();
     return result.name == "none" ? false : true;
-  }
-
-  Stream<bool> checkConnection() async* {
-    
   }
 }
