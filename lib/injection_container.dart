@@ -10,6 +10,15 @@ import 'package:password/features/delete/data/repository/delete_repository_impel
 import 'package:password/features/delete/domain/repository/delete_repository.dart';
 import 'package:password/features/delete/domain/use_case/delete.dart';
 import 'package:password/features/delete/presentation/provider/delete_provider.dart';
+import 'package:password/features/fetch_db/data/data_source/fetch_data_offline_source.dart';
+import 'package:password/features/fetch_db/data/data_source/fetch_data_online_source.dart';
+import 'package:password/features/fetch_db/data/repository/fetch_data_repo_implementation.dart';
+import 'package:password/features/fetch_db/data/repository/fetch_info_repo_implementation.dart';
+import 'package:password/features/fetch_db/domain/repository/fetch_data_repository.dart';
+import 'package:password/features/fetch_db/domain/repository/fetch_info_repository.dart';
+import 'package:password/features/fetch_db/domain/use_case/fetch_data.dart';
+import 'package:password/features/fetch_db/domain/use_case/fetch_info.dart';
+import 'package:password/features/fetch_db/presentation/provider/fetch_provider.dart';
 import 'package:password/features/password_generator/presentation/bloc/generate_password_bloc.dart';
 import 'package:password/features/show_accounts_list/data/data_source/show_account_list_local_data_source.dart';
 import 'package:password/features/show_accounts_list/data/data_source/show_account_list_remote_data_source.dart';
@@ -51,9 +60,6 @@ import 'package:password/screen/splash/data/repository/splash_repository_impleme
 import 'package:password/screen/splash/domain/repository/splash_repository.dart';
 import 'package:password/screen/splash/domain/use_case/is_user_logged_in.dart';
 import 'package:password/screen/splash/presentation/bloc/splash_bloc.dart';
-import 'package:password/screen/update_account/data/data_source/update_local_data_source.dart';
-import 'package:password/screen/update_account/data/data_source/update_remote_data_source.dart';
-import 'package:password/screen/update_account/presentation/bloc/update_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final sl = GetIt.instance;
@@ -233,6 +239,49 @@ Future<void> init() async {
     () => LocalDeleteDataSourceImplementation(
       sharedPreferences: sharedPreferences,
       database: db,
+    ),
+  );
+
+  ///======================================= Fetch Dialog Dependency ==============================================
+  sl.registerFactory(
+    () => FetchProvider(
+      fetchData: sl(),
+      fetchInfo: sl(),
+    ),
+  );
+  sl.registerLazySingleton(
+    () => FetchData(
+      fetchDataRepository: sl(),
+    ),
+  );
+  sl.registerLazySingleton(
+    () => FetchInfo(
+      fetchInfoRepository: sl(),
+    ),
+  );
+  sl.registerLazySingleton<FetchDataRepository>(
+    () => FetchDataRepoImplementation(
+      fetchDataOfflineRepo: sl(),
+      onlineSource: sl(),
+      connectivity: const NetworkConnectivity(),
+    ),
+  );
+  sl.registerLazySingleton<FetchInfoRepository>(
+    () => FetchInfoRepoImplementation(
+      fetchDataOfflineRepo: sl(),
+      onlineSource: sl(),
+      connectivity: const NetworkConnectivity(),
+    ),
+  );
+  sl.registerLazySingleton<FetchDataOnlineSource>(
+    () => FetchDataOnlineSourceImplementation(
+      fireStore: sl(),
+    ),
+  );
+  sl.registerLazySingleton<FetchDataOfflineRepo>(
+    () => FetchDataOfflineRepoImplementation(
+      dataBase: db,
+      sharedPreferences: sharedPreferences,
     ),
   );
 

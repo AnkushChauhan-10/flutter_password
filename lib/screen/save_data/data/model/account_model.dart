@@ -4,52 +4,37 @@ import 'package:password/screen/save_data/domain/entities/account.dart';
 
 class AccountModel extends Account {
   const AccountModel({
-    required super.userName,
+    required super.userId,
     required super.password,
     required super.lastUpdate,
-    required super.isUpdate,
     required super.title,
-    required super.websiteURL,
-    required super.email,
   });
 
   const AccountModel.empty()
       : this(
           title: "",
-          websiteURL: "",
-          email: "",
-          userName: "",
+          userId: "",
           password: "",
-          lastUpdate: "",
-          isUpdate: false,
+          lastUpdate: 0,
         );
 
   DataMap toMap() => {
         'title': title,
-        'email': email,
-        'website_url': websiteURL,
-        'user_name': userName,
+        'user_id': userId,
         'password': encodePassword(password),
         'last_update': lastUpdate,
-        'is_update': isUpdate ? 1 : 0,
       };
 
   AccountModel copyWith({
     String? title,
-    String? email,
-    String? websiteURL,
-    String? userName,
+    String? userId,
     String? password,
-    String? lastUpdate,
-    bool? isUpdate,
+    num? lastUpdate,
   }) =>
       AccountModel(
         title: title ?? this.title,
-        websiteURL: websiteURL ?? this.websiteURL,
-        email: email ?? this.email,
-        userName: userName ?? this.userName,
+        userId: userId?? this.userId,
         password: password ?? this.password,
         lastUpdate: lastUpdate ?? this.lastUpdate,
-        isUpdate: isUpdate ?? this.isUpdate,
       );
 }

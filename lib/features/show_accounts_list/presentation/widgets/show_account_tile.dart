@@ -12,7 +12,7 @@ class ShowAccountTile extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Card(
-        color: accountData.isUpdate ? Colors.grey : Colors.lightGreen,
+        color: Colors.lightGreen,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
@@ -41,7 +41,7 @@ class ShowAccountTile extends StatelessWidget {
                               child: Icon(Icons.person),
                             ),
                             TextSpan(
-                              text: " ${accountData.email}",
+                              text: " ${accountData.userName}",
                               style: const TextStyle(),
                             ),
                           ],

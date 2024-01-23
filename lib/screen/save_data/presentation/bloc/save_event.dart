@@ -2,24 +2,6 @@ import 'package:equatable/equatable.dart';
 
 abstract class SaveEvent extends Equatable {}
 
-class OnChangeEmail extends SaveEvent {
-  OnChangeEmail({required this.email});
-
-  final String email;
-
-  @override
-  List<Object?> get props => [];
-}
-
-class OnChangeWebSiteURL extends SaveEvent {
-  OnChangeWebSiteURL({required this.webSiteURL});
-
-  final String webSiteURL;
-
-  @override
-  List<Object?> get props => [];
-}
-
 class OnChangeTitle extends SaveEvent {
   OnChangeTitle({required this.title});
 
@@ -52,13 +34,9 @@ class OnSave extends SaveEvent {
     required this.onDone,
     required this.password,
     required this.userName,
-    required this.email,
     required this.title,
-    required this.websiteURL,
   });
 
-  final String email;
-  final String websiteURL;
   final String password;
   final String title;
   final String userName;

@@ -13,9 +13,14 @@ import 'package:password/screen/home/presentation/widgets/drawer.dart';
 import 'package:password/screen/home/presentation/widgets/home_tool_bar.dart';
 import 'package:password/screen/home/presentation/widgets/sliver_app_bar.dart';
 
-class HomePage extends StatelessWidget {
-  HomePage({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
+  @override
+  State<StatefulWidget> createState() => _HomePage();
+}
+
+class _HomePage extends State<HomePage> {
   final _key = GlobalKey<ScaffoldState>();
 
   @override
@@ -33,8 +38,14 @@ class HomePage extends StatelessWidget {
             ),
             body: CustomScrollView(
               slivers: [
-                SliversAppBar(profileUrl: "", name: state.name),
-                const SliverAccountList(),
+                SliversAppBar(
+                  profileUrl: "",
+                  name: state.name,
+                  setState: () {
+                    setState(() {});
+                  },
+                ),
+                SliverAccountList(),
               ],
             ),
             floatingActionButton: GetBuilder<NetworkConnectivityController>(
@@ -48,6 +59,8 @@ class HomePage extends StatelessWidget {
                             title: "Network Error",
                             message: "Please Check your network connection and try again!",
                           );
+                    setState(() {
+                    });
                   },
                   child: const Icon(Icons.add),
                 ),

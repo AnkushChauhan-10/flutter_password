@@ -26,32 +26,26 @@ class SaveRepoImplementation extends SaveRepository {
     try {
       if (await _networkConnectivity.isConnected()) {
         AccountModel model = AccountModel(
-          email: account.email,
           title: account.title,
-          websiteURL: account.websiteURL,
-          userName: account.userName,
           password: account.password,
           lastUpdate: account.lastUpdate,
-          isUpdate: true,
+          userId: account.userId,
         );
         var path = _offlineRepo.getToken();
         result = await _remoteRepo.saveData(path, model.toMap());
-        var date = int.parse(account.lastUpdate);
+        var date = account.lastUpdate;
         await _remoteRepo.lastUpdate(date, path);
-      }else{
+      } else {
         throw Exception("No internet connection");
       }
       AccountModel model = AccountModel(
-        email: account.email,
         title: account.title,
-        websiteURL: account.websiteURL,
-        userName: account.userName,
+        userId: account.userId,
         password: account.password,
         lastUpdate: account.lastUpdate,
-        isUpdate: result == null ? false : true,
       );
       await _offlineRepo.saveData(model);
-      var date = int.parse(account.lastUpdate);
+      var date = account.lastUpdate;
       _offlineRepo.lastUpdate(date);
       return SuccessResponse<dynamic>(result);
     } catch (e) {

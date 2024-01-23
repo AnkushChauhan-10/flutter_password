@@ -24,11 +24,13 @@ class ShowAccountsListRepositoryImplementation extends ShowAccountsListRepositor
   FutureResponse getAccountsList() async {
     List<DataMap> map;
     try{
-      if (await _networkConnectivity.isConnected()) {
-        map = await _getDataOnline();
-      } else {
-        map = await _getDataOffline();
-      }
+      // if (await _networkConnectivity.isConnected()) {
+      //   map = await _getDataOnline();
+      // } else {
+      //   map = await _getDataOffline();
+      // }
+      map = await _getDataOffline();
+      print(map);
       return SuccessResponse<List<ShowAccount>>(
         List.generate(
           map.length,

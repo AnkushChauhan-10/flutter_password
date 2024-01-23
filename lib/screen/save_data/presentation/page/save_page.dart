@@ -49,18 +49,8 @@ class _SavePage extends State<SavePage> {
                       validation: validateName,
                     ),
                     CommonField(
-                      controller: _websiteURL,
-                      label: 'Website URL',
-                      validation: validateName,
-                    ),
-                    CommonField(
-                      controller: _email,
-                      label: 'Email',
-                      validation: validateEmail,
-                    ),
-                    CommonField(
                       controller: _userName,
-                      label: "User Name",
+                      label: "User Id",
                       validation: validateName,
                     ),
                     CommonField(
@@ -88,8 +78,6 @@ class _SavePage extends State<SavePage> {
                                           title: _title.text,
                                           password: _password.text,
                                           userName: _userName.text,
-                                          email: _email.text,
-                                          websiteURL: _websiteURL.text,
                                           onDone: () {
                                             Navigator.pop(context);
                                           },

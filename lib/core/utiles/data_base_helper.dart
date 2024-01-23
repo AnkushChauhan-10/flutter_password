@@ -6,12 +6,9 @@ Future<Database> getDB() async {
   const tableName = "account_table";
 
   const columnTitle = 'title';
-  const columnEmail = 'email';
-  const columnWebsiteURL ="website_url";
-  const columnUserName = 'user_name';
+  const columnUserName = 'user_id';
   const columnPassword = "password";
   const columnLastUpdate = "last_update";
-  const columnIsUpdate = "is_update";
   return await openDatabase(
     databaseName,
     version: dbVersion,
@@ -19,12 +16,9 @@ Future<Database> getDB() async {
       await db.execute('''
                 CREATE TABLE $tableName(
                 $columnTitle TEXT NOT NULL PRIMARY KEY,
-                $columnWebsiteURL TEXT NOT NULL,
-                $columnEmail TEXT NOT NULL,
                 $columnUserName TEXT NOT NULL,
                 $columnPassword TEXT NOT NULL,
-                $columnLastUpdate TEXT NOT NULL,
-                $columnIsUpdate INTEGER NOT NULL
+                $columnLastUpdate INTEGER NOT NULL
                 )
               ''');
     },

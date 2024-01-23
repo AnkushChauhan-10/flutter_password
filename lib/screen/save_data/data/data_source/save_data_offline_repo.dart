@@ -9,7 +9,7 @@ abstract class SaveDataOfflineRepo {
   dynamic saveData(AccountModel data);
 
   String getToken();
-  lastUpdate(int date);
+  lastUpdate(num date);
 }
 
 class SaveDataOfflineRepoImplementation extends SaveDataOfflineRepo {
@@ -38,7 +38,8 @@ class SaveDataOfflineRepoImplementation extends SaveDataOfflineRepo {
   }
 
   @override
-  lastUpdate(int date) async{
-    await _sharedPreferences.setInt("last_update", date);
+  lastUpdate(num date) async{
+    print(date);
+    await _sharedPreferences.setInt("last_update", date.toInt());
   }
 }

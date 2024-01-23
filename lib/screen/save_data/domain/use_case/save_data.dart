@@ -19,18 +19,13 @@ class SaveDataParam {
 
   SaveDataParam({
     required String title,
-    required String userName,
-    required String email,
-    required String websiteURL,
+    required String userId,
     required String password,
-    required String lastUpdate,
+    required num lastUpdate,
   }) : account = Account(
           title: title,
-          email: email,
-          websiteURL: websiteURL,
-          userName: userName,
+          userId: userId,
           password: password,
           lastUpdate: lastUpdate,
-          isUpdate: false,
         );
 }

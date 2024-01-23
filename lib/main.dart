@@ -20,8 +20,6 @@ import 'package:password/screen/sign_up/presentation/bloc/sign_up_bloc.dart';
 import 'package:password/screen/sign_up/presentation/page/sign_up_page.dart';
 import 'package:password/screen/splash/presentation/bloc/splash_bloc.dart';
 import 'package:password/screen/splash/presentation/page/splash_page.dart';
-import 'package:password/screen/update_account/presentation/bloc/update_bloc.dart';
-import 'package:password/screen/update_account/presentation/page/update_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -68,10 +66,6 @@ class MyApp extends StatelessWidget {
           create: (_) => sl<GeneratePasswordBloc>(),
           child: const PasswordGeneratorPage(),
         ),
-        BlocProvider(
-          create: (_) => sl<UpdateBloc>(),
-          child: const UpdatePage(),
-        ),
       ],
       child: GetMaterialApp(
         title: 'Flutter Demo',
@@ -88,7 +82,6 @@ class MyApp extends StatelessWidget {
           lockScreenPageRoute: (context) => const LockPage(),
           homePageRoute: (context) => HomePage(),
           savePageRoute: (context) => const SavePage(),
-          updatePageRoute: (context) => const UpdatePage(),
         },
       ),
     );

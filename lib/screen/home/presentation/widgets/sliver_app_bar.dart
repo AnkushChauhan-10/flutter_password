@@ -1,17 +1,29 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:password/features/fetch_db/presentation/page/fetch_widget.dart';
+import 'package:password/features/fetch_db/presentation/provider/fetch_provider.dart';
+import 'package:password/injection_container.dart';
 import 'package:password/screen/home/presentation/widgets/curve_layout_1.dart';
 
-class SliversAppBar extends StatelessWidget {
+class SliversAppBar extends StatefulWidget {
   const SliversAppBar({
     super.key,
     required this.profileUrl,
     required this.name,
+    this.setState,
   });
 
   final String profileUrl;
   final String name;
+  final Function? setState;
+
+  @override
+  State<StatefulWidget> createState() => _SliversAppBar();
+}
+
+class _SliversAppBar extends State<SliversAppBar> {
+  bool isUpdate = false;
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +33,28 @@ class SliversAppBar extends StatelessWidget {
       snap: true,
       floating: true,
       title: const Text("Password"),
+      actions: [
+        Padding(
+          padding: const EdgeInsets.all(10),
+          child: FetchDialog(
+            fetchProvider: sl<FetchProvider>(),
+            onDone: widget.setState,
+            checkUpdate: (value) {
+              setState(() {
+                isUpdate = value;
+              });
+            },
+            child: Icon(
+              Icons.download_for_offline,
+              color: isUpdate ? Colors.deepOrangeAccent : Colors.black38,
+            ),
+          ),
+        )
+      ],
       flexibleSpace: CurveLayout1(
         child: _MyAppSpace(
-          name: name,
-          profileUrl: profileUrl,
+          name: widget.name,
+          profileUrl: widget.profileUrl,
         ),
       ),
     );

@@ -15,21 +15,18 @@ class SaveBloc extends Bloc<SaveEvent, SaveState> {
     on<OnChangeUserName>(_onChangeUserName);
     on<OnChangePassword>(_onChangePassword);
     on<OnChangeTitle>(_onChangeTitle);
-    on<OnChangeEmail>(_onChangeEmail);
   }
 
   final SaveData _saveData;
 
   Future<void> _onSave(OnSave event, Emitter<SaveState> emit) async {
-    if (validation(event.title, event.userName, event.email, event.password)) {
+    if (validation(event.title, event.userName, event.password)) {
       emit(state.copyWith(onSave: false));
       final params = SaveDataParam(
         title: event.title,
-        websiteURL: event.websiteURL,
-        userName: event.userName,
-        email: event.email,
+        userId: event.userName,
         password: event.password,
-        lastUpdate: DateTime.now().microsecondsSinceEpoch.toString(),
+        lastUpdate: DateTime.now().microsecondsSinceEpoch.toDouble(),
       );
       final result = await _saveData(params);
       if (result is SuccessResponse) {
@@ -51,18 +48,14 @@ class SaveBloc extends Bloc<SaveEvent, SaveState> {
 
   Future<void> _onChangeTitle(OnChangeTitle event, Emitter<SaveState> emit) async {}
 
-  Future<void> _onChangeEmail(OnChangeEmail event, Emitter<SaveState> emit) async {}
-
   bool validation(
     String siteName,
-    String userName,
     String userId,
     String password,
   ) {
     if (validateName(siteName) != null) return false;
     if (validatePassword(password) != null) return false;
-    if (validateEmail(userId) != null) return false;
-    if (validateName(userName) != null) return false;
+    if (validateName(userId) != null) return false;
     return true;
   }
 }

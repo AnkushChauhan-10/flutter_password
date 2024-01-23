@@ -3,7 +3,7 @@ import 'package:password/core/utiles/typedef.dart';
 
 abstract class SaveDataSourceRepo {
   dynamic saveData(String path, DataMap data);
-  lastUpdate(int date,String path);
+  lastUpdate(num date,String path);
 }
 
 class SaveDataSourceRepoImplementation extends SaveDataSourceRepo {
@@ -19,7 +19,7 @@ class SaveDataSourceRepoImplementation extends SaveDataSourceRepo {
   }
 
   @override
-  lastUpdate(int date,String path) async {
+  lastUpdate(num date,String path) async {
     final ref = fireStore.collection(path).doc("user_data");
     await ref.update({"last_update":date});
   }
