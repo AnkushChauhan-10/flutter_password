@@ -31,6 +31,12 @@ import 'package:password/features/sign_out/data/repository/sign_out_repository_i
 import 'package:password/features/sign_out/domain/repository/sign_out_repository.dart';
 import 'package:password/features/sign_out/domain/use_case/sign_out.dart';
 import 'package:password/features/sign_out/presentation/provider/sign_out_provider.dart';
+import 'package:password/screen/account/data/data_source/save_data_offline_repo.dart';
+import 'package:password/screen/account/data/data_source/save_data_source_repo.dart';
+import 'package:password/screen/account/data/repository/save_repository_implementation.dart';
+import 'package:password/screen/account/domain/repository/save_repo.dart';
+import 'package:password/screen/account/domain/use_case/save_data.dart';
+import 'package:password/screen/account/presentation/bloc/edit_bloc.dart';
 import 'package:password/screen/home/data/data_source/home_data_source.dart';
 import 'package:password/screen/home/data/data_source/home_remote_data_source.dart';
 import 'package:password/screen/home/data/repository/home_repo_impelentation.dart';
@@ -332,6 +338,37 @@ Future<void> init() async {
   sl.registerLazySingleton<LocalSignOutDataSource>(
     () => LocalSignOutDataSourceImplementation(
       sharedPreferences: sharedPreferences,
+    ),
+  );
+
+  ///====================================== Edit Data Dependency =============================================
+  //-----------bloc ( SaveBloc() )
+  sl.registerFactory(
+    () => EditBloc(
+      editData: sl(),
+    ),
+  );
+  sl.registerLazySingleton(
+    () => EditData(
+      editRepo: sl(),
+    ),
+  );
+  sl.registerLazySingleton<EditRepository>(
+    () => EditRepoImplementation(
+      editDataSourceRepo: sl(),
+      editDataOfflineRepo: sl(),
+      networkConnectivity: const NetworkConnectivity(),
+    ),
+  );
+  sl.registerLazySingleton<EditDataOfflineRepo>(
+    () => EditDataOfflineRepoImplementation(
+      dataBase: db,
+      sharedPreferences: sharedPreferences,
+    ),
+  );
+  sl.registerLazySingleton<EditDataSourceRepo>(
+    () => EditDataSourceRepoImplementation(
+      fireStore: sl(),
     ),
   );
 

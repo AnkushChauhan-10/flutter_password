@@ -4,13 +4,11 @@ import 'package:get/get.dart';
 import 'package:password/core/utiles/NetworkConnectivityController.dart';
 import 'package:password/core/utiles/const.dart';
 import 'package:password/core/utiles/utility.dart';
-import 'package:password/features/show_accounts_list/presentation/page/show_accounts_list_page.dart';
 import 'package:password/features/show_accounts_list/presentation/page/sliver_account_list.dart';
 import 'package:password/screen/home/presentation/bloc/home_bloc.dart';
 import 'package:password/screen/home/presentation/bloc/home_event.dart';
 import 'package:password/screen/home/presentation/bloc/home_state.dart';
 import 'package:password/screen/home/presentation/widgets/drawer.dart';
-import 'package:password/screen/home/presentation/widgets/home_tool_bar.dart';
 import 'package:password/screen/home/presentation/widgets/sliver_app_bar.dart';
 
 class HomePage extends StatefulWidget {

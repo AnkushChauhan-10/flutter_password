@@ -24,7 +24,7 @@ dependencies:
   firebase_auth: ^4.9.0
   connectivity_plus: ^4.0.2
   get: ^4.6.1
-  passcode_screen: ^2.0.1
+  local_auth: ^2.1.8
 
 
 dev_dependencies:

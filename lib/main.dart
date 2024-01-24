@@ -7,8 +7,10 @@ import 'package:password/core/utiles/const.dart';
 import 'package:password/features/password_generator/presentation/bloc/generate_password_bloc.dart';
 import 'package:password/features/password_generator/presentation/page/password_generator_page.dart';
 import 'package:password/features/show_accounts_list/presentation/bloc/show_accounts_list_bloc.dart';
-import 'package:password/features/show_accounts_list/presentation/page/show_accounts_list_page.dart';
+import 'package:password/features/show_accounts_list/presentation/page/sliver_account_list.dart';
 import 'package:password/injection_container.dart';
+import 'package:password/screen/account/presentation/bloc/edit_bloc.dart';
+import 'package:password/screen/account/presentation/page/edit_page.dart';
 import 'package:password/screen/home/presentation/bloc/home_bloc.dart';
 import 'package:password/screen/home/presentation/page/home_page.dart';
 import 'package:password/screen/lock_screen/presentation/page/lock_page.dart';
@@ -47,8 +49,12 @@ class MyApp extends StatelessWidget {
           child: const SavePage(),
         ),
         BlocProvider(
+          create: (_) => sl<EditBloc>(),
+          child: const EditPage(),
+        ),
+        BlocProvider(
           create: (_) => sl<HomeBloc>(),
-          child: HomePage(),
+          child: const HomePage(),
         ),
         BlocProvider(
           create: (_) => sl<SignUpBloc>(),
@@ -60,7 +66,7 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => sl<ShowAccountsListBloc>(),
-          child: const ShowAccountsListPage(),
+          child: const SliverAccountList(),
         ),
         BlocProvider(
           create: (_) => sl<GeneratePasswordBloc>(),
@@ -80,8 +86,9 @@ class MyApp extends StatelessWidget {
           signInPageRoute: (context) => const SignInPage(),
           signUpPageRoute: (context) => const SignUpPage(),
           lockScreenPageRoute: (context) => const LockPage(),
-          homePageRoute: (context) => HomePage(),
+          homePageRoute: (context) => const HomePage(),
           savePageRoute: (context) => const SavePage(),
+          editPageRoute: (context) => const EditPage(),
         },
       ),
     );

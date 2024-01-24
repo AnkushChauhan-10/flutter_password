@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get.dart';
-import 'package:password/core/utiles/NetworkConnectivityController.dart';
 import 'package:password/core/utiles/const.dart';
-import 'package:password/core/utiles/network_connectivity.dart';
 import 'package:password/features/delete/presentation/page/delete_page.dart';
 import 'package:password/features/delete/presentation/provider/delete_provider.dart';
 import 'package:password/features/show_accounts_list/presentation/bloc/show_accounts_list_bloc.dart';
 import 'package:password/features/show_accounts_list/presentation/bloc/show_accounts_list_event.dart';
 import 'package:password/features/show_accounts_list/presentation/bloc/show_accounts_list_state.dart';
-import 'package:password/features/show_accounts_list/presentation/widgets/schow_account_list.dart';
 import 'package:password/features/show_accounts_list/presentation/widgets/show_account_tile.dart';
 import 'package:password/injection_container.dart';
 
@@ -71,7 +67,9 @@ class SliverAccountList extends StatelessWidget {
                           width: double.infinity,
                           child: ShowAccountTile(
                             accountData: list[index],
-                            onTap: () => () {},
+                            onTap: (account){
+                              Navigator.pushNamed(context, editPageRoute,arguments: account);
+                            },
                           ),
                         ),
                       );

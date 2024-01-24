@@ -5,12 +5,14 @@ class ShowAccountTile extends StatelessWidget {
   const ShowAccountTile({super.key, required this.accountData, required this.onTap});
 
   final ShowAccount accountData;
-  final GestureTapCallback onTap;
+  final Function(ShowAccount) onTap;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap,
+      onTap: (){
+        onTap.call(accountData);
+      },
       child: Card(
         color: Colors.lightGreen,
         child: Padding(
