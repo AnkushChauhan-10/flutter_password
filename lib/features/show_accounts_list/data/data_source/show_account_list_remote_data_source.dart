@@ -4,7 +4,9 @@ import 'package:password/core/utiles/typedef.dart';
 abstract class ShowAccountsListRemoteDataSource {
   const ShowAccountsListRemoteDataSource();
 
-  Future<List<DataMap>> getAccountList(String path);
+  Stream<List<DataMap>> getAccountList(String path);
+
+  Future<num> getLastUpdate(String path);
 }
 
 class ShowAccountsListRemoteDataSourceImplementation extends ShowAccountsListRemoteDataSource {
@@ -13,19 +15,23 @@ class ShowAccountsListRemoteDataSourceImplementation extends ShowAccountsListRem
   final FirebaseFirestore _fireStore;
 
   @override
-  Future<List<DataMap>> getAccountList(String path) async {
-    List<DataMap> list = [];
+  Stream<List<DataMap>> getAccountList(String path) {
     final ref = _fireStore.collection(path);
-    await ref.get().then(
+    return ref.snapshots().map(
       (querySnapshot) {
+        List<DataMap> list = [];
         for (var docSnapshot in querySnapshot.docs) {
           if (docSnapshot.id != "user_data") {
             list.add(docSnapshot.data());
           }
         }
+        return list;
       },
-      onError: (e) => throw Exception(),
     );
-    return list;
+  }
+
+  @override
+  Future<num> getLastUpdate(String path) async {
+    return await _fireStore.collection(path).doc("user_data").get().then((value) => value.get("last_update"));
   }
 }

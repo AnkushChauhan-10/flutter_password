@@ -28,28 +28,46 @@ class _HomePage extends State<HomePage> {
       builder: (context, size) {
         return BlocBuilder<HomeBloc, HomeState>(
           builder: (context, state) => Scaffold(
+            appBar: AppBar(
+              backgroundColor: const Color.fromRGBO(22, 105, 122, 1.0),
+              title: const Text("Password"),
+            ),
             key: _key,
             drawer: CustomDrawer(
               onLogOut: () {},
               name: state.name,
               email: state.email,
             ),
-            body: CustomScrollView(
-              slivers: [
-                SliversAppBar(
-                  profileUrl: "",
-                  name: state.name,
-                  setState: () {
-                    setState(() {});
-                  },
+            body: Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Color.fromRGBO(22, 105, 122, 1.0),
+                    Color.fromRGBO(72, 159, 181, 1.0),
+                    Color.fromRGBO(130, 192, 204, 1.0),
+                  ],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
                 ),
-                SliverAccountList(),
-              ],
+              ),
+              child: CustomScrollView(
+                slivers: [
+                  SliversAppBar(
+                    profileUrl: "",
+                    name: state.name,
+                    setState: () {
+                      setState(() {});
+                    },
+                  ),
+                  const SliverAccountList(),
+                ],
+              ),
             ),
             floatingActionButton: GetBuilder<NetworkConnectivityController>(
               builder: (controller) => Opacity(
                 opacity: controller.connection ? 1 : 0.5,
                 child: FloatingActionButton(
+                  backgroundColor: const Color.fromRGBO(72, 159, 181, 1.0),
                   onPressed: () async {
                     controller.connection
                         ? await Navigator.pushNamed(context, savePageRoute)
@@ -57,10 +75,12 @@ class _HomePage extends State<HomePage> {
                             title: "Network Error",
                             message: "Please Check your network connection and try again!",
                           );
-                    setState(() {
-                    });
+                    setState(() {});
                   },
-                  child: const Icon(Icons.add),
+                  child: const Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),

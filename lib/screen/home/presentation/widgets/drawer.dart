@@ -18,25 +18,39 @@ class CustomDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      backgroundColor: const Color.fromRGBO(22, 105, 122, 1.0),
       child: ListView(
         children: [
           UserAccountsDrawerHeader(
-            accountName: RichText(
-              text: TextSpan(
-                children: [
-                  const WidgetSpan(child: Icon(Icons.person)),
-                  TextSpan(text: name),
-                ],
+            decoration: const BoxDecoration(
+              color: Color.fromRGBO(22, 105, 122, 1.0),
+            ),
+            onDetailsPressed: () {
+              print("press");
+            },
+            otherAccountsPictures: [
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.sunny,
+                  color: Colors.white,
+                ),
+              )
+            ],
+            currentAccountPicture: Container(
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.blue,
+              ),
+              child: Center(
+                child: Text(
+                  name[0],
+                  style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 25),
+                ),
               ),
             ),
-            accountEmail:RichText(
-              text: TextSpan(
-                children: [
-                  const WidgetSpan(child: Icon(Icons.email)),
-                  TextSpan(text: email),
-                ],
-              ),
-            ),
+            accountName: Text(name),
+            accountEmail: Text(email),
           ),
           Padding(
             padding: EdgeInsets.all(8.0),

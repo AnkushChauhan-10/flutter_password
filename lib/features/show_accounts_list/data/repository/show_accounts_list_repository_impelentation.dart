@@ -1,10 +1,11 @@
+import 'dart:async';
+
 import 'package:password/core/response/response.dart';
 import 'package:password/core/utiles/network_connectivity.dart';
 import 'package:password/core/utiles/typedef.dart';
 import 'package:password/features/show_accounts_list/data/data_source/show_account_list_local_data_source.dart';
 import 'package:password/features/show_accounts_list/data/data_source/show_account_list_remote_data_source.dart';
 import 'package:password/features/show_accounts_list/data/models/show_account_model.dart';
-import 'package:password/features/show_accounts_list/domain/entities/show_account.dart';
 import 'package:password/features/show_accounts_list/domain/repository/show_accounts_list_repository.dart';
 
 class ShowAccountsListRepositoryImplementation extends ShowAccountsListRepository {
@@ -21,35 +22,54 @@ class ShowAccountsListRepositoryImplementation extends ShowAccountsListRepositor
   final NetworkConnectivity _networkConnectivity;
 
   @override
-  FutureResponse getAccountsList() async {
+  Stream<Response> getAccountsList() {
     List<DataMap> map;
-    try{
-      // if (await _networkConnectivity.isConnected()) {
-      //   map = await _getDataOnline();
-      // } else {
-      //   map = await _getDataOffline();
-      // }
-      map = await _getDataOffline();
-      print(map);
-      return SuccessResponse<List<ShowAccount>>(
-        List.generate(
-          map.length,
-              (index) => ShowAccountModel.fromMap(map[index]),
-        ),
-      );
-    }catch (e){
-      return FailureResponse(e.toString());
-    }
+    StreamController<Response> streamController = StreamController();
+    StreamSubscription<List<DataMap>> onlineStream = _getDataOnline().listen((event) {
+      final data = List.generate(event.length, (index) => ShowAccountModel.fromMap(event[index]));
+      fetchData(event);
+      streamController.add(SuccessResponse(data));
+    });
+    init(onlineStream);
+    _networkConnectivity.isChange().listen(
+      (event) async {
+        try {
+          if (event) {
+            onlineStream.resume();
+          } else {
+            onlineStream.pause();
+            map = await _getDataOffline();
+            streamController.add(SuccessResponse(List.generate(map.length, (index) => ShowAccountModel.fromMap(map[index]))));
+          }
+        } catch (e) {}
+      },
+    );
+    return streamController.stream;
   }
 
-  Future<List<DataMap>> _getDataOnline() async {
+  Stream<List<DataMap>> _getDataOnline() {
     final path = _showAccountsListLocalDataSource.getToken();
-    final result = await _showAccountsListRemoteDataSource.getAccountList(path);
+    final result = _showAccountsListRemoteDataSource.getAccountList(path);
     return result;
   }
 
   Future<List<DataMap>> _getDataOffline() async {
     final result = await _showAccountsListLocalDataSource.getAccountList();
     return result;
+  }
+
+  Future<void> fetchData(List<DataMap> data) async {
+    int lastUpdate = _showAccountsListLocalDataSource.getLastUpdate();
+    data.forEach((element) {
+      int update = element["last_update"].toInt() ?? 0;
+      update > lastUpdate ? _showAccountsListLocalDataSource.saveData(element) : null;
+    });
+    final path = _showAccountsListLocalDataSource.getToken();
+    final num update = await _showAccountsListRemoteDataSource.getLastUpdate(path);
+    _showAccountsListLocalDataSource.lastUpdate(update.toInt());
+  }
+
+  Future<void> init(StreamSubscription<List<DataMap>> stream) async {
+    await _networkConnectivity.isConnected() ? stream.resume() : stream.pause();
   }
 }

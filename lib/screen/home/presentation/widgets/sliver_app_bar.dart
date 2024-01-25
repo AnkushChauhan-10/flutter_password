@@ -1,9 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:password/features/fetch_db/presentation/page/fetch_widget.dart';
-import 'package:password/features/fetch_db/presentation/provider/fetch_provider.dart';
-import 'package:password/injection_container.dart';
 import 'package:password/screen/home/presentation/widgets/curve_layout_1.dart';
 
 class SliversAppBar extends StatefulWidget {
@@ -23,34 +20,15 @@ class SliversAppBar extends StatefulWidget {
 }
 
 class _SliversAppBar extends State<SliversAppBar> {
-  bool isUpdate = false;
-
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
       expandedHeight: 200,
-      pinned: true,
-      snap: true,
-      floating: true,
-      title: const Text("Password"),
-      actions: [
-        Padding(
-          padding: const EdgeInsets.all(10),
-          child: FetchDialog(
-            fetchProvider: sl<FetchProvider>(),
-            onDone: widget.setState,
-            checkUpdate: (value) {
-              setState(() {
-                isUpdate = value;
-              });
-            },
-            child: Icon(
-              Icons.download_for_offline,
-              color: isUpdate ? Colors.deepOrangeAccent : Colors.black38,
-            ),
-          ),
-        )
-      ],
+      pinned: false,
+      snap: false,
+      floating: false,
+      backgroundColor: Colors.transparent,
+      automaticallyImplyLeading: false,
       flexibleSpace: CurveLayout1(
         child: _MyAppSpace(
           name: widget.name,
@@ -93,7 +71,7 @@ class _MyAppSpace extends StatelessWidget {
                   padding: EdgeInsets.only(left: 20.0, top: 10.0),
                   child: Text(
                     'Welcome Home',
-                    style: TextStyle(fontSize: 10, color: Colors.black),
+                    style: TextStyle(fontSize: 10, color: Colors.white),
                   ),
                 ),
               ),
@@ -102,7 +80,7 @@ class _MyAppSpace extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 20.0, top: 2.0),
                   child: Text(
                     name,
-                    style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.black),
+                    style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),
                   ),
                 ),
               ),

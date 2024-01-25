@@ -10,11 +10,11 @@ class ShowAccountTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){
+      onTap: () {
         onTap.call(accountData);
       },
       child: Card(
-        color: Colors.lightGreen,
+        color: const Color.fromRGBO(237, 231, 227, 1.0),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
@@ -30,7 +30,7 @@ class ShowAccountTile extends StatelessWidget {
                   ),
                   Text(
                     "Last update :- ${accountData.lastUpdate}",
-                    style: const TextStyle(fontSize: 11, color: Colors.black45),
+                    style: const TextStyle(fontSize: 11, color: Colors.black87),
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,11 +40,14 @@ class ShowAccountTile extends StatelessWidget {
                         text: TextSpan(
                           children: [
                             const WidgetSpan(
-                              child: Icon(Icons.person),
+                              child: Icon(
+                                Icons.person,
+                                color: Colors.black54,
+                              ),
                             ),
                             TextSpan(
                               text: " ${accountData.userName}",
-                              style: const TextStyle(),
+                              style: const TextStyle(fontSize: 11, color: Colors.black87),
                             ),
                           ],
                         ),
@@ -53,11 +56,14 @@ class ShowAccountTile extends StatelessWidget {
                         text: TextSpan(
                           children: [
                             const WidgetSpan(
-                              child: Icon(Icons.lock),
+                              child: Icon(
+                                Icons.lock,
+                                color: Colors.black54,
+                              ),
                             ),
                             TextSpan(
                               text: " ${accountData.password}",
-                              style: const TextStyle(),
+                              style: const TextStyle(fontSize: 11, color: Colors.black87),
                             ),
                           ],
                         ),

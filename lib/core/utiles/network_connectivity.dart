@@ -8,4 +8,6 @@ class NetworkConnectivity {
     ConnectivityResult result = await Connectivity().checkConnectivity();
     return result.name == "none" ? false : true;
   }
+
+  Stream<bool> isChange() => Connectivity().onConnectivityChanged.map((event) => event.name == 'none' ? false : true);
 }

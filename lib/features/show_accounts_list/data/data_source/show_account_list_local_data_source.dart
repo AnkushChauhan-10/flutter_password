@@ -8,6 +8,12 @@ abstract class ShowAccountsListLocalDataSource {
   Future<List<DataMap>> getAccountList();
 
   String getToken();
+
+  dynamic saveData(DataMap data);
+
+  Future<bool> lastUpdate(int date);
+
+  int getLastUpdate();
 }
 
 class ShowAccountsListLocalDataSourceImplementation extends ShowAccountsListLocalDataSource {
@@ -27,8 +33,29 @@ class ShowAccountsListLocalDataSourceImplementation extends ShowAccountsListLoca
   }
 
   @override
+  saveData(DataMap data) async {
+    final result = await _db.insert(
+      "account_table",
+      data,
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+    return result;
+  }
+
+  @override
+  Future<bool> lastUpdate(int date) async {
+    await _preferences.setInt("last_update", date);
+    return true;
+  }
+
+  @override
   String getToken() {
-    final result = _preferences.getString('token') ?? " ";
+    return _preferences.getString("token") ?? "";
+  }
+
+  @override
+  int getLastUpdate() {
+    int result = _preferences.getInt("last_update") ?? 0;
     return result;
   }
 }
