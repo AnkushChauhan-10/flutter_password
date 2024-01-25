@@ -3,7 +3,7 @@ import 'package:password/features/sign_out/presentation/page/sign_out_page.dart'
 import 'package:password/features/sign_out/presentation/provider/sign_out_provider.dart';
 import 'package:password/injection_container.dart';
 
-class CustomDrawer extends StatelessWidget {
+class CustomDrawer extends StatefulWidget {
   const CustomDrawer({
     super.key,
     required this.onLogOut,
@@ -16,7 +16,39 @@ class CustomDrawer extends StatelessWidget {
   final GestureTapCallback onLogOut;
 
   @override
+  State<CustomDrawer> createState() => _CustomDrawerState();
+}
+
+class _CustomDrawerState extends State<CustomDrawer> with TickerProviderStateMixin {
+  late String name;
+  late String email;
+
+  late final AnimationController _controller;
+  late final Animation<double> _animation;
+
+  @override
+  void initState() {
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 200),
+      vsync: this,
+    );
+    _animation = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.linear,
+    );
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    name = widget.name;
+    email = widget.email;
     return Drawer(
       backgroundColor: const Color.fromRGBO(22, 105, 122, 1.0),
       child: ListView(
@@ -26,6 +58,7 @@ class CustomDrawer extends StatelessWidget {
               color: Color.fromRGBO(22, 105, 122, 1.0),
             ),
             onDetailsPressed: () {
+              _controller.isCompleted ? _controller.reverse() : _controller.forward();
               print("press");
             },
             otherAccountsPictures: [
@@ -51,6 +84,26 @@ class CustomDrawer extends StatelessWidget {
             ),
             accountName: Text(name),
             accountEmail: Text(email),
+          ),
+          SizeTransition(
+            sizeFactor: _animation,
+            axis: Axis.vertical,
+            child: const Column(
+              children: [
+                Row(
+                  children: [
+                    Icon(Icons.add),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      "Add account",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ],
+                )
+              ],
+            ),
           ),
           Padding(
             padding: EdgeInsets.all(8.0),
