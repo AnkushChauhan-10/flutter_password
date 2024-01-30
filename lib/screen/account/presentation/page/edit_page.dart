@@ -41,96 +41,103 @@ class _EditPage extends State<EditPage> {
     setState(() {});
     return Scaffold(
       appBar: AppBar(
-        title: Text(account.title),
+        backgroundColor: Theme.of(context).primaryColor,
+        title: Text(
+          account.title,
+          style: const TextStyle(color: Colors.white),
+        ),
       ),
-      body: BlocBuilder<EditBloc, EditState>(
-        builder: (context, state) {
-          return Form(
-            key: _key,
-            child: SizedBox(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Flexible(
-                          child: CommonField(
-                            controller: _userName,
-                            label: "User Id",
-                            validation: validateName,
-                            enable: enableName,
+      body: Container(
+        color: Theme.of(context).secondaryHeaderColor,
+        child: BlocBuilder<EditBloc, EditState>(
+          builder: (context, state) {
+            return Form(
+              key: _key,
+              child: SizedBox(
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Flexible(
+                            child: CommonField(
+                              controller: _userName,
+                              label: "User Id",
+                              validation: validateName,
+                              enable: enableName,
+                            ),
                           ),
-                        ),
-                        IconButton(onPressed: () => context.read<EditBloc>().copy(_userName.text), icon: const Icon(Icons.copy)),
-                        IconButton(
-                          onPressed: () {
-                            enableName = enableName ? false : true;
-                            setState(() {});
-                          },
-                          icon: const Icon(Icons.edit),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Flexible(
-                          child: CommonField(
-                            controller: _password,
-                            label: "Password",
-                            validation: validatePassword,
-                            enable: enablePass,
+                          IconButton(onPressed: () => context.read<EditBloc>().copy(_userName.text), icon: const Icon(Icons.copy)),
+                          IconButton(
+                            onPressed: () {
+                              enableName = enableName ? false : true;
+                              setState(() {});
+                            },
+                            icon: const Icon(Icons.edit),
                           ),
-                        ),
-                        IconButton(onPressed: () => context.read<EditBloc>().copy(_password.text), icon: const Icon(Icons.copy)),
-                        IconButton(
-                          onPressed: () {
-                            enablePass = enablePass ? false : true;
-                            setState(() {});
-                          },
-                          icon: const Icon(Icons.edit),
-                        ),
-                      ],
-                    ),
-                    PasswordGeneratorPage(
-                      generatePassword: (password) {
-                        setState(() {
-                          enablePass ? _password.text = password : null;
-                        });
-                        print("=========================>>>> $password");
-                      },
-                    ),
-                    GetBuilder<NetworkConnectivityController>(builder: (ctrl) {
-                      return Opacity(
-                        opacity: ctrl.connection ? 1 : 0.4,
-                        child: SaveButton(
-                          onPressed: ctrl.connection
-                              ? () {
-                                  _key.currentState?.validate();
-                                  if (_userName.text != account.userName || _password.text != account.password) {
-                                    context.read<EditBloc>().add(
-                                          OnEdit(
-                                            title: account.title,
-                                            password: _password.text,
-                                            userName: _userName.text,
-                                            onDone: () {
-                                              Navigator.pop(context);
-                                            },
-                                          ),
-                                        );
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Flexible(
+                            child: CommonField(
+                              controller: _password,
+                              label: "Password",
+                              validation: validatePassword,
+                              enable: enablePass,
+                            ),
+                          ),
+                          IconButton(onPressed: () => context.read<EditBloc>().copy(_password.text), icon: const Icon(Icons.copy)),
+                          IconButton(
+                            onPressed: () {
+                              enablePass = enablePass ? false : true;
+                              setState(() {});
+                            },
+                            icon: const Icon(Icons.edit),
+                          ),
+                        ],
+                      ),
+                      PasswordGeneratorPage(
+                        generatePassword: (password) {
+                          setState(() {
+                            enablePass ? _password.text = password : null;
+                          });
+                          print("=========================>>>> $password");
+                        },
+                      ),
+                      GetBuilder<NetworkConnectivityController>(builder: (ctrl) {
+                        return Opacity(
+                          opacity: ctrl.connection ? 1 : 0.4,
+                          child: SaveButton(
+                            onPressed: ctrl.connection
+                                ? () {
+                                    _key.currentState?.validate();
+                                    if (_userName.text != account.userName || _password.text != account.password) {
+                                      context.read<EditBloc>().add(
+                                            OnEdit(
+                                              title: account.title,
+                                              password: _password.text,
+                                              userName: _userName.text,
+                                              onDone: () {
+                                                Navigator.pop(context);
+                                              },
+                                            ),
+                                          );
+                                    }
                                   }
-                                }
-                              : () => Utility.toastMessage(title: "Network Error", message: "Please Check your network connection and try again!"),
-                        ),
-                      );
-                    }),
-                  ],
+                                : () => Utility.toastMessage(title: "Network Error", message: "Please Check your network connection and try again!"),
+                          ),
+                        );
+                      }),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }

@@ -31,69 +31,75 @@ class _SavePage extends State<SavePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Add New Account"),
+        backgroundColor: Theme.of(context).primaryColor,
+        title: const Text(
+          "Add New Account",
+          style: TextStyle(color: Colors.white),
+        ),
       ),
-      body: BlocBuilder<SaveBloc, SaveState>(
-        builder: (context, state) {
-          return Form(
-            key: _key,
-            child: SizedBox(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    CommonField(
-                      controller: _title,
-                      label: "Title",
-                      validation: validateName,
-                    ),
-                    CommonField(
-                      controller: _userName,
-                      label: "User Id",
-                      validation: validateName,
-                    ),
-                    CommonField(
-                      controller: _password,
-                      label: "Password",
-                      validation: validatePassword,
-                    ),
-                    PasswordGeneratorPage(
-                      generatePassword: (password) {
-                        setState(() {
-                          _password.text = password;
-                        });
-                        print("=========================>>>> $password");
-                      },
-                    ),
-                    GetBuilder<NetworkConnectivityController>(builder: (ctrl) {
-                      return Opacity(
-                        opacity: ctrl.connection ? 1 : 0.4,
-                        child: SaveButton(
-                          onPressed: ctrl.connection
-                              ? () {
-                                  _key.currentState?.validate();
-                                  context.read<SaveBloc>().add(
-                                        OnSave(
-                                          title: _title.text,
-                                          password: _password.text,
-                                          userName: _userName.text,
-                                          onDone: () {
-                                            Navigator.pop(context);
-                                          },
-                                        ),
-                                      );
-                                }
-                              : () => Utility.toastMessage(title: "Network Error", message: "Please Check your network connection and try again!"),
-                        ),
-                      );
-                    }),
-                  ],
+      body: Container(
+        color: Theme.of(context).secondaryHeaderColor,
+        child: BlocBuilder<SaveBloc, SaveState>(
+          builder: (context, state) {
+            return Form(
+              key: _key,
+              child: SizedBox(
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      CommonField(
+                        controller: _title,
+                        label: "Title",
+                        validation: validateName,
+                      ),
+                      CommonField(
+                        controller: _userName,
+                        label: "User Id",
+                        validation: validateName,
+                      ),
+                      CommonField(
+                        controller: _password,
+                        label: "Password",
+                        validation: validatePassword,
+                      ),
+                      PasswordGeneratorPage(
+                        generatePassword: (password) {
+                          setState(() {
+                            _password.text = password;
+                          });
+                        },
+                      ),
+                      GetBuilder<NetworkConnectivityController>(builder: (ctrl) {
+                        return Opacity(
+                          opacity: ctrl.connection ? 1 : 0.4,
+                          child: SaveButton(
+                            onPressed: ctrl.connection
+                                ? () {
+                                    _key.currentState?.validate();
+                                    context.read<SaveBloc>().add(
+                                          OnSave(
+                                            title: _title.text,
+                                            password: _password.text,
+                                            userName: _userName.text,
+                                            onDone: () {
+                                              Navigator.pop(context);
+                                            },
+                                          ),
+                                        );
+                                  }
+                                : () => Utility.toastMessage(title: "Network Error", message: "Please Check your network connection and try again!"),
+                          ),
+                        );
+                      }),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }

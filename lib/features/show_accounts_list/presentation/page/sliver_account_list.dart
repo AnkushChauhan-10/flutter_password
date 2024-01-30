@@ -82,7 +82,7 @@ class SliverAccountList extends StatelessWidget {
                                   direction: DismissDirection.endToStart,
                                   background: Container(
                                     padding: const EdgeInsets.all(20),
-                                    color: Colors.red,
+                                    color: const Color.fromRGBO(110, 10, 10, 0.5686274509803921),
                                     child: const Align(
                                       alignment: Alignment.centerRight,
                                       child: Text(

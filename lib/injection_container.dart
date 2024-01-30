@@ -324,6 +324,7 @@ Future<void> init() async {
 
   sl.registerFactory(() => GeneratePasswordBloc());
 
+
   ///======================================= External Dependency ==================================================
   //-------------Fire Store -------------------------------
   await Firebase.initializeApp();

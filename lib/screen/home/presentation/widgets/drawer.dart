@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:password/features/sign_out/presentation/page/sign_out_page.dart';
 import 'package:password/features/sign_out/presentation/provider/sign_out_provider.dart';
+import 'package:password/features/theme_mode/theme_widget.dart';
 import 'package:password/injection_container.dart';
 
 class CustomDrawer extends StatefulWidget {
@@ -59,17 +60,8 @@ class _CustomDrawerState extends State<CustomDrawer> with TickerProviderStateMix
             ),
             onDetailsPressed: () {
               _controller.isCompleted ? _controller.reverse() : _controller.forward();
-              print("press");
             },
-            otherAccountsPictures: [
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.sunny,
-                  color: Colors.white,
-                ),
-              )
-            ],
+            otherAccountsPictures: const [ThemeWidget()],
             currentAccountPicture: Container(
               decoration: const BoxDecoration(
                 shape: BoxShape.circle,
@@ -82,8 +74,8 @@ class _CustomDrawerState extends State<CustomDrawer> with TickerProviderStateMix
                 ),
               ),
             ),
-            accountName: Text(name),
-            accountEmail: Text(email),
+            accountName: Text(name, style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+            accountEmail: Text(email, style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
           ),
           SizeTransition(
             sizeFactor: _animation,

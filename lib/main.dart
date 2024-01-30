@@ -8,6 +8,8 @@ import 'package:password/features/password_generator/presentation/bloc/generate_
 import 'package:password/features/password_generator/presentation/page/password_generator_page.dart';
 import 'package:password/features/show_accounts_list/presentation/bloc/show_accounts_list_bloc.dart';
 import 'package:password/features/show_accounts_list/presentation/page/sliver_account_list.dart';
+import 'package:password/core/utiles/style.dart';
+import 'package:password/features/theme_mode/theme_controller.dart';
 import 'package:password/injection_container.dart';
 import 'package:password/screen/account/presentation/bloc/edit_bloc.dart';
 import 'package:password/screen/account/presentation/page/edit_page.dart';
@@ -27,9 +29,12 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await init();
   Get.put(NetworkConnectivityController());
+  Get.lazyPut(()=>ThemeModeController());
   Connectivity().onConnectivityChanged.listen((event) {
     Get.find<NetworkConnectivityController>().connection = event.name != 'none';
   });
+  bool? theme = await ThemeModePreference().getTheme();
+  Get.find<ThemeModeController>().darkTheme = theme;
   runApp(const MyApp());
 }
 
@@ -73,24 +78,25 @@ class MyApp extends StatelessWidget {
           child: const PasswordGeneratorPage(),
         ),
       ],
-      child: GetMaterialApp(
-        title: 'Flutter Demo',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
-        initialRoute: splashPageRoute,
-        routes: {
-          splashPageRoute: (context) => SplashPage(),
-          signInPageRoute: (context) => const SignInPage(),
-          signUpPageRoute: (context) => const SignUpPage(),
-          lockScreenPageRoute: (context) => const LockPage(),
-          homePageRoute: (context) => const HomePage(),
-          savePageRoute: (context) => const SavePage(),
-          editPageRoute: (context) => const EditPage(),
-        },
-      ),
+      child: GetBuilder<ThemeModeController>(builder: (ctrl) {
+        return GetMaterialApp(
+          title: 'Flutter Demo',
+          debugShowCheckedModeBanner: false,
+          darkTheme: ThemeData.dark(),
+          // themeMode: ThemeMode.system,
+          theme: Styles.themeData(ctrl.darkTheme, context),
+          initialRoute: splashPageRoute,
+          routes: {
+            splashPageRoute: (context) => SplashPage(),
+            signInPageRoute: (context) => const SignInPage(),
+            signUpPageRoute: (context) => const SignUpPage(),
+            lockScreenPageRoute: (context) => const LockPage(),
+            homePageRoute: (context) => const HomePage(),
+            savePageRoute: (context) => const SavePage(),
+            editPageRoute: (context) => const EditPage(),
+          },
+        );
+      }),
     );
   }
 }

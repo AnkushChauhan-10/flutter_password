@@ -20,11 +20,11 @@ class ShowAccountsListRepositoryImplementation extends ShowAccountsListRepositor
   final ShowAccountsListRemoteDataSource _showAccountsListRemoteDataSource;
   final ShowAccountsListLocalDataSource _showAccountsListLocalDataSource;
   final NetworkConnectivity _networkConnectivity;
+  final  StreamController<Response> streamController = StreamController();
 
   @override
   Stream<Response> getAccountsList() {
     List<DataMap> map;
-    StreamController<Response> streamController = StreamController();
     StreamSubscription<List<DataMap>> onlineStream = _getDataOnline().listen((event) {
       final data = List.generate(event.length, (index) => ShowAccountModel.fromMap(event[index]));
       fetchData(event);
@@ -70,6 +70,12 @@ class ShowAccountsListRepositoryImplementation extends ShowAccountsListRepositor
   }
 
   Future<void> init(StreamSubscription<List<DataMap>> stream) async {
-    await _networkConnectivity.isConnected() ? stream.resume() : stream.pause();
+    if(await _networkConnectivity.isConnected()) {
+      stream.resume();
+    }else{
+      stream.pause();
+      List<DataMap> map = await _getDataOffline();
+      streamController.add(SuccessResponse(List.generate(map.length, (index) => ShowAccountModel.fromMap(map[index]))));
+    }
   }
 }
