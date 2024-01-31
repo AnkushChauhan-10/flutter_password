@@ -9,7 +9,7 @@ abstract class SignUpLocalSource {
 
   saveToken(String token);
 
-  saveUserDetails(SignUpDetailsModel signUpDetailsModel, String token);
+  Future<bool> saveUserDetails(SignUpDetailsModel signUpDetailsModel, String token);
 }
 
 class SignUpLocalSourceImplementation extends SignUpLocalSource {
@@ -26,7 +26,7 @@ class SignUpLocalSourceImplementation extends SignUpLocalSource {
   }
 
   @override
-  saveUserDetails(SignUpDetailsModel signUpDetailsModel, String token) async {
+  Future<bool> saveUserDetails(SignUpDetailsModel signUpDetailsModel, String token) async {
     UsersModel user = UsersModel(
       email: signUpDetailsModel.email,
       name: signUpDetailsModel.name,
@@ -35,8 +35,5 @@ class SignUpLocalSourceImplementation extends SignUpLocalSource {
     final insert = await _db.insert(user.toMap(), "users_table");
     final create = await _db.createTable(user.token);
     return insert && create;
-    // final r = await _sharedPreferences.setStringList("user_data", user.toListString());
-    // print(_sharedPreferences.getStringList("user_data"));
-    // print("-=============----------=====================================================================================");
   }
 }

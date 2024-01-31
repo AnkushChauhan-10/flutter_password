@@ -33,20 +33,10 @@ class EditRepoImplementation extends EditRepository {
         );
         var path = _offlineRepo.getToken();
         result = await _remoteRepo.editData(path, model.toMap());
-        var date = account.lastUpdate;
-        // await _remoteRepo.lastUpdate(date, path);
+        await _offlineRepo.editData(model,path);
       } else {
         throw Exception("No internet connection");
       }
-      AccountModel model = AccountModel(
-        title: account.title,
-        userId: account.userId,
-        password: account.password,
-        lastUpdate: account.lastUpdate,
-      );
-      await _offlineRepo.editData(model);
-      var date = account.lastUpdate;
-      _offlineRepo.lastUpdate(date);
       return SuccessResponse<dynamic>(result);
     } catch (e) {
       return FailureResponse(e.toString());

@@ -81,7 +81,9 @@ class DataBaseHelper {
 
   Future<void> updateStream(String table) async {
     if (tableName != table) return;
-    List<DataMap> list = await get(tableName);
+    List<DataMap> list = [];
+    list.addAll(await get(tableName));
+    list.sort((b, a) => a["last_update"].compareTo(b["last_update"]));
     _streamController.add(list);
   }
 }

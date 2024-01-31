@@ -38,7 +38,7 @@ class _HomePage extends State<HomePage> {
             drawer: CustomDrawer(
               onLogOut: () {},
               loggedUser: state.loggedUser!,
-              users: state.users,
+              users: state.accounts,
             ),
             body: Container(
               decoration: const BoxDecoration(

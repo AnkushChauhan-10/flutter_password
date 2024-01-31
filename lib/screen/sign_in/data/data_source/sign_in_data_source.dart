@@ -22,12 +22,10 @@ class SignInDataSourceImplementation extends SignInDataSource {
 
   @override
   singIn(SignInDetailsModel model) async {
-    print("before");
     UserCredential result = await _firebaseAuth.signInWithEmailAndPassword(
       email: model.email,
       password: model.password,
     );
-    print("after");
     return result.user!.uid;
   }
 
@@ -39,19 +37,4 @@ class SignInDataSourceImplementation extends SignInDataSource {
     result = data.data();
     return result;
   }
-
-  // Future<void> verifyOTP(String verificationId, String smsCode) async {
-  //   try {
-  //     final PhoneAuthCredential credential = PhoneAuthProvider.credential(
-  //       verificationId: verificationId,
-  //       smsCode: smsCode,
-  //     );
-  //     print("Verify otp ${credential}");
-  //     final UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
-  //
-  //     final User? user = userCredential.user;
-  //   } catch (e) {
-  //     print("Verify otp ${e.toString()}");
-  //   }
-  // }
 }

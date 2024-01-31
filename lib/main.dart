@@ -84,7 +84,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           darkTheme: ThemeData.dark(),
           // themeMode: ThemeMode.system,
-          theme: Styles.themeData(ctrl.darkTheme, context),
+          // theme: Styles.themeData(ctrl.darkTheme, context),
           initialRoute: splashPageRoute,
           routes: {
             splashPageRoute: (context) => SplashPage(),

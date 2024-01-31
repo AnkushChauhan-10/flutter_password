@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
+
 abstract final class Styles {
   static ThemeData themeData(bool isDarkTheme, BuildContext context) {
     return ThemeData(
-      primaryColor: isDarkTheme ? Colors.black : Colors.white,
+      primaryColor: isDarkTheme ? const Color.fromRGBO(22, 105, 122, 1.0) : Colors.white,
       hintColor: isDarkTheme ? Color(0xff280C0B) : Color(0xffEECED3),
       highlightColor: isDarkTheme ? Color(0xff372901) : Color(0xffFCE192),
       hoverColor: isDarkTheme ? Color(0xff3A3A3B) : Color(0xff4285F4),

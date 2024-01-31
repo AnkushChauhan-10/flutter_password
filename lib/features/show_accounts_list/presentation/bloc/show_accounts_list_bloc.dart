@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:password/core/response/response.dart';
+import 'package:password/features/show_accounts_list/data/models/show_account_model.dart';
 import 'package:password/features/show_accounts_list/domain/entities/show_account.dart';
 import 'package:password/features/show_accounts_list/domain/use_case/get_account_list.dart';
 import 'package:password/features/show_accounts_list/presentation/bloc/show_accounts_list_event.dart';
@@ -19,7 +20,7 @@ class ShowAccountsListBloc extends Bloc<ShowAccountsListEvent, ShowAccountsListS
   }
 
   final GetShowAccountsList _getAccountList;
-  List<ShowAccount> list;
+  List<ShowAccountModel> list;
   StreamSubscription? streamController;
 
   Future<void> _onGetShowAccountsListEvent(OnGetShowAccountsListEvent event, Emitter<ShowAccountsListState> emit) async {
@@ -31,7 +32,7 @@ class ShowAccountsListBloc extends Bloc<ShowAccountsListEvent, ShowAccountsListS
       emit(state.copyWith(searchList: [], isSearch: false));
       return;
     }
-    List<ShowAccount> temp = [];
+    List<ShowAccountModel> temp = [];
     list.forEach((element) => element.title.toLowerCase().contains(event.text.toLowerCase()) ? temp.add(element) : null);
     emit(state.copyWith(searchList: temp, isSearch: true));
   }

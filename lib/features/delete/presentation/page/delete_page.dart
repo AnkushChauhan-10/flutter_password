@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:password/core/utiles/NetworkConnectivityController.dart';
+import 'package:password/core/utiles/typedef.dart';
 import 'package:password/features/delete/presentation/provider/delete_provider.dart';
 
 class DeleteDialog extends StatelessWidget {
-  const DeleteDialog({
-    super.key,
-    required DeleteProvider deleteProvider,
-    required String name,
-  })  : _deleteProvider = deleteProvider,
-        _name = name;
+  const DeleteDialog({super.key, required DeleteProvider deleteProvider, required DataMap dataMap})
+      : _deleteProvider = deleteProvider,
+        _data = dataMap;
 
   final DeleteProvider _deleteProvider;
-  final String _name;
+  final DataMap _data;
 
   @override
   Widget build(BuildContext context) {
+    print(_data);
     return GetBuilder<NetworkConnectivityController>(
       builder: (ctrl) {
         return ctrl.connection
@@ -27,7 +26,7 @@ class DeleteDialog extends StatelessWidget {
                     onPressed: () {
                       _deleteProvider.delete(() {
                         Navigator.of(context).pop(true);
-                      }, _name);
+                      }, _data);
                     },
                     child: const Text("Yes"),
                   ),

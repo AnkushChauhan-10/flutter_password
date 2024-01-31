@@ -20,15 +20,15 @@ class DeleteRepositoryImplementation extends DeleteRepository {
   final NetworkConnectivity _networkConnectivity;
 
   @override
-  FutureResponse delete(String name) async {
+  FutureResponse delete(DataMap dataMap) async {
     bool remoteDelete = false , localDelete = false;
     try {
       var connection = await _networkConnectivity.isConnected();
       if(connection){
         var path = _localDeleteDataSource.getToken();
-        remoteDelete = await _remoteDeleteDataSource.deleteData(name, path);
+        remoteDelete = await _remoteDeleteDataSource.deleteData(dataMap['title'], path);
       }
-      localDelete = await _localDeleteDataSource.deleteData(name);
+      localDelete = await _localDeleteDataSource.deleteData(dataMap);
       return SuccessResponse(localDelete);
     } catch (e) {
       return FailureResponse(e);

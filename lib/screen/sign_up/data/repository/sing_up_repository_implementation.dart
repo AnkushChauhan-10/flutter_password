@@ -34,7 +34,8 @@ class SignUpRepositoryImplementation extends SignUpRepository {
       if (result.isEmpty) throw Exception();
       await _signUpLocalSource.saveToken(result);
       await _signUpDataSource.saveUser(params, result);
-      await _signUpLocalSource.saveUserDetails(params, result);
+      final setUp = await _signUpLocalSource.saveUserDetails(params, result);
+      if(!setUp) throw Exception("SetUp");
       return SuccessResponse(result);
     } catch (e) {
       return FailureResponse(e.toString());

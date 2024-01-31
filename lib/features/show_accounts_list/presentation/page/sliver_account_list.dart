@@ -97,7 +97,7 @@ class SliverAccountList extends StatelessWidget {
                                       builder: (BuildContext context) {
                                         return DeleteDialog(
                                           deleteProvider: sl<DeleteProvider>(),
-                                          name: list[index].title,
+                                          dataMap: list[index].toMap(),
                                         );
                                       },
                                     );

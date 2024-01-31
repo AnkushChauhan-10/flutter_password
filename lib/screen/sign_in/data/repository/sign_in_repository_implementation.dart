@@ -35,7 +35,8 @@ class SignInRepositoryImplementation extends SignInRepository {
       await _signInLocalSource.saveToken(result);
       DataMap user = await _signInDataSource.getUser(result);
       UsersModel usersModel = UsersModel.fromMap(user);
-      await _signInLocalSource.saveUserDetails(usersModel.toMap());
+      final setUp = await _signInLocalSource.saveUserDetails(usersModel.toMap());
+      // if(!setUp) throw Exception("Db error");
       return SuccessResponse(result);
     } catch (e) {
       return FailureResponse(e.toString());

@@ -248,7 +248,7 @@ Future<void> init() async {
   sl.registerLazySingleton<LocalDeleteDataSource>(
     () => LocalDeleteDataSourceImplementation(
       sharedPreferences: sharedPreferences,
-      database: db,
+      database: dataBaseHelper,
     ),
   );
 
@@ -323,7 +323,7 @@ Future<void> init() async {
   );
   sl.registerLazySingleton<EditDataOfflineRepo>(
     () => EditDataOfflineRepoImplementation(
-      dataBase: db,
+      dataBase: dataBaseHelper,
       sharedPreferences: sharedPreferences,
     ),
   );
