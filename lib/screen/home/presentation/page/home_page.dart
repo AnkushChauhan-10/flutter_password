@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:password/core/utiles/NetworkConnectivityController.dart';
 import 'package:password/core/utiles/const.dart';
 import 'package:password/core/utiles/utility.dart';
+import 'package:password/features/fetch/fetch_controller.dart';
 import 'package:password/features/show_accounts_list/presentation/page/sliver_account_list.dart';
 import 'package:password/screen/home/presentation/bloc/home_bloc.dart';
 import 'package:password/screen/home/presentation/bloc/home_event.dart';
@@ -23,7 +24,8 @@ class _HomePage extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    context.read<HomeBloc>().add(const GetUserDataHomeEvent());
+    context.read<HomeBloc>().add(const GetUsersHomeEvent());
+    // context.read<HomeBloc>().add(const GetLoggedUserHomeEvent());
     return LayoutBuilder(
       builder: (context, size) {
         return BlocBuilder<HomeBloc, HomeState>(
@@ -35,8 +37,8 @@ class _HomePage extends State<HomePage> {
             key: _key,
             drawer: CustomDrawer(
               onLogOut: () {},
-              name: state.name,
-              email: state.email,
+              loggedUser: state.loggedUser!,
+              users: state.users,
             ),
             body: Container(
               decoration: const BoxDecoration(
@@ -50,17 +52,22 @@ class _HomePage extends State<HomePage> {
                   end: Alignment.bottomCenter,
                 ),
               ),
-              child: CustomScrollView(
-                slivers: [
-                  SliversAppBar(
-                    profileUrl: "",
-                    name: state.name,
-                    setState: () {
-                      setState(() {});
-                    },
-                  ),
-                  const SliverAccountList(),
-                ],
+              child: RefreshIndicator(
+                onRefresh: () async {
+                  await Get.find<FetchController>().fetchDataBase();
+                },
+                child: CustomScrollView(
+                  slivers: [
+                    SliversAppBar(
+                      profileUrl: "",
+                      name: state.loggedUser!.name,
+                      setState: () {
+                        setState(() {});
+                      },
+                    ),
+                    SliverAccountList(),
+                  ],
+                ),
               ),
             ),
             floatingActionButton: GetBuilder<NetworkConnectivityController>(

@@ -1,4 +1,4 @@
-
+import 'package:password/core/utiles/data_base_helper.dart';
 import 'package:password/screen/save_data/data/model/account_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
@@ -9,25 +9,27 @@ abstract class SaveDataOfflineRepo {
   dynamic saveData(AccountModel data);
 
   String getToken();
+
   lastUpdate(num date);
 }
 
 class SaveDataOfflineRepoImplementation extends SaveDataOfflineRepo {
   const SaveDataOfflineRepoImplementation({
-    required Database dataBase,
+    required DataBaseHelper dataBase,
     required SharedPreferences sharedPreferences,
   })  : _db = dataBase,
         _sharedPreferences = sharedPreferences;
 
-  final Database _db;
+  final DataBaseHelper _db;
   final SharedPreferences _sharedPreferences;
 
   @override
   saveData(AccountModel data) async {
+    String tableName = getToken();
+    if (tableName.isEmpty) return;
     final result = await _db.insert(
-      "account_table",
       data.toMap(),
-      conflictAlgorithm: ConflictAlgorithm.replace,
+      tableName,
     );
     return result;
   }
@@ -38,7 +40,7 @@ class SaveDataOfflineRepoImplementation extends SaveDataOfflineRepo {
   }
 
   @override
-  lastUpdate(num date) async{
+  lastUpdate(num date) async {
     print(date);
     await _sharedPreferences.setInt("last_update", date.toInt());
   }

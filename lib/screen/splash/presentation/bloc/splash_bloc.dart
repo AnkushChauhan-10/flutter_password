@@ -19,7 +19,7 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
 
   Future<void> _onCompleteSplashEvent(OnCompleteSplashEvent event, Emitter<SplashState> emit) async {
     if(state.completeSplash == false){
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(seconds: 2));
       emit(state.copyWith(completeSplash: true));
       if(state.retrievedUser) {
         event.onDone.call(state.nextPage);

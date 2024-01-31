@@ -20,7 +20,6 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     if (validateName(event.name) == null &&
         validatePassword(event.password) == null &&
         validateEmail(event.email) == null &&
-        validatePhone(event.phone) == null &&
         validateConfirmPassword(event.password, event.confirmPassword) == null)
     {
       emit(state.copyWith(isLoading: true,error: null));
@@ -28,7 +27,6 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
         email: event.email,
         name: event.name,
         password: event.password,
-        phone: event.phone,
       );
       final result = await _signUp(params);
       if(result is SuccessResponse) {

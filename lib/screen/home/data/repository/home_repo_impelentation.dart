@@ -20,13 +20,32 @@ class HomeRepoImplementation extends HomeRepository {
   final NetworkConnectivity _networkConnectivity;
 
   @override
-  FutureResponse getUserData() async {
+  FutureResponse getUsers() async {
     try {
-      final result = _homeDataSource.getUserData();
-      return SuccessResponse<UsersModel>(result);
+      final result = await _homeDataSource.getUsers();
+      return SuccessResponse<List<UsersModel>>(List.generate(result.length, (index) => UsersModel.fromMap(result[index])));
     } catch (e) {
       return FailureResponse(e.toString());
     }
   }
 
+  @override
+  FutureResponse loggedUser() async {
+    try {
+      final result = _homeDataSource.getToken();
+      return SuccessResponse<String>(result);
+    } catch (e) {
+      return FailureResponse(e.toString());
+    }
+  }
+
+  @override
+  FutureResponse changeUser(String token) async {
+    try {
+      final result = await _homeDataSource.setToken(token);
+      return SuccessResponse<bool>(result);
+    } catch (e) {
+      return FailureResponse(e.toString());
+    }
+  }
 }

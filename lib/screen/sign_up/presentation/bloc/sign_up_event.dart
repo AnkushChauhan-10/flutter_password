@@ -10,7 +10,6 @@ class OnSignUpEvent extends SignUpEvent {
   const OnSignUpEvent({
     required this.email,
     required this.password,
-    required this.phone,
     required this.name,
     required this.onDone,
     required this.confirmPassword,
@@ -19,7 +18,6 @@ class OnSignUpEvent extends SignUpEvent {
   final String email;
   final String name;
   final String password;
-  final String phone;
   final String confirmPassword;
   final Function onDone;
 

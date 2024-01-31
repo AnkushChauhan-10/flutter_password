@@ -19,7 +19,7 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPage extends State<SignUpPage> {
-  late TextEditingController email, name, password, phone, confirmPassword;
+  late TextEditingController email, name, password, confirmPassword;
   final formKey = GlobalKey<FormState>();
 
   @override
@@ -27,7 +27,6 @@ class _SignUpPage extends State<SignUpPage> {
     email = TextEditingController();
     name = TextEditingController();
     password = TextEditingController();
-    phone = TextEditingController();
     confirmPassword = TextEditingController();
   }
 
@@ -72,11 +71,6 @@ class _SignUpPage extends State<SignUpPage> {
                             validation: validateEmail,
                           ),
                           CommonField(
-                            controller: phone,
-                            label: "Phone no.",
-                            validation: validatePhone,
-                          ),
-                          CommonField(
                             controller: password,
                             label: 'Password',
                             validation: validatePassword,
@@ -101,7 +95,6 @@ class _SignUpPage extends State<SignUpPage> {
                                     OnSignUpEvent(
                                       email: email.text,
                                       password: password.text,
-                                      phone: phone.text,
                                       name: name.text,
                                       confirmPassword: confirmPassword.text,
                                       onDone: () {

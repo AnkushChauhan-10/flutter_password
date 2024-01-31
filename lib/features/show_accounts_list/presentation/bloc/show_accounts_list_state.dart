@@ -10,7 +10,7 @@ class ShowAccountsListState extends Equatable {
     required this.isSearch,
   });
 
-  const ShowAccountsListState.initialState() : this(isLoading: true, list: const [], state: false, searchList: const [], isSearch: false);
+  const ShowAccountsListState.initialState() : this(isLoading: false, list: const [], state: false, searchList: const [], isSearch: false);
 
   final bool isLoading;
   final List<ShowAccount> list, searchList;

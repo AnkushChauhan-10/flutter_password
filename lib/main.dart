@@ -71,7 +71,7 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => sl<ShowAccountsListBloc>(),
-          child: const SliverAccountList(),
+          child: SliverAccountList(),
         ),
         BlocProvider(
           create: (_) => sl<GeneratePasswordBloc>(),

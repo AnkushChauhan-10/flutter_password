@@ -4,34 +4,32 @@ class UsersModel {
   const UsersModel({
     required this.email,
     required this.name,
-    required this.phone,
+    required this.token,
   });
+
+  const UsersModel.empty() :this(email: " ", name: " ", token: " ");
 
   final String email;
   final String name;
-  final String phone;
+  final String token;
 
-  List<String> toListString() => [email, name, phone];
+  List<String> toListString() =>
+      [
+        email,
+        name,
+      ];
 
-  factory UsersModel.fromListString(List<String> list) => UsersModel(
+  factory UsersModel.fromListString(List<String> list) =>
+      UsersModel(
         email: list[0],
         name: list[1],
-        phone: list[2],
+        token: list[2],
       );
 
-  factory UsersModel.fromMap(DataMap map) => UsersModel(
-    name: map["name"],
-    email: map["email"],
-    phone: map["phone"],
-  );
+  factory UsersModel.fromMap(DataMap map) => UsersModel(name: map["name"], email: map["email"], token: map['token']);
 
-  DataMap toMap() => {
-    'name': name,
-    'email': email,
-    'phone': phone,
-    'last_update': DateTime.now().microsecondsSinceEpoch
-  };
+  DataMap toMap() => {'name': name, 'email': email, 'token': token};
 
   @override
-  List<Object?> get props => [email, phone];
+  List<Object?> get props => [email, token];
 }

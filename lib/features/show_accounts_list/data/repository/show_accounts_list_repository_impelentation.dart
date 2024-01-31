@@ -20,31 +20,42 @@ class ShowAccountsListRepositoryImplementation extends ShowAccountsListRepositor
   final ShowAccountsListRemoteDataSource _showAccountsListRemoteDataSource;
   final ShowAccountsListLocalDataSource _showAccountsListLocalDataSource;
   final NetworkConnectivity _networkConnectivity;
-  final  StreamController<Response> streamController = StreamController();
+  final StreamController<Response> streamController = StreamController();
 
   @override
   Stream<Response> getAccountsList() {
     List<DataMap> map;
-    StreamSubscription<List<DataMap>> onlineStream = _getDataOnline().listen((event) {
-      final data = List.generate(event.length, (index) => ShowAccountModel.fromMap(event[index]));
-      fetchData(event);
-      streamController.add(SuccessResponse(data));
-    });
-    init(onlineStream);
-    _networkConnectivity.isChange().listen(
-      (event) async {
-        try {
-          if (event) {
-            onlineStream.resume();
-          } else {
-            onlineStream.pause();
-            map = await _getDataOffline();
-            streamController.add(SuccessResponse(List.generate(map.length, (index) => ShowAccountModel.fromMap(map[index]))));
-          }
-        } catch (e) {}
-      },
-    );
-    return streamController.stream;
+    // StreamSubscription<List<DataMap>> onlineStream = _getDataOnline().listen((event) {
+    //   final data = List.generate(event.length, (index) => ShowAccountModel.fromMap(event[index]));
+    //   fetchData(event);
+    //   streamController.add(SuccessResponse(data));
+    // });
+    // print("-------------------------------------------------SliverAccountList Repo ------------------------------- ");
+    // init(onlineStream);
+    // _networkConnectivity.isChange().listen(
+    //   (event) async {
+    //     try {
+    //       if (event) {
+    //         onlineStream.resume();
+    //       } else {
+    //         onlineStream.pause();
+    //         // map = await _getDataOffline();
+    //         // streamController.add(SuccessResponse(List.generate(map.length, (index) => ShowAccountModel.fromMap(map[index]))));
+    //       }
+    //     } catch (e) {}
+    //   },
+    // );
+
+    return _showAccountsListLocalDataSource.getAccountList().map(
+          (event) => SuccessResponse(
+            List.generate(
+              event.length,
+              (index) => ShowAccountModel.fromMap(
+                event[index],
+              ),
+            ),
+          ),
+        );
   }
 
   Stream<List<DataMap>> _getDataOnline() {
@@ -53,10 +64,10 @@ class ShowAccountsListRepositoryImplementation extends ShowAccountsListRepositor
     return result;
   }
 
-  Future<List<DataMap>> _getDataOffline() async {
-    final result = await _showAccountsListLocalDataSource.getAccountList();
-    return result;
-  }
+  // Future<List<DataMap>> _getDataOffline() async {
+  //   final result = await _showAccountsListLocalDataSource.getAccountList();
+  //   return result;
+  // }
 
   Future<void> fetchData(List<DataMap> data) async {
     int lastUpdate = _showAccountsListLocalDataSource.getLastUpdate();
@@ -65,17 +76,17 @@ class ShowAccountsListRepositoryImplementation extends ShowAccountsListRepositor
       update > lastUpdate ? _showAccountsListLocalDataSource.saveData(element) : null;
     });
     final path = _showAccountsListLocalDataSource.getToken();
-    final num update = await _showAccountsListRemoteDataSource.getLastUpdate(path);
-    _showAccountsListLocalDataSource.lastUpdate(update.toInt());
+    // final num update = await _showAccountsListRemoteDataSource.getLastUpdate(path);
+    // _showAccountsListLocalDataSource.lastUpdate(update.toInt());
   }
 
   Future<void> init(StreamSubscription<List<DataMap>> stream) async {
-    if(await _networkConnectivity.isConnected()) {
+    if (await _networkConnectivity.isConnected()) {
       stream.resume();
-    }else{
+    } else {
       stream.pause();
-      List<DataMap> map = await _getDataOffline();
-      streamController.add(SuccessResponse(List.generate(map.length, (index) => ShowAccountModel.fromMap(map[index]))));
+      // List<DataMap> map = await _getDataOffline();
+      // streamController.add(SuccessResponse(List.generate(map.length, (index) => ShowAccountModel.fromMap(map[index]))));
     }
   }
 }

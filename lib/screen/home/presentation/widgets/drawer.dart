@@ -1,19 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:password/core/model/users.dart';
+import 'package:password/core/utiles/const.dart';
+import 'package:password/core/utiles/data_base_helper.dart';
+import 'package:password/features/show_accounts_list/presentation/bloc/show_accounts_list_bloc.dart';
+import 'package:password/features/show_accounts_list/presentation/bloc/show_accounts_list_event.dart';
 import 'package:password/features/sign_out/presentation/page/sign_out_page.dart';
 import 'package:password/features/sign_out/presentation/provider/sign_out_provider.dart';
 import 'package:password/features/theme_mode/theme_widget.dart';
 import 'package:password/injection_container.dart';
+import 'package:password/screen/home/domain/use_case/users_list.dart';
+import 'package:password/screen/home/presentation/bloc/home_bloc.dart';
+import 'package:password/screen/home/presentation/bloc/home_event.dart';
 
 class CustomDrawer extends StatefulWidget {
   const CustomDrawer({
     super.key,
     required this.onLogOut,
-    required this.name,
-    required this.email,
+    required this.loggedUser,
+    required this.users,
   });
 
-  final String name;
-  final String email;
+  final UsersModel loggedUser;
+  final List<UsersModel> users;
   final GestureTapCallback onLogOut;
 
   @override
@@ -48,8 +57,8 @@ class _CustomDrawerState extends State<CustomDrawer> with TickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
-    name = widget.name;
-    email = widget.email;
+    name = widget.loggedUser.name;
+    email = widget.loggedUser.email;
     return Drawer(
       backgroundColor: const Color.fromRGBO(22, 105, 122, 1.0),
       child: ListView(
@@ -80,21 +89,36 @@ class _CustomDrawerState extends State<CustomDrawer> with TickerProviderStateMix
           SizeTransition(
             sizeFactor: _animation,
             axis: Axis.vertical,
-            child: const Column(
-              children: [
-                Row(
-                  children: [
-                    Icon(Icons.add),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      "Add account",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ],
-                )
-              ],
+            child: Column(
+              children: List.generate(
+                widget.users.length + 1,
+                (index) => index < widget.users.length
+                    ? InkWell(
+                        onTap: () => context.read<HomeBloc>().add(
+                              OnChangeLoggedUserHomeEvent(
+                                widget.users[index].token,
+                                () {
+                                  context.read<HomeBloc>().add(const GetUsersHomeEvent());
+                                },
+                              ),
+                            ),
+                        child: Text(widget.users[index].name))
+                    : InkWell(
+                        onTap: () => Navigator.pushNamed(context, signInPageRoute),
+                        child: const Row(
+                          children: [
+                            Icon(Icons.add),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              "Add account",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ],
+                        ),
+                      ),
+              ),
             ),
           ),
           Padding(

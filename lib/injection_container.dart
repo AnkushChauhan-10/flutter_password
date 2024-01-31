@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:password/core/utiles/data_base_helper.dart';
 import 'package:password/core/utiles/network_connectivity.dart';
@@ -10,6 +11,7 @@ import 'package:password/features/delete/data/repository/delete_repository_impel
 import 'package:password/features/delete/domain/repository/delete_repository.dart';
 import 'package:password/features/delete/domain/use_case/delete.dart';
 import 'package:password/features/delete/presentation/provider/delete_provider.dart';
+import 'package:password/features/fetch/fetch_controller.dart';
 import 'package:password/features/password_generator/presentation/bloc/generate_password_bloc.dart';
 import 'package:password/features/show_accounts_list/data/data_source/show_account_list_local_data_source.dart';
 import 'package:password/features/show_accounts_list/data/data_source/show_account_list_remote_data_source.dart';
@@ -32,7 +34,7 @@ import 'package:password/screen/home/data/data_source/home_data_source.dart';
 import 'package:password/screen/home/data/data_source/home_remote_data_source.dart';
 import 'package:password/screen/home/data/repository/home_repo_impelentation.dart';
 import 'package:password/screen/home/domain/repository/home_repo.dart';
-import 'package:password/screen/home/domain/use_case/get_account_list.dart';
+import 'package:password/screen/home/domain/use_case/users_list.dart';
 import 'package:password/screen/home/presentation/bloc/home_bloc.dart';
 import 'package:password/screen/save_data/data/data_source/save_data_offline_repo.dart';
 import 'package:password/screen/save_data/data/data_source/save_data_source_repo.dart';
@@ -63,6 +65,7 @@ final sl = GetIt.instance;
 
 Future<void> init() async {
   final db = await getDB();
+  final DataBaseHelper dataBaseHelper = DataBaseHelper(database: db);
   final sharedPreferences = await SharedPreferences.getInstance();
 
   ///====================================== Splash Page Dependency ==========================================
@@ -106,7 +109,7 @@ Future<void> init() async {
   );
   sl.registerLazySingleton<SaveDataOfflineRepo>(
     () => SaveDataOfflineRepoImplementation(
-      dataBase: db,
+      dataBase: dataBaseHelper,
       sharedPreferences: sharedPreferences,
     ),
   );
@@ -119,12 +122,20 @@ Future<void> init() async {
   ///===================================== Home Dependency ========================================================
   //----------------bloc ( HomeBloc() )
   sl.registerFactory<HomeBloc>(
-    () => HomeBloc(
-      getUserData: sl(),
+    () => HomeBloc(getUsers: sl(), getLoggedUser: sl(), changeAccount: sl()),
+  );
+  sl.registerLazySingleton(
+    () => GetLoggedUser(
+      homeRepository: sl(),
     ),
   );
   sl.registerLazySingleton(
-    () => GetUserData(
+    () => GetUsers(
+      homeRepository: sl(),
+    ),
+  );
+  sl.registerLazySingleton(
+    () => ChangeAccount(
       homeRepository: sl(),
     ),
   );
@@ -143,7 +154,7 @@ Future<void> init() async {
   sl.registerLazySingleton<HomeDataSource>(
     () => HomeDataSourceImplementation(
       sharedPreferences: sharedPreferences,
-      dataBase: db,
+      dataBase: dataBaseHelper,
     ),
   );
 
@@ -175,6 +186,7 @@ Future<void> init() async {
   sl.registerLazySingleton<SignUpLocalSource>(
     () => SignUpLocalSourceImplementation(
       sharedPreferences: sharedPreferences,
+      db: dataBaseHelper,
     ),
   );
 
@@ -206,6 +218,7 @@ Future<void> init() async {
   sl.registerLazySingleton<SignInLocalSource>(
     () => SignInLocalSourceImplementation(
       sharedPreferences: sharedPreferences,
+      db: dataBaseHelper,
     ),
   );
 
@@ -260,7 +273,7 @@ Future<void> init() async {
   sl.registerLazySingleton<ShowAccountsListLocalDataSource>(
     () => ShowAccountsListLocalDataSourceImplementation(
       sharedPreferences: sharedPreferences,
-      dataBase: db,
+      dataBase: dataBaseHelper,
     ),
   );
   sl.registerLazySingleton<ShowAccountsListRemoteDataSource>(
@@ -324,7 +337,6 @@ Future<void> init() async {
 
   sl.registerFactory(() => GeneratePasswordBloc());
 
-
   ///======================================= External Dependency ==================================================
   //-------------Fire Store -------------------------------
   await Firebase.initializeApp();
@@ -334,4 +346,12 @@ Future<void> init() async {
   );
   sl.registerLazySingleton(() => FirebaseFirestore.instance);
   sl.registerLazySingleton(() => FirebaseAuth.instance);
+  Get.put(
+    FetchController(
+      dataBaseHelper: dataBaseHelper,
+      firestore: sl(),
+      networkConnectivity: const NetworkConnectivity(),
+      sharedPreferences: sharedPreferences,
+    ),
+  );
 }

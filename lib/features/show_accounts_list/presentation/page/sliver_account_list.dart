@@ -11,18 +11,16 @@ import 'package:password/features/show_accounts_list/presentation/widgets/show_a
 import 'package:password/injection_container.dart';
 
 class SliverAccountList extends StatelessWidget {
-  const SliverAccountList({super.key});
+  SliverAccountList({super.key});
+
+  var focusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
-    var focusNode = FocusNode();
-    focusNode.addListener(() => focusNode.hasFocus ? context.read<ShowAccountsListBloc>().pauseStream() : context.read<ShowAccountsListBloc>().resumeStream());
-    context.read<ShowAccountsListBloc>().add(const OnGetShowAccountsListEvent());
+    context.read<ShowAccountsListBloc>().add(const SetStreamListEvent());
     return BlocBuilder<ShowAccountsListBloc, ShowAccountsListState>(
       builder: (context, state) {
-        if (state.state == false) {
-          context.read<ShowAccountsListBloc>().add(const OnGetShowAccountsListEvent());
-        }
+        if (state.state == false) {}
         if (state.isLoading) {
           return const SliverToBoxAdapter(
             child: Center(

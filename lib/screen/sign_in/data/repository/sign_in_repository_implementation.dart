@@ -1,3 +1,4 @@
+import 'package:password/core/model/users.dart';
 import 'package:password/core/response/response.dart';
 import 'package:password/core/utiles/network_connectivity.dart';
 import 'package:password/core/utiles/typedef.dart';
@@ -32,8 +33,9 @@ class SignInRepositoryImplementation extends SignInRepository {
       final String result = await _signInDataSource.singIn(params);
       if (result.isEmpty) throw Exception();
       await _signInLocalSource.saveToken(result);
-      List<String> user = await _signInDataSource.getUser(result);
-      await _signInLocalSource.saveUserDetails(user);
+      DataMap user = await _signInDataSource.getUser(result);
+      UsersModel usersModel = UsersModel.fromMap(user);
+      await _signInLocalSource.saveUserDetails(usersModel.toMap());
       return SuccessResponse(result);
     } catch (e) {
       return FailureResponse(e.toString());

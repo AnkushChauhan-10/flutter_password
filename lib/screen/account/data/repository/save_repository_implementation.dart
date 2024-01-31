@@ -34,7 +34,7 @@ class EditRepoImplementation extends EditRepository {
         var path = _offlineRepo.getToken();
         result = await _remoteRepo.editData(path, model.toMap());
         var date = account.lastUpdate;
-        await _remoteRepo.lastUpdate(date, path);
+        // await _remoteRepo.lastUpdate(date, path);
       } else {
         throw Exception("No internet connection");
       }

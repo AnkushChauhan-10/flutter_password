@@ -11,6 +11,13 @@ class OnGetShowAccountsListEvent extends ShowAccountsListEvent {
   List<Object?> get props => [];
 }
 
+class SetStreamListEvent extends ShowAccountsListEvent {
+  const SetStreamListEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+
 class OnSearchListEvent extends ShowAccountsListEvent {
   const OnSearchListEvent(this.text);
 

@@ -13,24 +13,16 @@ class ShowAccountsListBloc extends Bloc<ShowAccountsListEvent, ShowAccountsListS
   })  : _getAccountList = getShowAccountsList,
         list = [],
         super(const ShowAccountsListState.initialState()) {
-    final result = _getAccountList();
-    subscription = result.listen((event) {
-      if (event is SuccessResponse) {
-        list = event.data;
-      }
-      print("--------------------------$list");
-      add(const OnGetShowAccountsListEvent());
-    });
     on<OnGetShowAccountsListEvent>(_onGetShowAccountsListEvent);
     on<OnSearchListEvent>(_onSearchListEvent);
+    on<SetStreamListEvent>(_setStreamListEvent);
   }
 
   final GetShowAccountsList _getAccountList;
   List<ShowAccount> list;
-  late final StreamSubscription subscription;
+  StreamSubscription? streamController;
 
-  void _onGetShowAccountsListEvent(OnGetShowAccountsListEvent event, Emitter<ShowAccountsListState> emit) {
-    emit(state.copyWith(state: true, isLoading: true));
+  Future<void> _onGetShowAccountsListEvent(OnGetShowAccountsListEvent event, Emitter<ShowAccountsListState> emit) async {
     emit(state.copyWith(isLoading: false, list: list));
   }
 
@@ -44,7 +36,13 @@ class ShowAccountsListBloc extends Bloc<ShowAccountsListEvent, ShowAccountsListS
     emit(state.copyWith(searchList: temp, isSearch: true));
   }
 
-  void pauseStream() => subscription.pause();
-
-  void resumeStream() => subscription.resume();
+  Future<void> _setStreamListEvent(SetStreamListEvent event, Emitter<ShowAccountsListState> emit) async {
+    if (streamController != null) {
+      await streamController!.cancel();
+    }
+    streamController = _getAccountList().listen((event) {
+      list = event.data;
+      add(const OnGetShowAccountsListEvent());
+    });
+  }
 }

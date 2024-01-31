@@ -30,7 +30,7 @@ class SignUpDataSourceImplementation extends SignUpDataSource {
 
   @override
   saveUser(SignUpDetailsModel model, String path) async {
-    UsersModel usersModel = UsersModel(email: model.email, name: model.name, phone: model.phone);
+    UsersModel usersModel = UsersModel(email: model.email, name: model.name, token: path);
     final doc = _firebaseFirestore.collection(path).doc("user_data");
     await doc.set(usersModel.toMap());
     return "saved";

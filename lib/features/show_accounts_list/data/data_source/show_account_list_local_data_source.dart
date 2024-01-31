@@ -1,3 +1,4 @@
+import 'package:password/core/utiles/data_base_helper.dart';
 import 'package:password/core/utiles/typedef.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
@@ -5,7 +6,7 @@ import 'package:sqflite/sqflite.dart';
 abstract class ShowAccountsListLocalDataSource {
   const ShowAccountsListLocalDataSource();
 
-  Future<List<DataMap>> getAccountList();
+  Stream<List<DataMap>> getAccountList();
 
   String getToken();
 
@@ -19,26 +20,26 @@ abstract class ShowAccountsListLocalDataSource {
 class ShowAccountsListLocalDataSourceImplementation extends ShowAccountsListLocalDataSource {
   const ShowAccountsListLocalDataSourceImplementation({
     required SharedPreferences sharedPreferences,
-    required Database dataBase,
+    required DataBaseHelper dataBase,
   })  : _preferences = sharedPreferences,
         _db = dataBase;
 
   final SharedPreferences _preferences;
-  final Database _db;
+  final DataBaseHelper _db;
 
   @override
-  Future<List<DataMap>> getAccountList() async {
-    List<DataMap> result = await _db.query("account_table");
+  Stream<List<DataMap>> getAccountList(){
+    String tableName = getToken();
+    if(tableName.isEmpty) throw Exception();
+    final result = _db.streamDB(tableName);
     return result;
   }
 
   @override
   saveData(DataMap data) async {
-    final result = await _db.insert(
-      "account_table",
-      data,
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
+    String tableName = getToken();
+    if(tableName.isEmpty) throw Exception();
+    final result = await _db.insert(data, tableName);
     return result;
   }
 

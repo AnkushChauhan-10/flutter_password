@@ -25,7 +25,6 @@ class SignUpRepositoryImplementation extends SignUpRepository {
     final params = SignUpDetailsModel(
       email: user.email,
       name: user.name,
-      phone: user.phone,
       password: user.password,
     );
 
@@ -34,8 +33,8 @@ class SignUpRepositoryImplementation extends SignUpRepository {
       final String result = await _signUpDataSource.singUp(params);
       if (result.isEmpty) throw Exception();
       await _signUpLocalSource.saveToken(result);
-      await _signUpLocalSource.saveUserDetails(params);
       await _signUpDataSource.saveUser(params, result);
+      await _signUpLocalSource.saveUserDetails(params, result);
       return SuccessResponse(result);
     } catch (e) {
       return FailureResponse(e.toString());

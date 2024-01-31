@@ -25,6 +25,13 @@ class AccountModel extends Account {
         'last_update': lastUpdate,
       };
 
+  factory AccountModel.fromMap(DataMap map) => AccountModel(
+    title: map["title"],
+    userId: map["user_id"],
+    password: decodePassword(map["password"]),
+    lastUpdate: double.tryParse(map["last_update"].toString())?.toInt() ?? 0,
+  );
+
   AccountModel copyWith({
     String? title,
     String? userId,

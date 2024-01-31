@@ -17,8 +17,7 @@ class SingUpParams {
     required String email,
     required String name,
     required String password,
-    required String phone,
-  }) : singUpDetails = SignUpDetails(email: email, name: name, phone: phone, password: password);
+  }) : singUpDetails = SignUpDetails(email: email, name: name, password: password);
 
   final SignUpDetails singUpDetails;
 }

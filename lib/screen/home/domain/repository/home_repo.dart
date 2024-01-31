@@ -3,6 +3,7 @@ import 'package:password/core/utiles/typedef.dart';
 abstract class HomeRepository{
   const HomeRepository();
 
-  FutureResponse getUserData();
-
+  FutureResponse getUsers();
+  FutureResponse loggedUser();
+  FutureResponse changeUser(String token);
 }
