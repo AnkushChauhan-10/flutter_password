@@ -71,7 +71,7 @@ class _MyAppSpace extends StatelessWidget {
                   padding: EdgeInsets.only(left: 20.0, top: 10.0),
                   child: Text(
                     'Welcome Home',
-                    style: TextStyle(fontSize: 10, color: Colors.white),
+                    style: TextStyle(fontSize: 10),
                   ),
                 ),
               ),
@@ -80,7 +80,7 @@ class _MyAppSpace extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 20.0, top: 2.0),
                   child: Text(
                     name,
-                    style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),
+                    style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                   ),
                 ),
               ),

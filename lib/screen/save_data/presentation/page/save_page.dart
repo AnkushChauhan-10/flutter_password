@@ -19,11 +19,7 @@ class SavePage extends StatefulWidget {
 }
 
 class _SavePage extends State<SavePage> {
-  final TextEditingController _title = TextEditingController(),
-      _email = TextEditingController(),
-      _userName = TextEditingController(),
-      _password = TextEditingController(),
-      _websiteURL = TextEditingController();
+  final TextEditingController _title = TextEditingController(), _userName = TextEditingController(), _password = TextEditingController();
 
   final _key = GlobalKey<FormState>();
 
@@ -34,7 +30,7 @@ class _SavePage extends State<SavePage> {
         backgroundColor: Theme.of(context).primaryColor,
         title: const Text(
           "Add New Account",
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(),
         ),
       ),
       body: Container(

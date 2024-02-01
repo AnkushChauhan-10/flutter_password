@@ -5,13 +5,17 @@ class SaveButton extends StatelessWidget {
   final VoidCallback onPressed;
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ElevatedButton(
-          onPressed: onPressed,
-          child: const Text("Save"),
-        ),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        children: [
+          Expanded(
+            child: ElevatedButton(
+              onPressed: onPressed,
+              child: const Text("Save"),
+            ),
+          ),
+        ],
       ),
     );
   }

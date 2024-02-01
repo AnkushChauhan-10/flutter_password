@@ -14,8 +14,8 @@ class ThemeWidget extends StatelessWidget {
             ctrl.darkTheme = ctrl.darkTheme ? false : true;
           },
           icon: Icon(
-            ctrl.darkTheme ? Icons.dark_mode : Icons.sunny,
-            color: ctrl.darkTheme ? Colors.blueGrey : Colors.white,
+            !ctrl.darkTheme ? Icons.dark_mode : Icons.sunny,
+            color: Colors.white,
           ),
         );
       },

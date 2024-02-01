@@ -24,6 +24,7 @@ class ShowAccountsListBloc extends Bloc<ShowAccountsListEvent, ShowAccountsListS
   StreamSubscription? streamController;
 
   Future<void> _onGetShowAccountsListEvent(OnGetShowAccountsListEvent event, Emitter<ShowAccountsListState> emit) async {
+    emit(state.copyWith(isLoading: true));
     emit(state.copyWith(isLoading: false, list: list));
   }
 
@@ -43,6 +44,7 @@ class ShowAccountsListBloc extends Bloc<ShowAccountsListEvent, ShowAccountsListS
     }
     streamController = _getAccountList().listen((event) {
       list = event.data;
+      print(list.first.password);
       add(const OnGetShowAccountsListEvent());
     });
   }

@@ -41,14 +41,14 @@ class _EditPage extends State<EditPage> {
     setState(() {});
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
         title: Text(
           account.title,
-          style: const TextStyle(color: Colors.white),
+          style: const TextStyle(),
         ),
       ),
       body: Container(
         color: Theme.of(context).secondaryHeaderColor,
+        padding: const EdgeInsets.only(top: 30),
         child: BlocBuilder<EditBloc, EditState>(
           builder: (context, state) {
             return Form(

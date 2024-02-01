@@ -14,7 +14,7 @@ class ShowAccountTile extends StatelessWidget {
         onTap.call(accountData);
       },
       child: Card(
-        color: const Color.fromRGBO(237, 231, 227, 1.0),
+        color: Theme.of(context).cardColor,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(

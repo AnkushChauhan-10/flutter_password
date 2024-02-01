@@ -1,25 +1,31 @@
 import 'package:flutter/material.dart';
 
-
 abstract final class Styles {
   static ThemeData themeData(bool isDarkTheme, BuildContext context) {
     return ThemeData(
-      primaryColor: isDarkTheme ? const Color.fromRGBO(22, 105, 122, 1.0) : Colors.white,
-      hintColor: isDarkTheme ? Color(0xff280C0B) : Color(0xffEECED3),
-      highlightColor: isDarkTheme ? Color(0xff372901) : Color(0xffFCE192),
-      hoverColor: isDarkTheme ? Color(0xff3A3A3B) : Color(0xff4285F4),
-      focusColor: isDarkTheme ? Color(0xff0B2512) : Color(0xffA8DAB5),
+      backgroundColor: isDarkTheme ? Colors.white38 : Colors.white60,
+      primaryColor: isDarkTheme ? const Color.fromRGBO(22, 105, 122, 1.0) : const Color(0xffccd5ae),
+      secondaryHeaderColor: isDarkTheme ? const Color.fromRGBO(28, 112, 168, 1.0) : const Color(0xfffaedcd),
+      hintColor: isDarkTheme ? Colors.white38 : Colors.black54,
+      highlightColor: isDarkTheme ? const Color(0xff372901) :
+      const Color(0xfffefae0),
+      hoverColor: isDarkTheme ? const Color(0xff3A3A3B)
+          :const Color(0xfffefae0),
+      focusColor: isDarkTheme ? const Color(0xff0B2512) : const Color(0xfffaedcd),
       disabledColor: Colors.grey,
-      cardColor: isDarkTheme ? Color(0xFF151515) : Colors.white,
+      cardColor: isDarkTheme ? Colors.grey.shade400 : const Color(0xFFfaedcd),
+      iconTheme: IconThemeData(color: isDarkTheme ? Colors.white60 : Colors.black54),
       canvasColor: isDarkTheme ? Colors.black : Colors.grey[50],
       buttonTheme: Theme.of(context).buttonTheme.copyWith(
             colorScheme: isDarkTheme ? const ColorScheme.dark() : const ColorScheme.light(),
           ),
-      appBarTheme: const AppBarTheme(
-        elevation: 0.0,
+      appBarTheme: AppBarTheme(
+        color: isDarkTheme ? const Color.fromRGBO(22, 105, 122, 1.0) : const Color(0xffccd5ae),
+        elevation: 0.5,
       ),
-      colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.red).copyWith(
-        background: isDarkTheme ? Colors.black : Color(0xffF1F5FB),
+      colorScheme: ColorScheme.fromSwatch(primarySwatch: isDarkTheme ? Colors.cyan : Colors.lime).copyWith(
+        background: isDarkTheme ? Colors.black : const Color(0xffccd5ae),
+        primary: isDarkTheme ? const Color.fromRGBO(22, 105, 122, 1.0) : const Color(0xffccd5ae),
         brightness: isDarkTheme ? Brightness.dark : Brightness.light,
       ),
       textSelectionTheme: TextSelectionThemeData(

@@ -37,7 +37,7 @@ class SliverAccountList extends StatelessWidget {
                 onChanged: (value) => context.read<ShowAccountsListBloc>().add(OnSearchListEvent(value)),
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.search),
-                  fillColor: Colors.white,
+                  fillColor: Theme.of(context).backgroundColor,
                   filled: true,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20),
@@ -80,7 +80,7 @@ class SliverAccountList extends StatelessWidget {
                                   direction: DismissDirection.endToStart,
                                   background: Container(
                                     padding: const EdgeInsets.all(20),
-                                    color: const Color.fromRGBO(110, 10, 10, 0.5686274509803921),
+                                    color: Theme.of(context).disabledColor,
                                     child: const Align(
                                       alignment: Alignment.centerRight,
                                       child: Text(

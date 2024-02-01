@@ -21,7 +21,7 @@ class LocalDeleteDataSourceImplementation extends LocalDeleteDataSource {
   @override
   Future<bool> deleteData(DataMap dataMap) async {
     final table = getToken();
-    final result = await _database.delete(dataMap, table);
+    final result = await _database.delete(value: dataMap, table: table, where: 'title');
     return result;
   }
 

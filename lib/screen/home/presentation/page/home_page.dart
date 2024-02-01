@@ -31,22 +31,20 @@ class _HomePage extends State<HomePage> {
         return BlocBuilder<HomeBloc, HomeState>(
           builder: (context, state) => Scaffold(
             appBar: AppBar(
-              backgroundColor: const Color.fromRGBO(22, 105, 122, 1.0),
               title: const Text("Password"),
             ),
             key: _key,
             drawer: CustomDrawer(
               onLogOut: () {},
-              loggedUser: state.loggedUser!,
+              loggedUser: state.loggedUser,
               users: state.accounts,
             ),
             body: Container(
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
-                    Color.fromRGBO(22, 105, 122, 1.0),
-                    Color.fromRGBO(72, 159, 181, 1.0),
-                    Color.fromRGBO(130, 192, 204, 1.0),
+                    Theme.of(context).primaryColor,
+                    Theme.of(context).secondaryHeaderColor,
                   ],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
@@ -86,7 +84,7 @@ class _HomePage extends State<HomePage> {
                   },
                   child: const Icon(
                     Icons.add,
-                    color: Colors.white,
+                    // color: Colors.white,
                   ),
                 ),
               ),

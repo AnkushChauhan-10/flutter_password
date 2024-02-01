@@ -36,6 +36,7 @@ import 'package:password/screen/home/data/repository/home_repo_impelentation.dar
 import 'package:password/screen/home/domain/repository/home_repo.dart';
 import 'package:password/screen/home/domain/use_case/users_list.dart';
 import 'package:password/screen/home/presentation/bloc/home_bloc.dart';
+import 'package:password/screen/lock_screen/data/lock_repository.dart';
 import 'package:password/screen/save_data/data/data_source/save_data_offline_repo.dart';
 import 'package:password/screen/save_data/data/data_source/save_data_source_repo.dart';
 import 'package:password/screen/save_data/data/repository/save_repository_implementation.dart';
@@ -299,6 +300,7 @@ Future<void> init() async {
   sl.registerLazySingleton<LocalSignOutDataSource>(
     () => LocalSignOutDataSourceImplementation(
       sharedPreferences: sharedPreferences,
+      dataBaseHelper: dataBaseHelper,
     ),
   );
 
@@ -346,6 +348,7 @@ Future<void> init() async {
   );
   sl.registerLazySingleton(() => FirebaseFirestore.instance);
   sl.registerLazySingleton(() => FirebaseAuth.instance);
+  sl.registerLazySingleton(() => LockRepository(sharedPreferences: sharedPreferences));
   Get.put(
     FetchController(
       dataBaseHelper: dataBaseHelper,

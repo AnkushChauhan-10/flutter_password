@@ -1,5 +1,5 @@
-const upperCaseCipher = 18;
-const lowerCaseCipher = 13;
+const upperCaseCipher = 16;
+const lowerCaseCipher = 10;
 const digitCipher = 7;
 
 

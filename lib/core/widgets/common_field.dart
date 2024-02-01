@@ -14,7 +14,7 @@ class CommonField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
-        enabled: enable,
+        enabled: enable ?? true,
         validator: (val) => arg == null ? validation(val) : validation(arg, val),
         controller: controller,
         decoration: InputDecoration(

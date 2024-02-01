@@ -73,6 +73,6 @@ class FetchController extends GetxController {
       }
     }
     _db.insertAll(List.generate(insert.length, (i) => insert[i].toMap()), table);
-    _db.deleteAll(List.generate(delete.length, (i) => delete[i].toMap()), table);
+    _db.deleteAll(data: List.generate(delete.length, (i) => delete[i].toMap()), table: table, where: 'title');
   }
 }

@@ -20,21 +20,21 @@ class AccountTile extends StatelessWidget {
           Container(
             width: 30,
             height: 30,
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: Colors.cyan,
+              color: Theme.of(context).secondaryHeaderColor,
             ),
             child: Center(
               child: Text(
                 name[0],
-                style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 20),
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
             ),
           ),
           const SizedBox(width: 10),
           Text(
             name,
-            style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+            style: const TextStyle(fontWeight: FontWeight.bold),
           )
         ],
       ),

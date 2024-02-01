@@ -32,6 +32,15 @@ class DataBaseHelper {
     }
   }
 
+  Future<bool> deleteTable(String table) async {
+    try {
+      final res = await _db.execute("DROP TABLE IF EXISTS $tableName");
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   Future<bool> insert(DataMap value, String table) async {
     try {
       final res = await _db.insert(table, value, conflictAlgorithm: ConflictAlgorithm.replace);
@@ -42,9 +51,9 @@ class DataBaseHelper {
     }
   }
 
-  Future<bool> delete(DataMap value, String table) async {
+  Future<bool> delete({required DataMap value, required String table, required String where}) async {
     try {
-      final res = await _db.delete(table, where: "title = ?", whereArgs: [value['title']]);
+      final res = await _db.delete(table, where: "$where = ?", whereArgs: [value[where]]);
       updateStream(table);
       return true;
     } catch (e) {
@@ -52,9 +61,9 @@ class DataBaseHelper {
     }
   }
 
-  Future<bool> deleteAll(List<DataMap> data, String table) async {
+  Future<bool> deleteAll({required List<DataMap> data, required String table, required String where}) async {
     for (var i in data) {
-      final res = await delete(i, table);
+      final res = await delete(value: i, table: table, where: where);
       if (!res) return false;
     }
     return true;
@@ -110,41 +119,4 @@ Future<Database> getDB() async {
               ''');
     },
   );
-
-  // @override
-  // Future<void> insert(Account account) async {
-  //   var db = await getDB();
-  //   await db!.insert(
-  //     tableName,
-  //     {
-  //       columnSiteName: account.siteName,
-  //       columnUserId: account.id,
-  //       columnUserName: account.userName,
-  //       columnPassword: account.password,
-  //       columnLastUpdate: account.lastUpdate,
-  //     },
-  //   );
-  // }
-
-/*Future<void> delete(Model std) async{
-    var db = await getDB();
-    await db!.delete(tableName,where: '$column_id = ?',whereArgs: [std.id]);
-  }
-
-  Future<void> update(Model std) async{
-    var db = await getDB();
-    await db!.update(tableName, {column_id:std.id,column_name:std.name,column_phone:std.phone,column_email:std.email},
-        where: '$column_id = ?',whereArgs: [std.id]);
-  }
-
-  Future<List<Model>> getList() async{
-    var db = await getDB();
-    List<Map<String,dynamic>> res  = await db!.query(tableName);
-    return List.generate(res.length, (index)=> Model(
-        id: res[index][column_id],
-        name: res[index][column_name],
-        phone: res[index][column_phone],
-        email: res[index][column_email] ?? "null" )
-    );
-  }*/
 }
