@@ -43,6 +43,11 @@ import 'package:password/screen/save_data/data/repository/save_repository_implem
 import 'package:password/screen/save_data/domain/repository/save_repo.dart';
 import 'package:password/screen/save_data/domain/use_case/save_data.dart';
 import 'package:password/screen/save_data/presentation/bloc/save_bloc.dart';
+import 'package:password/screen/security/data/pin_data_source.dart';
+import 'package:password/screen/security/data/pin_repo_implementation.dart';
+import 'package:password/screen/security/domain/repository.dart';
+import 'package:password/screen/security/domain/use_case.dart';
+import 'package:password/screen/security/presentation/bloc/security_bloc.dart';
 import 'package:password/screen/sign_in/data/data_source/sign_in_data_source.dart';
 import 'package:password/screen/sign_in/data/data_source/sign_in_local_source.dart';
 import 'package:password/screen/sign_in/data/repository/sign_in_repository_implementation.dart';
@@ -73,6 +78,12 @@ Future<void> init() async {
   sl.registerFactory(
     () => SplashBloc(
       isUserLoggedIn: sl(),
+      isLockSet: sl(),
+    ),
+  );
+  sl.registerLazySingleton(
+    () => IsLockSet(
+      splashRepository: sl(),
     ),
   );
   sl.registerLazySingleton(
@@ -334,6 +345,14 @@ Future<void> init() async {
       fireStore: sl(),
     ),
   );
+
+  ///======================================= Security Bloc ======================================================
+  sl.registerFactory(() => SecurityBloc(pin: sl(), setPin: sl(), deletePin: sl()));
+  sl.registerLazySingleton(() => Pin(pinRepository: sl()));
+  sl.registerLazySingleton(() => SetPin(pinRepository: sl()));
+  sl.registerLazySingleton(() => DeletePin(pinRepository: sl()));
+  sl.registerLazySingleton<PinRepository>(() => PinRepoImplementation(pinDataSource: sl()));
+  sl.registerLazySingleton<PinDataSource>(() => PinDataSourceImplementation(sharedPreferences: sharedPreferences));
 
   ///======================================= Generate Password Bloc ==============================================
 

@@ -4,7 +4,5 @@ class LockRepository {
   const LockRepository({required SharedPreferences sharedPreferences}) : _sharedPreferences = sharedPreferences;
   final SharedPreferences _sharedPreferences;
 
-  String lock() => _sharedPreferences.getString("lock") ?? "1111";
-
-  Future<void> setLock(String lock) async => await _sharedPreferences.setString("lock", lock);
+  String lock() => _sharedPreferences.getString("lock") ?? "";
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:password/core/utiles/const.dart';
+import 'package:password/core/utiles/nav.dart';
 import 'package:password/features/delete/presentation/page/delete_page.dart';
 import 'package:password/features/delete/presentation/provider/delete_provider.dart';
 import 'package:password/features/show_accounts_list/presentation/bloc/show_accounts_list_bloc.dart';
@@ -107,7 +108,7 @@ class SliverAccountList extends StatelessWidget {
                                     child: ShowAccountTile(
                                       accountData: list[index],
                                       onTap: (account) {
-                                        Navigator.pushNamed(context, editPageRoute, arguments: account);
+                                        Nav.of(context).pushNameFadeAnimation(editPageRoute, arg: account);
                                       },
                                     ),
                                   ),

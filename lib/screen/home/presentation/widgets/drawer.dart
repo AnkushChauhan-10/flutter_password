@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:password/core/model/users.dart';
 import 'package:password/core/utiles/const.dart';
+import 'package:password/core/utiles/nav.dart';
 import 'package:password/features/sign_out/presentation/page/sign_out_page.dart';
 import 'package:password/features/sign_out/presentation/provider/sign_out_provider.dart';
 import 'package:password/features/theme_mode/theme_widget.dart';
@@ -89,48 +90,59 @@ class _CustomDrawerState extends State<CustomDrawer> with TickerProviderStateMix
             child: Column(
               children: List.generate(
                 widget.users.length + 1,
-                    (index) => index < widget.users.length
+                (index) => index < widget.users.length
                     ? Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: AccountTile(
-                    onTap: () => context.read<HomeBloc>().add(
-                      OnChangeLoggedUserHomeEvent(
-                        widget.users[index].token,
-                            () {
-                          context.read<HomeBloc>().add(const GetUsersHomeEvent());
-                        },
-                      ),
-                    ),
-                    name: widget.users[index].name,
-                  ),
-                )
-                    : Column(
-                  children: [
-                    InkWell(
-                      onTap: () => Navigator.pushNamed(context, signInPageRoute),
-                      child: const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Row(
-                          children: [
-                            Icon(Icons.add),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              "Add account",
-                              style: TextStyle(),
-                            ),
-                          ],
+                        padding: const EdgeInsets.all(5.0),
+                        child: AccountTile(
+                          onTap: () => context.read<HomeBloc>().add(
+                                OnChangeLoggedUserHomeEvent(
+                                  widget.users[index].token,
+                                  () {
+                                    context.read<HomeBloc>().add(const GetUsersHomeEvent());
+                                  },
+                                ),
+                              ),
+                          name: widget.users[index].name,
                         ),
+                      )
+                    : Column(
+                        children: [
+                          InkWell(
+                            onTap: () => Navigator.pushNamed(context, signInPageRoute),
+                            child: const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Row(
+                                children: [
+                                  Icon(Icons.add),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    "Add account",
+                                    style: TextStyle(),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Divider(
+                            height: 0,
+                            thickness: 0.1,
+                            color: Theme.of(context).textSelectionTheme.selectionColor,
+                          ),
+                        ],
                       ),
-                    ),
-                    Divider(
-                      height: 0,
-                      thickness: 0.1,
-                      color: Theme.of(context).textSelectionTheme.selectionColor,
-                    ),
-                  ],
-                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: InkWell(
+              onTap: () {
+                Nav.of(context).pushNameFadeAnimation(securityPageRoute);
+              },
+              child: const Text(
+                "Security",
               ),
             ),
           ),
@@ -152,7 +164,7 @@ class _CustomDrawerState extends State<CustomDrawer> with TickerProviderStateMix
                 style: TextStyle(),
               ),
             ),
-          )
+          ),
         ],
       ),
     );

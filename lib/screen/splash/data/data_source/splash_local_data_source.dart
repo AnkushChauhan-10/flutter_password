@@ -4,6 +4,8 @@ abstract class SplashLocalDataSource {
   const SplashLocalDataSource();
 
   String? getUserLoggedInData();
+
+  String? lock();
 }
 
 class SplashLocalDataSourceImplementation extends SplashLocalDataSource {
@@ -14,5 +16,10 @@ class SplashLocalDataSourceImplementation extends SplashLocalDataSource {
   @override
   String? getUserLoggedInData() {
     return _sharedPreferences.getString("token");
+  }
+
+  @override
+  String? lock() {
+    return _sharedPreferences.getString("lock");
   }
 }

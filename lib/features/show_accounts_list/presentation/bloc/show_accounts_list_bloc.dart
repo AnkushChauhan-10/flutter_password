@@ -34,7 +34,9 @@ class ShowAccountsListBloc extends Bloc<ShowAccountsListEvent, ShowAccountsListS
       return;
     }
     List<ShowAccountModel> temp = [];
-    list.forEach((element) => element.title.toLowerCase().contains(event.text.toLowerCase()) ? temp.add(element) : null);
+    for (var element in list) {
+      element.title.toLowerCase().contains(event.text.toLowerCase()) ? temp.add(element) : null;
+    }
     emit(state.copyWith(searchList: temp, isSearch: true));
   }
 
@@ -44,7 +46,6 @@ class ShowAccountsListBloc extends Bloc<ShowAccountsListEvent, ShowAccountsListS
     }
     streamController = _getAccountList().listen((event) {
       list = event.data;
-      print(list.first.password);
       add(const OnGetShowAccountsListEvent());
     });
   }

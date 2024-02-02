@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:password/core/utiles/const.dart';
+import 'package:password/core/utiles/nav.dart';
+import 'package:password/screen/home/presentation/page/home_page.dart';
+import 'package:password/screen/lock_screen/presentation/page/lock_page.dart';
+import 'package:password/screen/sign_in/presentation/page/sign_in_page.dart';
 import 'package:password/screen/splash/presentation/bloc/splash_bloc.dart';
 import 'package:password/screen/splash/presentation/bloc/splash_event.dart';
 import 'package:password/screen/splash/presentation/bloc/splash_state.dart';
@@ -18,8 +23,8 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
   late final AnimationController _fadeController;
   late final Animation<double> _fadeAnimation;
 
-  String nextPage = "";
-  bool isCompleted = false;
+  String? nextPage;
+  bool lock = false;
 
   @override
   void initState() {
@@ -41,12 +46,19 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
     );
     _controller.forward();
     _controller.addListener(() {
-      _controller.isCompleted ? isCompleted = true : null;
-      if (nextPage.isNotEmpty) {
-        if(_controller.value <= 0.1 && isCompleted) {
-          Navigator.pushReplacementNamed(context, nextPage);
-        }else{
-          _controller.isAnimating ? null : _controller.reverse();
+      if (_animation.isCompleted) {
+        if (lock) {
+          showDialog(
+            context: context,
+            builder: (context) => LockPage(
+              onDone: () {
+                Navigator.pop(context);
+                Nav.of(context).pushNameReplacementFadeAnimation(nextPage??signInPageRoute);
+              },
+            ),
+          );
+        } else {
+          Nav.of(context).pushNameReplacementFadeAnimation(nextPage??signInPageRoute);
         }
       }
     });
@@ -61,10 +73,9 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    context.read<SplashBloc>().add(OnRetrievedUserSplashEvent(onDone: (page) {
-      nextPage = page;
-      print("page");
-      if (_controller.isCompleted) _controller.reverse();
+    context.read<SplashBloc>().add(OnRetrievedUserSplashEvent(onDone: (page, isLock) {
+      nextPage = page.isEmpty ? null : page;
+      lock = isLock;
     }));
     return SafeArea(
       child: Scaffold(
@@ -90,7 +101,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
                   scale: _animation,
                   child: const Text(
                     "Password",
-                    style: TextStyle(fontSize: 25,color: Colors.white),
+                    style: TextStyle(fontSize: 25, color: Colors.white),
                   ),
                 ),
               ),

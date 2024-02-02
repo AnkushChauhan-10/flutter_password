@@ -24,9 +24,12 @@ class ShowAccountTile extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    accountData.title,
-                    style: const TextStyle(fontSize: 26, color: Colors.black),
+                  Hero(
+                    tag: "title${accountData.title}",
+                    child: Text(
+                      accountData.title,
+                      style: const TextStyle(fontSize: 26, color: Colors.black),
+                    ),
                   ),
                   Text(
                     "Last update :- ${accountData.lastUpdate}",

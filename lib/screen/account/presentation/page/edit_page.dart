@@ -41,9 +41,12 @@ class _EditPage extends State<EditPage> {
     setState(() {});
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          account.title,
-          style: const TextStyle(),
+        title: Hero(
+          tag: "title${account.title}",
+          child: Text(
+            account.title,
+            style: const TextStyle(),
+          ),
         ),
       ),
       body: Container(

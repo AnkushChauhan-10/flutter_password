@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:password/core/utiles/const.dart';
 import 'package:password/injection_container.dart';
 import 'package:password/screen/lock_screen/data/lock_repository.dart';
-import 'package:password/screen/lock_screen/presentation/widgets/num_pad.dart';
+import 'package:password/core/widgets/num_pad.dart';
 
 class LockPage extends StatefulWidget {
-  const LockPage({super.key});
+  const LockPage({super.key, required this.onDone});
+
+  final Function onDone;
 
   @override
   State<LockPage> createState() => _LockPageState();
@@ -14,7 +15,6 @@ class LockPage extends StatefulWidget {
 class _LockPageState extends State<LockPage> {
   late TextEditingController _controller;
   late String pin;
-  bool route = false;
 
   @override
   void initState() {
@@ -29,13 +29,17 @@ class _LockPageState extends State<LockPage> {
     super.initState();
   }
 
-  void check() async {
+  void check() {
+    if (_controller.text == pin) {
+      widget.onDone.call();
+    } else {
+      reset();
+    }
+  }
+
+  void reset() async {
     await Future.delayed(const Duration(milliseconds: 500));
-    _controller.text == pin
-        ? setState(() {
-            route = true;
-          })
-        : _controller.text = "";
+    _controller.text = "";
   }
 
   @override

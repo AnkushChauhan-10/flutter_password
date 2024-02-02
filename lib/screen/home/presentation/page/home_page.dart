@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:password/core/utiles/NetworkConnectivityController.dart';
 import 'package:password/core/utiles/const.dart';
+import 'package:password/core/utiles/nav.dart';
 import 'package:password/core/utiles/utility.dart';
 import 'package:password/features/fetch/fetch_controller.dart';
 import 'package:password/features/show_accounts_list/presentation/page/sliver_account_list.dart';
@@ -25,7 +26,6 @@ class _HomePage extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     context.read<HomeBloc>().add(const GetUsersHomeEvent());
-    // context.read<HomeBloc>().add(const GetLoggedUserHomeEvent());
     return LayoutBuilder(
       builder: (context, size) {
         return BlocBuilder<HomeBloc, HomeState>(
@@ -75,7 +75,7 @@ class _HomePage extends State<HomePage> {
                   // backgroundColor: const Color.fromRGBO(72, 159, 181, 1.0),
                   onPressed: () async {
                     controller.connection
-                        ? await Navigator.pushNamed(context, savePageRoute)
+                        ? Nav.of(context).pushNamed(savePageRoute)
                         : Utility.toastMessage(
                             title: "Network Error",
                             message: "Please Check your network connection and try again!",

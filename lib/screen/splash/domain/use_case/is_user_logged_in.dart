@@ -9,3 +9,12 @@ class IsUserLoggedIn extends UseCaseWithOutParams<bool> {
   @override
   bool call() => _splashRepository.isUserLoggedIn();
 }
+
+class IsLockSet extends UseCaseWithOutParams<bool> {
+  IsLockSet({required SplashRepository splashRepository}) : _splashRepository = splashRepository;
+
+  final SplashRepository _splashRepository;
+
+  @override
+  bool call() => _splashRepository.isLockSet();
+}
