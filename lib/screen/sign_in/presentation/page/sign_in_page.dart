@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:password/core/utiles/const.dart';
+import 'package:password/core/utiles/nav.dart';
 import 'package:password/core/utiles/validation.dart';
 import 'package:password/core/widgets/common_field.dart';
 import 'package:password/screen/sign_in/presentation/bloc/sign_in_bloc.dart';
@@ -73,7 +74,7 @@ class _SignInPage extends State<SignInPage> {
                           Flexible(
                             child: NotHaveAccountText(
                               tap: () {
-                                Navigator.pushReplacementNamed(context, signUpPageRoute);
+                                Nav.of(context).pushNameReplacementHorizontalSlideAnimation(signUpPageRoute);
                               },
                             ),
                           ),
@@ -88,7 +89,7 @@ class _SignInPage extends State<SignInPage> {
                                         email: email.text,
                                         password: password.text,
                                         onDone: () {
-                                          Navigator.pushReplacementNamed(context, homePageRoute);
+                                          Nav.of(context).pushNameReplacementFadeAnimation(homePageRoute);
                                         },
                                       ),
                                     );

@@ -23,18 +23,18 @@ class ShowAccountTile extends StatelessWidget {
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Hero(
-                    tag: "title${accountData.title}",
-                    child: Text(
-                      accountData.title,
-                      style: const TextStyle(fontSize: 26, color: Colors.black),
-                    ),
+                  Text(
+                    accountData.title,
+                    style: const TextStyle(fontSize: 26, color: Colors.black),
                   ),
+                  const SizedBox(height: 1),
                   Text(
                     "Last update :- ${accountData.lastUpdate}",
-                    style: const TextStyle(fontSize: 11, color: Colors.black87),
+                    style: const TextStyle(fontSize: 13, color: Colors.black87),
                   ),
+                  const SizedBox(height: 10),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -50,11 +50,12 @@ class ShowAccountTile extends StatelessWidget {
                             ),
                             TextSpan(
                               text: " ${accountData.userName}",
-                              style: const TextStyle(fontSize: 11, color: Colors.black87),
+                              style: const TextStyle(fontSize: 15, color: Colors.black87),
                             ),
                           ],
                         ),
                       ),
+                      const SizedBox(height: 5),
                       RichText(
                         text: TextSpan(
                           children: [
@@ -66,7 +67,7 @@ class ShowAccountTile extends StatelessWidget {
                             ),
                             TextSpan(
                               text: " ${accountData.password}",
-                              style: const TextStyle(fontSize: 11, color: Colors.black87),
+                              style: const TextStyle(fontSize: 15, color: Colors.black87),
                             ),
                           ],
                         ),

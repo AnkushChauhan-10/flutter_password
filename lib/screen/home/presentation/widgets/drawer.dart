@@ -81,8 +81,8 @@ class _CustomDrawerState extends State<CustomDrawer> with TickerProviderStateMix
                 ),
               ),
             ),
-            accountName: Text(name, style: const TextStyle(fontWeight: FontWeight.bold)),
-            accountEmail: Text(email, style: const TextStyle()),
+            accountName: Text(name, style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 16)),
+            accountEmail: Text(email, style: const TextStyle(fontSize: 16)),
           ),
           SizeTransition(
             sizeFactor: _animation,
@@ -98,6 +98,7 @@ class _CustomDrawerState extends State<CustomDrawer> with TickerProviderStateMix
                                 OnChangeLoggedUserHomeEvent(
                                   widget.users[index].token,
                                   () {
+                                    Nav.of(context).pop();
                                     context.read<HomeBloc>().add(const GetUsersHomeEvent());
                                   },
                                 ),
@@ -119,7 +120,7 @@ class _CustomDrawerState extends State<CustomDrawer> with TickerProviderStateMix
                                   ),
                                   Text(
                                     "Add account",
-                                    style: TextStyle(),
+                                    style: TextStyle(fontSize: 16),
                                   ),
                                 ],
                               ),
@@ -139,10 +140,12 @@ class _CustomDrawerState extends State<CustomDrawer> with TickerProviderStateMix
             padding: const EdgeInsets.all(8.0),
             child: InkWell(
               onTap: () {
-                Nav.of(context).pushNameFadeAnimation(securityPageRoute);
+                Nav.of(context).pop();
+                Nav.of(context).pushNameHorizontalSlideAnimation(securityPageRoute);
               },
               child: const Text(
                 "Security",
+                style: TextStyle(fontSize: 16),
               ),
             ),
           ),
@@ -161,7 +164,7 @@ class _CustomDrawerState extends State<CustomDrawer> with TickerProviderStateMix
               },
               child: const Text(
                 "Log out",
-                style: TextStyle(),
+                style: TextStyle(fontSize: 16),
               ),
             ),
           ),

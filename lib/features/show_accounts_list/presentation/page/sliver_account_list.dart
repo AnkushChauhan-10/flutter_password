@@ -38,7 +38,7 @@ class SliverAccountList extends StatelessWidget {
                 onChanged: (value) => context.read<ShowAccountsListBloc>().add(OnSearchListEvent(value)),
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.search),
-                  fillColor: Theme.of(context).backgroundColor,
+                  fillColor: Colors.white,
                   filled: true,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20),
@@ -108,7 +108,7 @@ class SliverAccountList extends StatelessWidget {
                                     child: ShowAccountTile(
                                       accountData: list[index],
                                       onTap: (account) {
-                                        Nav.of(context).pushNameFadeAnimation(editPageRoute, arg: account);
+                                        Nav.of(context).pushNameHorizontalSlideAnimation(editPageRoute, arg: account);
                                       },
                                     ),
                                   ),

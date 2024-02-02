@@ -42,7 +42,51 @@ class Nav {
             child: child,
           );
         },
-        transitionDuration: const Duration(seconds: 1),
+        transitionDuration: const Duration(milliseconds: 300),
+        pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
+          return _routes[name]!;
+        },
+      );
+
+  PageRouteBuilder _verticalTransition(String name, dynamic arg) => PageRouteBuilder(
+        settings: RouteSettings(arguments: arg),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(1.0, 1.0),
+              end: Offset.zero,
+            ).animate(
+              CurvedAnimation(
+                curve: Curves.ease,
+                parent: animation,
+              ),
+            ),
+            child: child,
+          );
+        },
+        transitionDuration: const Duration(milliseconds: 300),
+        pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
+          return _routes[name]!;
+        },
+      );
+
+  PageRouteBuilder _horizontalTransition(String name, dynamic arg) => PageRouteBuilder(
+        settings: RouteSettings(arguments: arg),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(0, 1),
+              end: Offset.zero,
+            ).animate(
+              CurvedAnimation(
+                curve: Curves.ease,
+                parent: animation,
+              ),
+            ),
+            child: child,
+          );
+        },
+        transitionDuration: const Duration(milliseconds: 300),
         pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
           return _routes[name]!;
         },
@@ -50,6 +94,10 @@ class Nav {
 
   void pushNamed(String name, {dynamic arg}) {
     Navigator.pushNamed(context, name, arguments: arg);
+  }
+
+  void pop() {
+    Navigator.pop(context);
   }
 
   void pushReplacementNamed(String name, {dynamic arg}) {
@@ -62,5 +110,18 @@ class Nav {
 
   void pushNameFadeAnimation(String name, {dynamic arg}) {
     Navigator.of(context).push(_fadeTransition(name, arg));
+  }
+
+  void pushNameVerticalSlideAnimation(String name, {dynamic arg}) {
+    Navigator.of(context).push(_verticalTransition(name, arg));
+  }
+  void pushNameHorizontalSlideAnimation(String name, {dynamic arg}) {
+    Navigator.of(context).push(_horizontalTransition(name, arg));
+  }
+  void pushNameReplacementHorizontalSlideAnimation(String name, {dynamic arg}) {
+    Navigator.of(context).pushReplacement(_horizontalTransition(name, arg));
+  }
+  void pushNameReplacementVerticalSlideAnimation(String name, {dynamic arg}) {
+    Navigator.of(context).pushReplacement(_verticalTransition(name, arg));
   }
 }

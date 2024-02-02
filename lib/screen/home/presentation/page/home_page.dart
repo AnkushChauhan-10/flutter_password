@@ -58,7 +58,7 @@ class _HomePage extends State<HomePage> {
                   slivers: [
                     SliversAppBar(
                       profileUrl: "",
-                      name: state.loggedUser!.name,
+                      name: state.loggedUser.name,
                       setState: () {
                         setState(() {});
                       },
@@ -75,7 +75,7 @@ class _HomePage extends State<HomePage> {
                   // backgroundColor: const Color.fromRGBO(72, 159, 181, 1.0),
                   onPressed: () async {
                     controller.connection
-                        ? Nav.of(context).pushNamed(savePageRoute)
+                        ? Nav.of(context).pushNameVerticalSlideAnimation(savePageRoute)
                         : Utility.toastMessage(
                             title: "Network Error",
                             message: "Please Check your network connection and try again!",

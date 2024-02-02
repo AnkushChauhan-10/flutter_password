@@ -41,7 +41,6 @@ class FetchController extends GetxController {
       compareData(local, remote, table);
       return const SuccessResponse(true);
     } catch (e) {
-      print(e);
       return FailureResponse(e);
     }
   }
@@ -51,15 +50,11 @@ class FetchController extends GetxController {
   }
 
   void compareData(List<AccountModel> local, List<AccountModel> remote, String table) {
-    print(local);
-    print(remote);
     List<AccountModel> delete = [], insert = [];
     delete.addAll(local);
     insert.addAll(remote);
-    int k = 0;
     for (var i in remote) {
       for (var j in local) {
-        print(k);
         if (j.title == i.title) {
           if (i.lastUpdate > j.lastUpdate) {
             delete.remove(j);
@@ -68,8 +63,6 @@ class FetchController extends GetxController {
             delete.remove(j);
           }
         }
-        print(insert);
-        print(delete);
       }
     }
     _db.insertAll(List.generate(insert.length, (i) => insert[i].toMap()), table);

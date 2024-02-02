@@ -62,20 +62,8 @@ class MyApp extends StatelessWidget {
         return GetMaterialApp(
           title: 'Flutter Demo',
           debugShowCheckedModeBanner: false,
-          /* darkTheme: ThemeData.dark(),
-          themeMode: ThemeMode.system,*/
           theme: Styles.themeData(ctrl.darkTheme, context),
           initialRoute: splashPageRoute,
-          // home: const SplashPage(),
-          // getPages: [
-          //   GetPage(name: lockScreenPageRoute, page: () => const LockPage()),
-          //   GetPage(name: splashPageRoute, page: () => const SplashPage(), transitionDuration: const Duration(seconds: 1), transition: Transition.zoom),
-          //   GetPage(name: signInPageRoute, page: () => const SignInPage()),
-          //   GetPage(name: signUpPageRoute, page: () => const SignUpPage()),
-          //   GetPage(name: homePageRoute, page: () => const HomePage()),
-          //   GetPage(name: savePageRoute, page: () => const SavePage()),
-          //   GetPage(name: editPageRoute, page: () => const EditPage())
-          // ],
           routes: {
             splashPageRoute: (context) => const SplashPage(),
             signInPageRoute: (context) => const SignInPage(),

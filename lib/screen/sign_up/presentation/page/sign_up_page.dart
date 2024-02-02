@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:password/core/utiles/const.dart';
+import 'package:password/core/utiles/nav.dart';
 import 'package:password/core/utiles/utility.dart';
 import 'package:password/core/utiles/validation.dart';
 import 'package:password/core/widgets/common_field.dart';
@@ -83,7 +84,7 @@ class _SignUpPage extends State<SignUpPage> {
                           ),
                           HaveAccountText(
                             tap: () {
-                              Navigator.pushReplacementNamed(context, signInPageRoute);
+                              Nav.of(context).pushNameReplacementHorizontalSlideAnimation(signInPageRoute);
                             },
                           ),
                           SignUpButton(
@@ -98,7 +99,7 @@ class _SignUpPage extends State<SignUpPage> {
                                       name: name.text,
                                       confirmPassword: confirmPassword.text,
                                       onDone: () {
-                                        Navigator.pushReplacementNamed(context, homePageRoute);
+                                        Nav.of(context).pushNameReplacementFadeAnimation(homePageRoute);
                                       },
                                     ),
                                   );
