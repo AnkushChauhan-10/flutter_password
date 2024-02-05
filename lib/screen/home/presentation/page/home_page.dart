@@ -72,7 +72,6 @@ class _HomePage extends State<HomePage> {
               builder: (controller) => Opacity(
                 opacity: controller.connection ? 1 : 0.5,
                 child: FloatingActionButton(
-                  // backgroundColor: const Color.fromRGBO(72, 159, 181, 1.0),
                   onPressed: () async {
                     controller.connection
                         ? Nav.of(context).pushNameVerticalSlideAnimation(savePageRoute)
