@@ -1,13 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:password/core/response/response.dart';
 import 'package:password/features/show_accounts_list/data/models/show_account_model.dart';
-import 'package:password/features/show_accounts_list/domain/entities/show_account.dart';
 import 'package:password/features/show_accounts_list/domain/use_case/get_account_list.dart';
 import 'package:password/features/show_accounts_list/presentation/bloc/show_accounts_list_event.dart';
 import 'package:password/features/show_accounts_list/presentation/bloc/show_accounts_list_state.dart';
-import 'package:password/screen/home/presentation/bloc/home_bloc.dart';
 
 class ShowAccountsListBloc extends Bloc<ShowAccountsListEvent, ShowAccountsListState> {
   ShowAccountsListBloc({

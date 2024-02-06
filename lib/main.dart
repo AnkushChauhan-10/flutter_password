@@ -7,16 +7,12 @@ import 'package:password/core/utiles/const.dart';
 import 'package:password/core/utiles/style.dart';
 import 'package:password/features/password_generator/presentation/bloc/generate_password_bloc.dart';
 import 'package:password/features/password_generator/presentation/page/password_generator_page.dart';
-import 'package:password/features/show_accounts_list/presentation/bloc/show_accounts_list_bloc.dart';
-import 'package:password/features/show_accounts_list/presentation/page/sliver_account_list.dart';
 import 'package:password/features/theme_mode/theme_controller.dart';
 import 'package:password/injection_container.dart';
 import 'package:password/screen/account/presentation/bloc/edit_bloc.dart';
 import 'package:password/screen/account/presentation/page/edit_page.dart';
 import 'package:password/screen/home/presentation/bloc/home_bloc.dart';
 import 'package:password/screen/home/presentation/page/home_page.dart';
-import 'package:password/screen/lock_screen/data/lock_repository.dart';
-import 'package:password/screen/lock_screen/presentation/page/lock_page.dart';
 import 'package:password/screen/save_data/presentation/bloc/save_bloc.dart';
 import 'package:password/screen/save_data/presentation/page/save_page.dart';
 import 'package:password/screen/security/presentation/bloc/security_bloc.dart';
@@ -54,7 +50,6 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => sl<HomeBloc>(), child: const HomePage()),
         BlocProvider(create: (_) => sl<SignUpBloc>(), child: const SignUpPage()),
         BlocProvider(create: (_) => sl<SignInBloc>(), child: const SignInPage()),
-        BlocProvider(create: (_) => sl<ShowAccountsListBloc>(), child: SliverAccountList()),
         BlocProvider(create: (_) => sl<GeneratePasswordBloc>(), child: const PasswordGeneratorPage()),
         BlocProvider(create: (_) => sl<SecurityBloc>(), child: const SecurityPage()),
       ],
