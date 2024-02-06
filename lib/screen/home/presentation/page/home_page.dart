@@ -63,7 +63,7 @@ class _HomePage extends State<HomePage> {
                         setState(() {});
                       },
                     ),
-                    SliverAccountList(),
+                    const SliverAccountList(),
                   ],
                 ),
               ),
